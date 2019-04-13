@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">GraduationProject</string>
+    <string name="app_name">大姨妈</string>
+
+    <string-array name="dates">
+        <item>1天</item>
+        <item>2天</item>
+        <item>3天</item>
+        <item>4天</item>
+        <item>生命壹号</item>
+        <item>生命壹号</item>
+        <item>生命壹号</item>
+        <item>生命壹号</item>
+        <item>生命壹号</item>
+    </string-array>
 </resources>
