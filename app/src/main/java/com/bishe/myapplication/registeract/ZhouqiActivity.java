@@ -1,6 +1,7 @@
 package com.bishe.myapplication.registeract;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -11,11 +12,14 @@ import android.widget.TextView;
 
 import com.bishe.myapplication.MyBaseActivity;
 import com.bishe.myapplication.R;
+import com.bishe.myapplication.utils.MySharedPreferences;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ZhouqiActivity extends MyBaseActivity implements View.OnClickListener {
 
@@ -56,7 +60,10 @@ public class ZhouqiActivity extends MyBaseActivity implements View.OnClickListen
         mZhouqiList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Map<String, String> infoMap = (Map<String, String>) parent.getItemAtPosition(position);
+                int zhouqiTiem = Integer.parseInt(getNumbers(infoMap.get("day")));
+                Log.i("stw", "onItemClick: 周期==" + zhouqiTiem);
+                MySharedPreferences.setZhouqiTime(zhouqiTiem);
             }
         });
     }

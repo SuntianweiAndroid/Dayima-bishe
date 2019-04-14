@@ -34,9 +34,12 @@ public class LogInActivity extends MyBaseActivity implements View.OnClickListene
         setContentView(R.layout.activity_login);
         initView();
         MySharedPreferences.getInstance(this);
-        mEdtName = findViewById(R.id.edt_name);
-        mEdtPwd = findViewById(R.id.edt_pwd);
-        mBtnLogin = findViewById(R.id.btn_login);
+        if (MySharedPreferences.getIslogin()) {
+            intentClass(MenuActivity.class);
+            finish();
+        } else {
+
+        }
     }
 
     private void initView() {
@@ -54,14 +57,15 @@ public class LogInActivity extends MyBaseActivity implements View.OnClickListene
             default:
                 break;
             case R.id.btn_login:
-                String loginName = MySharedPreferences.getString("name");
-                String loginPwd = MySharedPreferences.getString("pwd");
+                String loginName = MySharedPreferences.getName();
+                String loginPwd = MySharedPreferences.getPwd();
                 if (mEdtName.getText().toString().equals("") || mEdtPwd.getText().toString().equals("")) {
                     showToast(this, "请输入用户名或密码！");
-
                 } else if (mEdtName.getText().toString().equals(loginName) && mEdtPwd.getText().toString().equals(loginPwd)) {
                     showToast(this, "登录成功！");
+                    MySharedPreferences.setIslogin(true);
                     intentClass(MenuActivity.class);
+                    finish();
                 } else {
                     showToast(this, "用户名或密码错误！");
                 }

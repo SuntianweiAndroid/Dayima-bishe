@@ -113,7 +113,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@drawable/button_style"
-        android:text="注册"
+        android:text="确定"
         android:textColor="@color/button_text" />
 
 

@@ -41,7 +41,7 @@
         android:textSize="20sp" />
 
     <ListView
-        android:id="@+id/zhouqi_list"
+        android:id="@+id/jingqi_list"
         android:layout_width="150dp"
         android:layout_height="match_parent"
         android:layout_gravity="center"

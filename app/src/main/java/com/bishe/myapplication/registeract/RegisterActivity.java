@@ -40,12 +40,12 @@ public class RegisterActivity extends MyBaseActivity implements View.OnClickList
             case R.id.btn_register:
                 String name = mEdtName.getText().toString();
                 String pwd = mEdtPwd.getText().toString();
-//                if (name.equals("")||pwd.equals("")) {
-//                    showToast(this, "请填写正确的用户名密码！");
-//                }
-                MySharedPreferences.setString("name", name);
-                MySharedPreferences.setString("pwd", pwd);
-                showToast(this, "注册成功，请登录！");
+                if (name.equals("") || pwd.equals("")) {
+                    showToast(this, "请填写正确的用户名密码！");
+                }
+                MySharedPreferences.setName(name);
+                MySharedPreferences.setPwd(pwd);
+
                 intentClass(ZhouqiActivity.class);
                 break;
         }

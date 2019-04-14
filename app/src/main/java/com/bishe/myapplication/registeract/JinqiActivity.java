@@ -1,6 +1,7 @@
 package com.bishe.myapplication.registeract;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.bishe.myapplication.MyBaseActivity;
 import com.bishe.myapplication.R;
+import com.bishe.myapplication.utils.MySharedPreferences;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,7 +26,7 @@ public class JinqiActivity extends MyBaseActivity implements View.OnClickListene
      * 2/3经期
      */
     private TextView mTvTitle;
-    private ListView mZhouqiList;
+    private ListView mjingqiList;
     /**
      * 确定
      */
@@ -51,12 +53,15 @@ public class JinqiActivity extends MyBaseActivity implements View.OnClickListene
                 R.layout.layout_register_item, /*设置具体某个items的布局，需要是新的布局，而不是ListView控件的布局*/
                 new String[]{"day"}, /*传入上面定义的键值对的键名称,会自动根据传入的键找到对应的值*/
                 new int[]{R.id.tv_item});/*传入items布局文件中需要指定传入的控件，这里直接上id即可*/
-        mZhouqiList.setAdapter(simpleAdapter);
+        mjingqiList.setAdapter(simpleAdapter);
 
-        mZhouqiList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mjingqiList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Map<String, String> infoMap = (Map<String, String>) parent.getItemAtPosition(position);
+                int jingqiTiem = Integer.parseInt(getNumbers(infoMap.get("day")));
+                Log.i("stw", "onItemClick:经期== " + jingqiTiem);
+                MySharedPreferences.setJingqiTime(jingqiTiem);
             }
         });
     }
@@ -65,7 +70,7 @@ public class JinqiActivity extends MyBaseActivity implements View.OnClickListene
         mImgBack = (ImageButton) findViewById(R.id.img_back);
         mImgBack.setOnClickListener(this);
         mTvTitle = (TextView) findViewById(R.id.tv_title);
-        mZhouqiList = (ListView) findViewById(R.id.zhouqi_list);
+        mjingqiList = (ListView) findViewById(R.id.jingqi_list);
         mBtnTrue = (Button) findViewById(R.id.btn_true);
         mBtnTrue.setOnClickListener(this);
     }
@@ -79,6 +84,7 @@ public class JinqiActivity extends MyBaseActivity implements View.OnClickListene
                 finish();
                 break;
             case R.id.btn_true:
+                intentClass(RiqiActivity.class);
 
                 break;
         }
