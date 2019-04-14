@@ -102,8 +102,11 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 new CommomDialog2(getActivity(), R.style.DialogTheme, new CommomDialog2.OnCloseListener() {
                     @Override
                     public void onClick(Dialog dialog, boolean confirm, int selectTime) {
-                        Log.i("stw", "onClick:设置周期 " + selectTime);
-                        mTvZhouqiday.setText(selectTime + "天");
+                        Log.i("stw", "onClick:设置经期 " + selectTime);
+                        if (confirm) {
+                            MySharedPreferences.setJingqiTime(selectTime);
+                            mTvJignqiday.setText(selectTime + "天");
+                        }
                     }
                 }, "jingqi").setTitle("设置经期").show();
                 break;
@@ -112,7 +115,10 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onClick(Dialog dialog, boolean confirm, int selectTime) {
                         Log.i("stw", "onClick:设置周期 " + selectTime);
-                        mTvZhouqiday.setText(selectTime + "天");
+                        if (confirm) {
+                            MySharedPreferences.setZhouqiTime(selectTime);
+                            mTvZhouqiday.setText(selectTime + "天");
+                        }
                     }
                 }, "zhouqi").setTitle("设置周期").show();
                 break;

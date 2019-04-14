@@ -104,7 +104,7 @@ public class RiqiActivity extends MyBaseActivity implements View.OnClickListener
                 mDatePicker.getSelectTime();
                 showToast(this, "注册成功！");
                 MySharedPreferences.setIslogin(true);
-                intentClass(MenuActivity.class);
+                intentClass2(MenuActivity.class);
                 finish();
                 break;
             case R.id.img_back:

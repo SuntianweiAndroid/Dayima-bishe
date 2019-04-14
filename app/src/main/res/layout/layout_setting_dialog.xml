@@ -9,10 +9,10 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
         android:gravity="center_horizontal"
         android:padding="12dp"
         android:text=""
+        android:textColor="#050202"
         android:textSize="16sp" />
 
     <TextView
@@ -27,6 +27,7 @@
         android:gravity="center"
         android:lineSpacingExtra="3dp"
         android:text="UUUUU"
+        android:textColor="#050202"
         android:textSize="20sp" />
 
 
@@ -44,6 +45,7 @@
             android:layout_weight="1.0"
             android:gravity="center"
             android:text="@string/cancel"
+            android:textColor="#050202"
             android:textSize="12sp" />
 
 
@@ -55,6 +57,7 @@
             android:layout_weight="1.0"
             android:gravity="center"
             android:text="确定"
+            android:textColor="#050202"
             android:textSize="12sp" />
 
     </LinearLayout>

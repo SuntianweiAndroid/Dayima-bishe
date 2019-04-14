@@ -1,15 +1,6 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- 没有焦点时字体颜色 -->
-    <item
-        android:state_selected="false"
-        android:color="#0E0D0D"/>
-    <!--选中时的字体颜色  -->
-    <item
-        android:state_selected="true"
-        android:color="@color/button_false"/>
-    <!-- 非触摸模式下获得焦点并单击时的字体颜色 -->
-    <item
-        android:state_focused="true"
-        android:state_pressed="true"
-        android:color="@color/button_false"/>
+    <item android:state_focused="true" android:color="#E90909" /> <!-- focused -->
+    <item android:state_pressed="true" android:color="#EC0303" /> <!-- pressed -->
+    <item android:state_selected="true" android:color="#D61616" /> <!-- pressed -->
+    <item android:color="#0E0101" /> <!-- default -->
 </selector>

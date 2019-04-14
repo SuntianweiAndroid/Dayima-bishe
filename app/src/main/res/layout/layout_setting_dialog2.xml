@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="#FFFFFF"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/date_picker_divider"
         android:orientation="horizontal">
 
         <TextView
@@ -15,10 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:padding="12dp"
+
             android:text=""
+            android:textColor="#050202"
             android:textSize="16sp" />
 
         <ImageView
@@ -27,24 +30,22 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
+            android:visibility="gone"
             android:background="@mipmap/seting_error" />
     </LinearLayout>
 
-    <LinearLayout
+
+    <ListView
+        android:id="@+id/lsit_show"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:layout_gravity="center">
+        android:layout_height="200dp"
+        android:layout_gravity="center"
 
-        <ListView
-            android:id="@+id/lsit_show"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:layout_weight="1"
-            android:scrollbars="none"></ListView>
-
-    </LinearLayout>
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1"
+        android:scrollbars="none" />
 
 
     <LinearLayout
@@ -61,6 +62,7 @@
             android:layout_weight="1.0"
             android:gravity="center"
             android:text="@string/cancel"
+            android:textColor="#050202"
             android:textSize="12sp" />
 
 
@@ -72,6 +74,7 @@
             android:layout_weight="1.0"
             android:gravity="center"
             android:text="确定"
+            android:textColor="#050202"
             android:textSize="12sp" />
 
     </LinearLayout>

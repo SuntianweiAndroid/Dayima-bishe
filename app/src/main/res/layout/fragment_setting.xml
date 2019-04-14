@@ -51,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="1.5dp"
         android:layout_margin="15dp"
-        android:background="@color/date_picker_text_dark" />
+        android:background="#6666" />
 
     <LinearLayout
         android:id="@+id/seting_jingqiday"
@@ -97,7 +97,7 @@
         android:layout_width="match_parent"
         android:layout_height="1.5dp"
         android:layout_margin="15dp"
-        android:background="@color/date_picker_text_dark" />
+        android:background="#6666" />
 
     <LinearLayout
         android:id="@+id/seting_zhouqiday"
@@ -143,7 +143,7 @@
         android:layout_width="match_parent"
         android:layout_height="1.5dp"
         android:layout_margin="15dp"
-        android:background="@color/date_picker_text_dark" />
+        android:background="#6666" />
 
     <LinearLayout
         android:id="@+id/seting_tixing"
@@ -188,7 +188,7 @@
         android:layout_width="match_parent"
         android:layout_height="1.5dp"
         android:layout_margin="15dp"
-        android:background="@color/date_picker_text_dark" />
+        android:background="#6666" />
 
     <Button
         android:id="@+id/btn_seting_out"

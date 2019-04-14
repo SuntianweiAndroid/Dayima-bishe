@@ -51,34 +51,34 @@ public class HomeFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         initView(v);
-        dateView = (DateView) v.findViewById(R.id.date_view);
-        dateView.setOnItemClickListener(new DateView.OnItemListener() {
-
-            @Override
-            public void onClick(long time, DateCardModel d) {
-                nowTime = time;
-                dcm = d;
-                if (time > DateChange.getDate()) {
-                    llMtCome.setVisibility(View.GONE);
-                    llMtBack.setVisibility(View.GONE);
-                    return;
-                } else if (dcm.type == 1) {
-                    llMtCome.setVisibility(View.GONE);
-                    llMtBack.setVisibility(View.VISIBLE);
-
-                }
-//                else if (mtDao.getEndTimeNumber(nowTime) < 6) {
+//        dateView = (DateView) v.findViewById(R.id.date_view);
+//        dateView.setOnItemClickListener(new DateView.OnItemListener() {
+//
+//            @Override
+//            public void onClick(long time, DateCardModel d) {
+//                nowTime = time;
+//                dcm = d;
+//                if (time > DateChange.getDate()) {
+//                    llMtCome.setVisibility(View.GONE);
+//                    llMtBack.setVisibility(View.GONE);
+//                    return;
+//                } else if (dcm.type == 1) {
 //                    llMtCome.setVisibility(View.GONE);
 //                    llMtBack.setVisibility(View.VISIBLE);
 //
-//                } else if (dcm.type != 1) {
-//                    llMtCome.setVisibility(View.VISIBLE);
-//                    llMtBack.setVisibility(View.GONE);
-//
 //                }
-            }
-        });
-        tvDate.setText(dateView.getYearAndmonth());
+////                else if (mtDao.getEndTimeNumber(nowTime) < 6) {
+////                    llMtCome.setVisibility(View.GONE);
+////                    llMtBack.setVisibility(View.VISIBLE);
+////
+////                } else if (dcm.type != 1) {
+////                    llMtCome.setVisibility(View.VISIBLE);
+////                    llMtBack.setVisibility(View.GONE);
+////
+////                }
+//            }
+//        });
+//        tvDate.setText(dateView.getYearAndmonth());
 
         return v;
     }
@@ -88,37 +88,37 @@ public class HomeFragment extends Fragment {
      */
     private void initData() {
         Calendar calendar = Calendar.getInstance();
-        Date   curDate = new Date();
+        Date curDate = new Date();
         calendar.setTime(curDate);
-        MenstruationDao   mtDao = new MenstruationDao(getContext());
+        MenstruationDao mtDao = new MenstruationDao(getContext());
         mCycle = mtDao.getMTCycle();
-        long nowDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+1)+"-1","yyyy-MM-dd");
-        long nextDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+2)+"-1","yyyy-MM-dd");
+        long nowDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-1", "yyyy-MM-dd");
+        long nextDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 2) + "-1", "yyyy-MM-dd");
         //获取当月数据
         List<MenstruationModel> mtmList = mtDao.getMTModelList(nowDate, nextDate);
         //获取全部数据
-         List<MenstruationModel> list = mtDao.getMTModelList(0, 0);
+        List<MenstruationModel> list = mtDao.getMTModelList(0, 0);
         //当数据库中没有本月记录时，根据上一次的记录预测本月记录
-        for(int i=0; i<mtmList.size(); i++){
+        for (int i = 0; i < mtmList.size(); i++) {
             mtmList.get(i).setCon(true);
         }
-        if(mtmList.size()==0){
+        if (mtmList.size() == 0) {
             MenstruationModel mtm = new MenstruationModel();
             mtm.setDate(nowDate);
-            mtm.setBeginTime(list.get(list.size()-1).getBeginTime()+intervalTime(list.get(list.size()-1).getBeginTime(), nowDate));
-            mtm.setEndTime(list.get(list.size()-1).getBeginTime()+intervalTime(list.get(list.size()-1).getBeginTime(), nowDate)+86400000l*(mCycle.getNumber()-1));
+            mtm.setBeginTime(list.get(list.size() - 1).getBeginTime() + intervalTime(list.get(list.size() - 1).getBeginTime(), nowDate));
+            mtm.setEndTime(list.get(list.size() - 1).getBeginTime() + intervalTime(list.get(list.size() - 1).getBeginTime(), nowDate) + 86400000l * (mCycle.getNumber() - 1));
             mtm.setCon(false);
             //如果当月没有记录，就根据之前的数据来预测现在的来月经时间，如果根据之前预测的时间小于当天时间就从现在开始记录
-            if(mtm.getBeginTime() > DateChange.getDate()){
+            if (mtm.getBeginTime() > DateChange.getDate()) {
                 mtmList.add(mtm);
-            }else {
+            } else {
                 mtm.setBeginTime(DateChange.getDate());
-                mtm.setEndTime(DateChange.getDate() + 86400000l*4);
+                mtm.setEndTime(DateChange.getDate() + 86400000l * 4);
                 mtmList.add(mtm);
             }
             //记录预测的基准
 
-        }else {
+        } else {
             //记录预测的基准
 
         }
@@ -126,17 +126,20 @@ public class HomeFragment extends Fragment {
 
         dateView.initData(mtmList);
     }
+
     /**
      * 计算间隔时间
+     *
      * @param startTime
      * @param endTime
      * @return
      */
-    private long intervalTime(long startTime, long endTime){
-        int i = (int) ((endTime-startTime)/86400000/mCycle.getCycle());
-        i = (endTime-startTime)/86400000%mCycle.getCycle()==0 ? i-1 : i;
-        return   i*86400000l*mCycle.getCycle();
+    private long intervalTime(long startTime, long endTime) {
+        int i = (int) ((endTime - startTime) / 86400000 / mCycle.getCycle());
+        i = (endTime - startTime) / 86400000 % mCycle.getCycle() == 0 ? i - 1 : i;
+        return i * 86400000l * mCycle.getCycle();
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -147,7 +150,7 @@ public class HomeFragment extends Fragment {
         ivClickLeftMonth = (ImageView) v.findViewById(R.id.iv_click_left_month);
         tvDate = (TextView) v.findViewById(R.id.tv_date);
         ivClickRightMonth = (ImageView) v.findViewById(R.id.iv_click_right_month);
-        dateView = (DateView) v.findViewById(R.id.date_view);
+//        dateView = (DateView) v.findViewById(R.id.date_view);
         llMtCome = (LinearLayout) v.findViewById(R.id.ll_mt_come);
         llMtBack = (LinearLayout) v.findViewById(R.id.ll_mt_back);
     }

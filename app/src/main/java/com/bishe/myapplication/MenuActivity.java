@@ -2,15 +2,16 @@ package com.bishe.myapplication;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 import com.bishe.myapplication.fragment.HomeFragment;
 import com.bishe.myapplication.fragment.SettingFragment;
 
-public class MenuActivity extends AppCompatActivity implements View.OnClickListener {
+public class MenuActivity extends FragmentActivity implements View.OnClickListener {
     private HomeFragment homeFragment;
     private SettingFragment settingFragment;
     private FrameLayout mFragment;
@@ -22,6 +23,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏 第一种方法
         setContentView(R.layout.activity_menu);
         initView();
         initFragment();

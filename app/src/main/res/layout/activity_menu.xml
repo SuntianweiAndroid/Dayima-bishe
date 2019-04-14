@@ -15,37 +15,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="#999"
+        android:background="#667A7A"
         android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/btn_home"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@mipmap/home" />
 
         <ImageButton
             android:id="@+id/date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
+            android:layout_margin="10dp"
             android:background="@mipmap/date" />
 
         <ImageButton
             android:id="@+id/yueliang"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@mipmap/yuelaing" />
 
         <ImageButton
             android:id="@+id/btn_setting"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@mipmap/shezhi" />
