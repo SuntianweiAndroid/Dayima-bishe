@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.GridLayout;
 
 
+import com.bishe.myapplication.db.MenstruationModel;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;

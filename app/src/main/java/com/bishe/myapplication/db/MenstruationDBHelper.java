@@ -1,4 +1,4 @@
-package com.bishe.myapplication.view;
+package com.bishe.myapplication.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,7 +21,7 @@ public class MenstruationDBHelper extends SQLiteOpenHelper {
 
 	public MenstruationDBHelper(Context context, String name,
 			SQLiteDatabase.CursorFactory factory, int version) {
-		super(context, "xmjk.db", null, 1);
+		super(context, "dayima.db", null, 1);
 	}
 
     @Override

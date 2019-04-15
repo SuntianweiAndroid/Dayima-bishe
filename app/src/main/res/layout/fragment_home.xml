@@ -155,10 +155,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!--<com.bishe.myapplication.view.DateView-->
-                <!--android:id="@+id/date_view"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content" />-->
+            <com.bishe.myapplication.view.DateView
+                android:id="@+id/date_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:layout_width="match_parent"

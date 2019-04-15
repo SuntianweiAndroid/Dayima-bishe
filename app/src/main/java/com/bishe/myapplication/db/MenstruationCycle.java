@@ -1,4 +1,4 @@
-package com.bishe.myapplication.view;
+package com.bishe.myapplication.db;
 
 /**
  * 大姨妈平均周期与平均天数

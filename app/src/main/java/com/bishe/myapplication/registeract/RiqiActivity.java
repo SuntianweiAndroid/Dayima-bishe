@@ -13,7 +13,11 @@ import com.bishe.myapplication.R;
 import com.bishe.myapplication.date.CustomDatePicker;
 import com.bishe.myapplication.date.DateFormatUtils;
 import com.bishe.myapplication.date.PickerView;
+import com.bishe.myapplication.db.MenstruationCycle;
+import com.bishe.myapplication.db.MenstruationDao;
+import com.bishe.myapplication.db.MenstruationModel;
 import com.bishe.myapplication.utils.MySharedPreferences;
+import com.bishe.myapplication.view.DateChange;
 
 public class RiqiActivity extends MyBaseActivity implements View.OnClickListener {
 
@@ -35,6 +39,7 @@ public class RiqiActivity extends MyBaseActivity implements View.OnClickListener
      * 分
      */
     private TextView mTvMinuteUnit;
+    private String time;
     /**
      * 确定
      */
@@ -63,6 +68,7 @@ public class RiqiActivity extends MyBaseActivity implements View.OnClickListener
             public void onTimeSelected(long timestamp) {
                 // TODO: 2019/4/14 保存时间
                 MySharedPreferences.setRiqiTime(timestamp);
+                MySharedPreferences.setRiqiTime2(DateFormatUtils.long2Str(timestamp, false));
                 Log.i("stw", "onTimeSelected: " + DateFormatUtils.long2Str(timestamp, false));
             }
         }, beginTimestamp, endTimestamp, mDpvYear, mDpvMonth, mDpvDay, mDpvHour, mDpvMinute, mTvHourUnit, mTvMinuteUnit);
@@ -93,7 +99,10 @@ public class RiqiActivity extends MyBaseActivity implements View.OnClickListener
         mTvMinuteUnit = (TextView) findViewById(R.id.tv_minute_unit);
         mBtnTrue = (Button) findViewById(R.id.btn_true);
         mBtnTrue.setOnClickListener(this);
+        mtDao = new MenstruationDao(this);
     }
+
+    private MenstruationDao mtDao;
 
     @Override
     public void onClick(View v) {
@@ -104,6 +113,17 @@ public class RiqiActivity extends MyBaseActivity implements View.OnClickListener
                 mDatePicker.getSelectTime();
                 showToast(this, "注册成功！");
                 MySharedPreferences.setIslogin(true);
+                MenstruationCycle mc = new MenstruationCycle();
+                mc.setNumber(MySharedPreferences.getJingqiTime());
+                mc.setCycle(MySharedPreferences.getZhouqiTime());
+                mtDao.setMTCycle(mc);
+                MenstruationModel mtm = new MenstruationModel();
+                mtm.setBeginTime(DateChange.dateTimeStamp(MySharedPreferences.getRiqiTime2(), "yyyy-MM-dd"));
+                mtm.setEndTime(DateChange.dateTimeStamp(MySharedPreferences.getRiqiTime2(), "yyyy-MM-dd") + 86400000l * (MySharedPreferences.getJingqiTime() - 1));
+                mtm.setCycle(MySharedPreferences.getZhouqiTime());
+                mtm.setDurationDay(MySharedPreferences.getJingqiTime());
+                mtm.setDate(DateChange.dateTimeStamp(MySharedPreferences.getRiqiTime2(), "yyyy-MM-dd"));
+                mtDao.setMTModel(mtm);
                 intentClass2(MenuActivity.class);
                 finish();
                 break;

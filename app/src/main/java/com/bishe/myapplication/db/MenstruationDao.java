@@ -1,10 +1,8 @@
-package com.bishe.myapplication.view;
+package com.bishe.myapplication.db;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,7 +81,7 @@ public class MenstruationDao {
                     " startTime > ? ", new String[]{mt.getBeginTime()+""});
             while(cursor.moveToNext()){
             	if(cursor.getLong(0) != 0){
-            		mt.setCycle((int)((cursor.getLong(0)-mt.getBeginTime())/86400000l)+1);
+            		mt.setCycle((int)((cursor.getLong(0)-mt.getBeginTime())/86400000L)+1);
             	}
             }
         	db.execSQL("INSERT INTO " + MenstruationDBHelper.TB_NAME_MT_TIME + " (date, startTime, endTime, cycle, number) " +
@@ -146,7 +144,6 @@ public class MenstruationDao {
     
     /**
      * 描述：获取月经开始结束时间等数据
-     * @param time 全部记录�?，某月记录为当天时间�?
      * @return
      */
     public MenstruationModel getMTModel(long startTime, long endTime){
@@ -214,7 +211,6 @@ public class MenstruationDao {
     /**
      * 修改结束时间
      * @param newTime
-     * @param oldTime
      */
     public void updateMTEndTime(long newTime){
     	SQLiteDatabase db= dbHelper.getWritableDatabase();
@@ -230,7 +226,7 @@ public class MenstruationDao {
         	}
         	db.execSQL("UPDATE " + MenstruationDBHelper.TB_NAME_MT_TIME + " SET endTime = ?, number = ? "
             		+ " WHERE startTime = ? ",
-                    new Object[]{newTime, (newTime-time)/86400000l+1, time});
+                    new Object[]{newTime, (newTime-time)/86400000L+1, time});
             cursor.close();
         	db.close();
         }
@@ -254,7 +250,7 @@ public class MenstruationDao {
             }
     		db.execSQL("UPDATE " + MenstruationDBHelper.TB_NAME_MT_TIME + " SET startTime = ?, number = ? "
             		+ " WHERE startTime == ? ",
-                    new Object[]{newTime, (endTime-newTime)/86400000l+1, oldTime});
+                    new Object[]{newTime, (endTime-newTime)/86400000L+1, oldTime});
     		//修改当月周期
     		Cursor cursor1 = db.rawQuery("SELECT MIN(startTime) FROM " + MenstruationDBHelper.TB_NAME_MT_TIME + " WHERE " +
                     " startTime > ?", new String[]{oldTime+""});
@@ -265,7 +261,7 @@ public class MenstruationDao {
             if(nextTime != 0){
             	db.execSQL("UPDATE " + MenstruationDBHelper.TB_NAME_MT_TIME + " SET cycle = ? "
                 		+ " WHERE startTime == ? ",
-                        new Object[]{(nextTime-newTime)/86400000l+1, newTime});
+                        new Object[]{(nextTime-newTime)/86400000L+1, newTime});
             }
     		
             //修改上月信息
@@ -278,7 +274,7 @@ public class MenstruationDao {
             if(time != 0){
             	db.execSQL("UPDATE " + MenstruationDBHelper.TB_NAME_MT_TIME + " SET cycle = ? "
                 		+ " WHERE startTime == ? ",
-                        new Object[]{(newTime-time)/86400000l+1, time});
+                        new Object[]{(newTime-time)/86400000L+1, time});
             }
             cursor.close();
             db.close();
@@ -328,8 +324,6 @@ public class MenstruationDao {
 
     /**
      * 修改�?��时间
-     * @param newTime
-     * @param oldTime
      */
     public void updateMTM(MenstruationMt mt){
     	SQLiteDatabase db= dbHelper.getWritableDatabase();

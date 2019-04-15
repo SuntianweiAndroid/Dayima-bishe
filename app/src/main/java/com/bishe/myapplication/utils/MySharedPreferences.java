@@ -76,4 +76,12 @@ public class MySharedPreferences {
     public static long getRiqiTime() {
         return sharedPreferences.getLong("Riqi", 0);
     }
+    public static void setRiqiTime2(String jingqi) {
+        editor.putString("Riqi", jingqi);
+        editor.commit();
+    }
+
+    public static String getRiqiTime2() {
+        return sharedPreferences.getString("Riqi", "");
+    }
 }

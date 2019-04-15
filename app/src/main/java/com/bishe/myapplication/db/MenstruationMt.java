@@ -1,4 +1,4 @@
-package com.bishe.myapplication.view;
+package com.bishe.myapplication.db;
 
 public class MenstruationMt {
 	private long date;//日期
