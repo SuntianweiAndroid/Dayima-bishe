@@ -8,12 +8,14 @@ import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
+import com.bishe.myapplication.fragment.RiliFragment;
 import com.bishe.myapplication.fragment.HomeFragment;
 import com.bishe.myapplication.fragment.SettingFragment;
 
 public class MenuActivity extends FragmentActivity implements View.OnClickListener {
     private HomeFragment homeFragment;
     private SettingFragment settingFragment;
+    private RiliFragment riliFragment;
     private FrameLayout mFragment;
     private ImageButton mBtnHome;
     private ImageButton mDate;
@@ -45,6 +47,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
     private void initFragment() {
         homeFragment = new HomeFragment();
         settingFragment = new SettingFragment();
+        riliFragment = new RiliFragment();
     }
 
     private void initView() {
@@ -68,6 +71,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
                 changeFragment(homeFragment);
                 break;
             case R.id.date:
+                changeFragment(riliFragment);
                 break;
             case R.id.yueliang:
                 break;

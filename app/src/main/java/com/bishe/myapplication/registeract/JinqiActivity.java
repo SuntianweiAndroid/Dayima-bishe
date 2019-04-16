@@ -58,6 +58,7 @@ public class JinqiActivity extends MyBaseActivity implements View.OnClickListene
         mjingqiList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 Map<String, String> infoMap = (Map<String, String>) parent.getItemAtPosition(position);
                 int jingqiTiem = Integer.parseInt(getNumbers(infoMap.get("day")));
                 Log.i("stw", "onItemClick:经期== " + jingqiTiem);

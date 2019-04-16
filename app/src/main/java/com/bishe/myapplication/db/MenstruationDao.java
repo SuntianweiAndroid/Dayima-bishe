@@ -8,7 +8,6 @@ import java.util.List;
 
 /**
  * SQLite产检记录表工具类
- * Created by Administrator on 2015/5/26.
  */
 public class MenstruationDao {
     private Context mContext;

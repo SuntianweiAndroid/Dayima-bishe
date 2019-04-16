@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 /**
  * 大姨妈数据表
- * @author Administrator zxm
  *
  */
 public class MenstruationDBHelper extends SQLiteOpenHelper {

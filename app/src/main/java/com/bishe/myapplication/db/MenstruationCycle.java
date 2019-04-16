@@ -2,7 +2,6 @@ package com.bishe.myapplication.db;
 
 /**
  * 大姨妈平均周期与平均天数
- * @author Administrator
  *
  */
 public class MenstruationCycle {

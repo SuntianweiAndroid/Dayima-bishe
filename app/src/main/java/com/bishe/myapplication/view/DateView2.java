@@ -6,7 +6,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.GridLayout;
 
-
 import com.bishe.myapplication.db.MenstruationModel;
 
 import java.text.SimpleDateFormat;
@@ -19,7 +18,7 @@ import java.util.List;
  * @author Administrator zxm
  *
  */
-public class DateView extends GridLayout {
+public class DateView2 extends GridLayout {
 	private boolean is = true;
 	private Date curDate; // 当前日历显示的月
 	private Calendar calendar;
@@ -30,28 +29,27 @@ public class DateView extends GridLayout {
 	private int lastNumber, toNumber; //这个月显示上月天数， 这个月天数
 	private String dateClick = "";//记录点击的日期
 
-	public DateView(Context context, AttributeSet attrs, int defStyle) {
+	public DateView2(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
+
 		initView();
 	}
 
-	public DateView(Context context) {
+	public DateView2(Context context) {
 		super(context);
+
 		initView();
 	}
 
-	public DateView(Context context, AttributeSet attrs) {
+	public DateView2(Context context, AttributeSet attrs) {
 		super(context, attrs);
+
 		initView();
 	}
 
-    /**
-     * 拿到 日历
-     */
 	private void initView() {
-        //设置7列表格
-        setColumnCount(7);
-        //获取日历
+		setColumnCount(7);
+
 		calendar = Calendar.getInstance();
 		curDate = new Date();
 	}

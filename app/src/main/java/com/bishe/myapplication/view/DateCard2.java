@@ -18,7 +18,7 @@ import com.bishe.myapplication.R;
  *
  * @author Administrator zxm
  */
-public class DateCard extends FrameLayout {
+public class DateCard2 extends FrameLayout {
     //颜色
     private String safety = "#9DF96F"; //3
     private String risk = "#FFF370"; //4
@@ -27,7 +27,7 @@ public class DateCard extends FrameLayout {
     private ImageView iv;
     private LinearLayout ll, layout;
 
-    public DateCard(Context context) {
+    public DateCard2(Context context) {
         super(context);
 
         initView();
@@ -93,6 +93,7 @@ public class DateCard extends FrameLayout {
      */
     public void initData(DateCardModel dateCard) {
         tvNumber.setText(dateCard.date + "");
+
         setToMonth(dateCard.istoMonth);
         setToDay(dateCard.isToday, dateCard.type);
         setStart(dateCard.isStart);
