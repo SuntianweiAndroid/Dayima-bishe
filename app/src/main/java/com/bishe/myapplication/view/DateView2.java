@@ -24,7 +24,7 @@ public class DateView2 extends GridLayout {
 	private Calendar calendar;
 	private int number = 42;
 	private int[] date = new int[number]; // 日历显示数字
-	private DateCard[] dateCard = new DateCard[number];
+	private DateCardLyout[] dateCard = new DateCardLyout[number];
 	private DateCardModel[] dateList = new DateCardModel[number];
 	private int lastNumber, toNumber; //这个月显示上月天数， 这个月天数
 	private String dateClick = "";//记录点击的日期
@@ -74,12 +74,12 @@ public class DateView2 extends GridLayout {
 
 	private void addCards(int cardWidth,int cardHeight){
 
-		DateCard c;
+		DateCardLyout c;
 
 		int i = 0;
 		for (int y = 0; y < number/7; y++) {
 			for (int x = 0; x < 7; x++) {
-				c = new DateCard(getContext());
+				c = new DateCardLyout(getContext());
 				c.initData(dateList[i]);
 				addView(c, cardWidth, cardHeight);
 				dateCard[i] = c;
