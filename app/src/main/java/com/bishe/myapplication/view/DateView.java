@@ -1,19 +1,18 @@
 package com.bishe.myapplication.view;
 
 
-import android.content.Context;
-import android.graphics.Canvas;
-import android.util.AttributeSet;
-import android.view.View;
-import android.widget.GridLayout;
-
-
-import com.bishe.myapplication.db.MenstruationModel;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import android.content.Context;
+import android.util.AttributeSet;
+import android.view.View;
+import android.widget.GridLayout;
+
+import com.bishe.myapplication.db.MenstruationModel;
+
 
 /**
  * 大姨妈日历控件
@@ -26,98 +25,80 @@ public class DateView extends GridLayout {
 	private Calendar calendar;
 	private int number = 42;
 	private int[] date = new int[number]; // 日历显示数字
-	private DateCardLyout[] dateCardLyouts = new DateCardLyout[number];
+	private DateCard[] dateCard;
 	private DateCardModel[] dateList = new DateCardModel[number];
 	private int lastNumber, toNumber; //这个月显示上月天数， 这个月天数
 	private String dateClick = "";//记录点击的日期
-
+	
 	public DateView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
+		
 		initView();
 	}
 
 	public DateView(Context context) {
 		super(context);
+		
 		initView();
 	}
 
 	public DateView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		
 		initView();
 	}
 
-    /**
-     * 拿到 日历
-     */
 	private void initView() {
-        //设置7列表格
-        setColumnCount(7);
-        //获取日历
+		setColumnCount(7);
+		
 		calendar = Calendar.getInstance();
 		curDate = new Date();
 	}
 
 	public void initData(List<MenstruationModel> mtmList){
-		calculateDate(mtmList);
+		dateCard = new DateCard[number];
+		calculateDate();
 		calculateType(mtmList);
 		onItemListener.onClick(DateChange.dateTimeStamp(dateClick, "yyyy/MM/dd"), dateList[lastNumber+getNowTime("dd")]);
 	}
-
-	@Override
-	protected void onDraw(Canvas canvas) {
-		DateCardLyout c;
-
-		int i = 0;
-		for (int y = 0; y < number/7; y++) {
-			for (int x = 0; x < 7; x++) {
-				c = new DateCardLyout(getContext());
-				c.initData(dateList[i]);
-				addView(c);
-				dateCardLyouts[i] = c;
-				i++;
-			}
-		}
-		setListener();
-		super.onDraw(canvas);
-	}
-
+	
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
-
+		
 		if(is){
 			int cardWidth = w/7;
 			addCards(cardWidth,cardWidth);
 			is = false;
 		}
-
+		
 	}
-
+	
 	private void addCards(int cardWidth,int cardHeight){
-
-		DateCardLyout c;
-
+		
+		DateCard c;
+		
 		int i = 0;
 		for (int y = 0; y < number/7; y++) {
 			for (int x = 0; x < 7; x++) {
-				c = new DateCardLyout(getContext());
+				c = new DateCard(getContext());
 				c.initData(dateList[i]);
 				addView(c, cardWidth, cardHeight);
-				dateCardLyouts[i] = c;
+				dateCard[i] = c;
 				i++;
 			}
 		}
 		setListener();
 	}
-
+	
 	private void setListener(){
 		//设置点击事件（上个月与下个月的不能点击）
 		for(int i=0; i<=lastNumber; i++){
-			dateCardLyouts[i].setOnClickListener(null);
+			dateCard[i].setOnClickListener(null);
 		}
 		for(int i=lastNumber+1; i<=lastNumber + toNumber; i++){
 			final int position = i;
-			dateCardLyouts[i].setOnClickListener(new OnClickListener() {
+			dateCard[i].setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
 					for(int j=lastNumber+1; j<=lastNumber + toNumber; j++){
@@ -129,41 +110,41 @@ public class DateView extends GridLayout {
 						}else {
 							dateList[j].isClick = false;
 						}
-						dateCardLyouts[j].setOnClick(dateList[j].isClick);
+						dateCard[j].setOnClick(dateList[j].isClick);
 					}
 				}
 			});
 		}
 		for(int i=lastNumber + toNumber+1; i<dateList.length; i++){
-			dateCardLyouts[i].setOnClickListener(null);
+			dateCard[i].setOnClickListener(null);
 		}
-
+		
 		//开头空白超过一行去掉一行
 		if(lastNumber >= 6){
 			for(int i=0; i<7; i++){
-				dateCardLyouts[i].setVisibility(View.GONE);
+				dateCard[i].setVisibility(View.GONE);
 			}
 		}else {
 			for(int i=0; i<7; i++){
-				dateCardLyouts[i].setVisibility(View.VISIBLE);
+				dateCard[i].setVisibility(View.VISIBLE);
 			}
 		}
 		//结尾空白超过一行去掉一行
 		if(lastNumber + toNumber > 34){
 			for(int i=35; i<42; i++){
-				dateCardLyouts[i].setVisibility(View.VISIBLE);
+				dateCard[i].setVisibility(View.VISIBLE);
 			}
 		}else {
 			for(int i=35; i<42; i++){
-				dateCardLyouts[i].setVisibility(View.GONE);
+				dateCard[i].setVisibility(View.GONE);
 			}
 		}
 	}
-
+	
 	/**
 	 * 计算日期
 	 */
-	private void calculateDate(List<MenstruationModel> mtmList) {
+	private void calculateDate() {
 		calendar.setTime(curDate);
 		calendar.set(Calendar.DAY_OF_MONTH, 1);
 		int dayInWeek = calendar.get(Calendar.DAY_OF_WEEK);
@@ -174,16 +155,16 @@ public class DateView extends GridLayout {
 		monthStart -= 1;  //以日为开头-1，以星期一为开头-2
 		//月初1号
 		if(dateClick.equals(calendar.get(Calendar.YEAR)+"/"+(calendar.get(Calendar.MONTH)+1)+"/"+1)){
-			if(getNowTime("yyyy") == calendar.get(Calendar.YEAR)
-					&& getNowTime("MM") == calendar.get(Calendar.MONTH)+1
+			if(getNowTime("yyyy") == calendar.get(Calendar.YEAR) 
+					&& getNowTime("MM") == calendar.get(Calendar.MONTH)+1 
 				 	&& getNowTime("dd") == 1){
 				dateList[monthStart] = new DateCardModel(1, true, 0, 0, true, true);
 			}else {
 				dateList[monthStart] = new DateCardModel(1, false, 0, 0, true, true);
 			}
 		}else {
-			if(getNowTime("yyyy") == calendar.get(Calendar.YEAR)
-					&& getNowTime("MM") == calendar.get(Calendar.MONTH)+1
+			if(getNowTime("yyyy") == calendar.get(Calendar.YEAR) 
+					&& getNowTime("MM") == calendar.get(Calendar.MONTH)+1 
 				 	&& getNowTime("dd") == 1){
 				dateList[monthStart] = new DateCardModel(1, true, 0, 0, true, false);
 			}else {
@@ -196,7 +177,7 @@ public class DateView extends GridLayout {
 			calendar.set(Calendar.DAY_OF_MONTH, 0);
 			int dayInmonth = calendar.get(Calendar.DAY_OF_MONTH);
 			lastNumber = monthStart - 1;
-
+			
 			for (int i = monthStart - 1; i >= 0; i--) {
 				dateList[i] = new DateCardModel(dayInmonth, false, 0, 0, false, false);
 				date[i] = dayInmonth;
@@ -209,22 +190,22 @@ public class DateView extends GridLayout {
 		calendar.add(Calendar.MONTH, 1);
 		calendar.set(Calendar.DAY_OF_MONTH, 0);
 		int monthDay = calendar.get(Calendar.DAY_OF_MONTH);
-
+		
 		toNumber = monthDay;
 		for (int i = 1; i < monthDay; i++) {
 			date[monthStart + i] = i + 1;
 			calendar.setTime(curDate);
 			if(dateClick.equals(calendar.get(Calendar.YEAR)+"/"+(calendar.get(Calendar.MONTH)+1)+"/"+(i+1))){
-				if(getNowTime("yyyy") == calendar.get(Calendar.YEAR)
-						&& getNowTime("MM") == calendar.get(Calendar.MONTH)+1
+				if(getNowTime("yyyy") == calendar.get(Calendar.YEAR) 
+						&& getNowTime("MM") == calendar.get(Calendar.MONTH)+1 
 						 	&& getNowTime("dd") == (i+1)){
 					dateList[monthStart+i] = new DateCardModel(i+1, true, 0, 0, true, true);
 				}else {
 					dateList[monthStart+i] = new DateCardModel(i+1, false, 0, 0, true, true);
 				}
 			}else if(dateClick.equals("")){
-				if(getNowTime("yyyy") == calendar.get(Calendar.YEAR)
-						&& getNowTime("MM") == calendar.get(Calendar.MONTH)+1
+				if(getNowTime("yyyy") == calendar.get(Calendar.YEAR) 
+						&& getNowTime("MM") == calendar.get(Calendar.MONTH)+1 
 						 	&& getNowTime("dd") == (i+1)){
 					//=========初始化点击
 					dateList[monthStart+i] = new DateCardModel(i+1, true, 0, 0, true, true);
@@ -233,8 +214,8 @@ public class DateView extends GridLayout {
 					dateList[monthStart+i] = new DateCardModel(i+1, false, 0, 0, true, false);
 				}
 			}else {
-				if(getNowTime("yyyy") == calendar.get(Calendar.YEAR)
-						&& getNowTime("MM") == calendar.get(Calendar.MONTH)+1
+				if(getNowTime("yyyy") == calendar.get(Calendar.YEAR) 
+						&& getNowTime("MM") == calendar.get(Calendar.MONTH)+1 
 						 	&& getNowTime("dd") == (i+1)){
 					dateList[monthStart+i] = new DateCardModel(i+1, true, 0, 0, true, false);
 				}else {
@@ -247,30 +228,30 @@ public class DateView extends GridLayout {
 			dateList[i] = new DateCardModel(i - (monthStart + monthDay) + 1, false, 0, 0, false, false);
 			date[i] = i - (monthStart + monthDay) + 1;
 		}
-		calculateType(mtmList);
+//		calculateType(1, 12, 15, getNowTime("dd"));
 	}
-
+	
 	private long getNowDate(int d){
 		calendar.setTime(curDate);
 		String date = calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+1)+"-"+d;
 		return DateChange.dateTimeStamp(date, "yyyy-MM-dd");
 	}
-
+	
 	/**
 	 * 刷新UI
 	 * @param mtmList
 	 */
 	public void refreshUI(List<MenstruationModel> mtmList){
 		calendar.setTime(curDate);
-		calculateDate(mtmList);
+		calculateDate();
 		calculateType(mtmList);
 		for(int i=0; i<number; i++){
-			dateCardLyouts[i].initData(dateList[i]);
+			dateCard[i].initData(dateList[i]);
 		}
 		setListener();
 		onItemListener.onClick(DateChange.dateTimeStamp(dateClick, "yyyy/MM/dd"), dateList[lastNumber+getNowTime("dd")]);
 	}
-
+	
 	/**
 	 * 计算当月显示的状态（1为月经期，2为预测期，3为安全期，4为易孕期, 0为其他）
 	 */
@@ -323,10 +304,10 @@ public class DateView extends GridLayout {
 				}else {
 					dateList[i].type = 4;
 				}
-
+				
 			}
 		}
-
+		
 	}
 	private int isType1(List<MenstruationModel> mtmList, int position){
 		for(int i = 0; i<mtmList.size(); i++){
@@ -336,17 +317,17 @@ public class DateView extends GridLayout {
 		}
 		return -1;
 	}
-
+	
 	private boolean isType2(List<MenstruationModel> mtmList, int position){
 		for(int i = 0; i<mtmList.size(); i++){
-			if((getNowDate(dateList[position].date)<mtmList.get(i).getBeginTime() && getNowDate(dateList[position].date)>=mtmList.get(i).getBeginTime()-9*86400000)
+			if((getNowDate(dateList[position].date)<mtmList.get(i).getBeginTime() && getNowDate(dateList[position].date)>=mtmList.get(i).getBeginTime()-9*86400000) 
 					|| (getNowDate(dateList[position].date)>mtmList.get(i).getEndTime() && getNowDate(dateList[position].date)<mtmList.get(i).getBeginTime()+9*86400000)){
 				return true;
 			}
 		}
 		return false;
 	}
-
+	
 	private boolean isStart(List<MenstruationModel> mtmList, int position){
 		for(int i = 0; i<mtmList.size(); i++){
 			if(getNowDate(dateList[position].date) == mtmList.get(i).getBeginTime()){
@@ -375,7 +356,7 @@ public class DateView extends GridLayout {
 	}
 
 	private OnItemListener onItemListener;
-
+	
 	/**
 	 * 点击回调事件
 	 * @param onItemListener
@@ -383,11 +364,11 @@ public class DateView extends GridLayout {
 	public void setOnItemClickListener(OnItemListener onItemListener){
 		this.onItemListener = onItemListener;
 	}
-
+	
 	public interface OnItemListener{
 		public void onClick(long time, DateCardModel dcm);
 	}
-
+	
 	/**
 	 * 向上一月
 	 * @return
@@ -396,12 +377,12 @@ public class DateView extends GridLayout {
 		calendar.setTime(curDate);
 		calendar.add(Calendar.MONTH, -1);
 		curDate = calendar.getTime();
-		calculateDate(mtmList);
+		calculateDate();
 		if(mtmList != null){
 			calculateType(mtmList);
 		}
 		for(int i=0; i<number; i++){
-			dateCardLyouts[i].initData(dateList[i]);
+			dateCard[i].initData(dateList[i]);
 		}
 		setListener();
 		return getYearAndmonth();
@@ -414,18 +395,18 @@ public class DateView extends GridLayout {
 		calendar.setTime(curDate);
 		calendar.add(Calendar.MONTH, 1);
 		curDate = calendar.getTime();
-		calculateDate(mtmList);
+		calculateDate();
 		if(mtmList!=null){
 			calculateType(mtmList);
 		}
 		for(int i=0; i<number; i++){
-			dateCardLyouts[i].initData(dateList[i]);
+			dateCard[i].initData(dateList[i]);
 		}
 		setListener();
 		return getYearAndmonth();
 	}
-
-
+	
+	
 	/**
 	 * 回今天
 	 * @return
@@ -434,12 +415,12 @@ public class DateView extends GridLayout {
 		calendar.setTime(curDate);
 		calendar.add(Calendar.MONTH, getNowTime("yyyy")*12 + getNowTime("MM") - (calendar.get(Calendar.MONTH)+1)-calendar.get(Calendar.YEAR)*12);
 		curDate = calendar.getTime();
-		calculateDate(mtmList);
+		calculateDate();
 		calculateType(mtmList);
 		int position = 1;
 		for(int i=lastNumber+1; i<=lastNumber + toNumber; i++){
-			if(getNowTime("yyyy") == calendar.get(Calendar.YEAR)
-					&& getNowTime("MM") == calendar.get(Calendar.MONTH)+1
+			if(getNowTime("yyyy") == calendar.get(Calendar.YEAR) 
+					&& getNowTime("MM") == calendar.get(Calendar.MONTH)+1 
 				 	&& getNowTime("dd") == position){
 				dateList[i].isClick = true;
 				dateClick= calendar.get(Calendar.YEAR)+"/"+(calendar.get(Calendar.MONTH)+1)+"/"+dateList[i].date;
@@ -450,7 +431,7 @@ public class DateView extends GridLayout {
 			position++;
 		}
 		for(int i=0; i<number; i++){
-			dateCardLyouts[i].initData(dateList[i]);
+			dateCard[i].initData(dateList[i]);
 		}
 		setListener();
 		return getYearAndmonth();
@@ -460,21 +441,21 @@ public class DateView extends GridLayout {
 	 * @param format
 	 * @return
 	 */
-	public String getYMD(String format) {
-        Date now = new Date();
+	public String getYMD(String format) { 
+        Date now = new Date(); 
         SimpleDateFormat dateFormat = new SimpleDateFormat(format);// 可以方便地修改日期格式  
-        String hehe = dateFormat.format(now);
-        return hehe;
-    }
+        String hehe = dateFormat.format(now); 
+        return hehe; 
+    } 
 	/**
 	 * 获取当天日期
 	 * @param format
 	 * @return
 	 */
-	public int getNowTime(String format) {
-        Date now = new Date();
+	public int getNowTime(String format) { 
+        Date now = new Date(); 
         SimpleDateFormat dateFormat = new SimpleDateFormat(format);// 可以方便地修改日期格式  
-        String hehe = dateFormat.format(now);
-        return Integer.parseInt(hehe);
-    }
+        String hehe = dateFormat.format(now); 
+        return Integer.parseInt(hehe); 
+    } 
 }

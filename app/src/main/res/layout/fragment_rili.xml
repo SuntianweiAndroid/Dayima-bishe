@@ -146,19 +146,12 @@
             android:textSize="12sp" />
     </LinearLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.bishe.myapplication.view.DateView
-                android:id="@+id/date_view"
-                android:layout_width="match_parent"
-                android:layout_height="150dp" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -277,8 +270,12 @@
                     android:layout_height="wrap_content"
                     android:src="@mipmap/dym_xuan" />
             </LinearLayout>
-
+            <com.bishe.myapplication.view.DateView
+                android:id="@+id/date_view"
+                android:background="@color/date_picker_divider"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
-    </ScrollView>
+
 
 </LinearLayout>

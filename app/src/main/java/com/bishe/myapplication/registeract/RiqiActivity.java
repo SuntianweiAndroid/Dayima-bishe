@@ -60,7 +60,7 @@ public class RiqiActivity extends MyBaseActivity implements View.OnClickListener
 
     private void initDatePicker() {
         //设置初始显示时间
-        long beginTimestamp = DateFormatUtils.str2Long("2019-00-01", false);
+        long beginTimestamp = DateFormatUtils.str2Long("2018-01-01", false);
         long endTimestamp = System.currentTimeMillis();
         // 通过时间戳初始化日期，毫秒级别
         mDatePicker = new CustomDatePicker(this, new CustomDatePicker.Callback() {
@@ -99,6 +99,7 @@ public class RiqiActivity extends MyBaseActivity implements View.OnClickListener
         mTvMinuteUnit = (TextView) findViewById(R.id.tv_minute_unit);
         mBtnTrue = (Button) findViewById(R.id.btn_true);
         mBtnTrue.setOnClickListener(this);
+        mImgBack.setOnClickListener(this);
         mtDao = new MenstruationDao(this);
     }
 
@@ -119,7 +120,7 @@ public class RiqiActivity extends MyBaseActivity implements View.OnClickListener
                 mtDao.setMTCycle(mc);
                 MenstruationModel mtm = new MenstruationModel();
                 mtm.setBeginTime(DateChange.dateTimeStamp(MySharedPreferences.getRiqiTime2(), "yyyy-MM-dd"));
-                mtm.setEndTime(DateChange.dateTimeStamp(MySharedPreferences.getRiqiTime2(), "yyyy-MM-dd") + 86400000l * (MySharedPreferences.getJingqiTime() - 1));
+                mtm.setEndTime(DateChange.dateTimeStamp(MySharedPreferences.getRiqiTime2(), "yyyy-MM-dd") + 86400000L * (MySharedPreferences.getJingqiTime() - 1));
                 mtm.setCycle(MySharedPreferences.getZhouqiTime());
                 mtm.setDurationDay(MySharedPreferences.getJingqiTime());
                 mtm.setDate(DateChange.dateTimeStamp(MySharedPreferences.getRiqiTime2(), "yyyy-MM-dd"));

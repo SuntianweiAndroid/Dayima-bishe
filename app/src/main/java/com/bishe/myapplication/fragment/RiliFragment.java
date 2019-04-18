@@ -49,34 +49,54 @@ public class RiliFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_rili, container, false);
         mContext = getActivity();
         initView(v);
-        initData();
+
         setListener(v);
+        dateView.requestLayout();
+        dateView.requestLayout();
+        dateView.requestLayout();
+        dateView.invalidate();
+        dateView.invalidate();
+        dateView.invalidate();
         return v;
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
+
+    }
+
     private void initView(View v) {
         tvDate = (TextView) v.findViewById(R.id.tv_date);
-        dateView = (DateView)v. findViewById(R.id.date_view);
+        dateView = (DateView) v.findViewById(R.id.date_view);
         dateView.setOnItemClickListener(new DateView.OnItemListener() {
 
             @Override
             public void onClick(long time, DateCardModel d) {
                 nowTime = time;
                 dcm = d;
-                if(time> DateChange.getDate()){
+                if (time > DateChange.getDate()) {
                     llMtCome.setVisibility(View.GONE);
                     llMtBack.setVisibility(View.GONE);
 
                     return;
-                }else if(dcm.type == 1){
+                } else if (dcm.type == 1) {
                     MenstruationMt mt = mtDao.getMTMT(nowTime);
                     llMtCome.setVisibility(View.GONE);
                     llMtBack.setVisibility(View.VISIBLE);
 
-                }else if (mtDao.getEndTimeNumber(nowTime) < 6) {
+                } else if (mtDao.getEndTimeNumber(nowTime) < 6) {
                     llMtCome.setVisibility(View.GONE);
                     llMtBack.setVisibility(View.VISIBLE);
 
-                }else if (dcm.type != 1) {
+                } else if (dcm.type != 1) {
                     llMtCome.setVisibility(View.VISIBLE);
                     llMtBack.setVisibility(View.GONE);
 
@@ -93,7 +113,7 @@ public class RiliFragment extends Fragment {
     /**
      * 初始化大姨妈数据
      */
-    private void initData(){
+    private void initData() {
         calendar = Calendar.getInstance();
         curDate = new Date();
         calendar.setTime(curDate);
@@ -129,76 +149,78 @@ public class RiliFragment extends Fragment {
             //记录预测的基准
             mtmBass = mtmList.get(mtmList.size()-1);
         }
+//        mtmBass = calculateMt(nowDate, nextDate).get(0);
         //下一次的月经是否在当月
         MenstruationModel mtm = new MenstruationModel();
-        mtm.setBeginTime(mtmBass.getBeginTime()+ 86400000L *28);
-        mtm.setEndTime(mtmBass.getBeginTime()+ 86400000L *28+ 86400000L *(mCycle.getNumber()-1));
+        mtm.setBeginTime(mtmBass.getBeginTime() + 86400000L * 28);
+        mtm.setEndTime(mtmBass.getBeginTime() + 86400000L * 28 + 86400000L * (mCycle.getNumber() - 1));
         mtm.setDate(nowDate);
         mtm.setCon(false);
-        if(nextDate > mtm.getBeginTime()){
-            if(mtm.getBeginTime() > DateChange.getDate()){
-                mtmList.add(mtm);
-            }else {
+        if (nextDate > mtm.getBeginTime()) {
+            if (mtm.getBeginTime() > DateChange.getDate()) {
+                calculateMt(nowDate, nextDate).add(mtm);
+            } else {
                 mtm.setBeginTime(DateChange.getDate());
-                mtm.setEndTime(DateChange.getDate() + 86400000L*4);
-                mtmList.add(mtm);
+                mtm.setEndTime(DateChange.getDate() + 86400000L * 4);
+                calculateMt(nowDate, nextDate).add(mtm);
             }
             mtmBass = mtm;
         }
         dateView.initData(mtmList);
-//        dateView.refreshUI(mtmList);
+
     }
 
     /**
      * 获取并预测大姨妈
-     * @param nowDate 当月时间
+     *
+     * @param nowDate  当月时间
      * @param nextDate 下月时间
      * @return
      */
-    private List<MenstruationModel> calculateMt(long nowDate, long nextDate){
+    private List<MenstruationModel> calculateMt(long nowDate, long nextDate) {
         //获取本月大姨妈数据
         List<MenstruationModel> mtmList = mtDao.getMTModelList(nowDate, nextDate);//将数据库中的当月大姨妈数据取出来
-        for(int i=0; i<mtmList.size(); i++){
+        for (int i = 0; i < mtmList.size(); i++) {
             mtmList.get(i).setCon(true);
         }
         //现在时间小于基础时间，不用计算其他的
-        if(nowDate < mtmBass.getDate()){
+        if (nowDate < mtmBass.getDate()) {
             return mtmList;
         }
         //如果当月没有大姨妈数据，就根据上一个月的数据预测这个月的姨妈周期
-        if(nowDate == mtmBass.getDate()){
+        if (nowDate == mtmBass.getDate()) {
             //现在时间跟基础时间相同
-            if(!mtmBass.isCon()){
+            if (!mtmBass.isCon()) {
                 mtmList.add(mtmBass);
             }
-        }else {
+        } else {
             //不同就根据基础时间预测
             MenstruationModel mtm1 = new MenstruationModel();
-            mtm1.setBeginTime(mtmBass.getBeginTime()+intervalTime(mtmBass.getDate(), nowDate));
-            mtm1.setEndTime(mtmBass.getBeginTime()+intervalTime(mtmBass.getDate(), nowDate)+86400000L*(mCycle.getNumber()-1));
+            mtm1.setBeginTime(mtmBass.getBeginTime() + intervalTime(mtmBass.getDate(), nowDate));
+            mtm1.setEndTime(mtmBass.getBeginTime() + intervalTime(mtmBass.getDate(), nowDate) + 86400000L * (mCycle.getNumber() - 1));
             mtm1.setCon(false);
             mtmList.add(mtm1);
             //判断下一次的大姨妈是否在本月
             MenstruationModel mtm = new MenstruationModel();
-            mtm.setBeginTime(mtmBass.getBeginTime()+intervalTime(mtmBass.getDate(), nowDate)+86400000L*28);
-            mtm.setEndTime(mtmBass.getBeginTime()+intervalTime(mtmBass.getDate(), nowDate)+86400000L*28+86400000L*(mCycle.getNumber()-1));
+            mtm.setBeginTime(mtmBass.getBeginTime() + intervalTime(mtmBass.getDate(), nowDate) + 86400000L * 28);
+            mtm.setEndTime(mtmBass.getBeginTime() + intervalTime(mtmBass.getDate(), nowDate) + 86400000L * 28 + 86400000L * (mCycle.getNumber() - 1));
             mtm.setCon(false);
-            if(nextDate > mtm.getBeginTime()){
-                if(mtm.getBeginTime() > DateChange.getDate()){
+            if (nextDate > mtm.getBeginTime()) {
+                if (mtm.getBeginTime() > DateChange.getDate()) {
                     mtmList.add(mtm);
-                }else {
+                } else {
                     mtm.setBeginTime(DateChange.getDate());
-                    mtm.setEndTime(DateChange.getDate() + 86400000L *4);
+                    mtm.setEndTime(DateChange.getDate() + 86400000L * 4);
                     mtmList.add(mtm);
                 }
             }
         }
         //判断上一次的大姨妈是否有在本月
         MenstruationModel mtm1 = new MenstruationModel();
-        mtm1.setBeginTime(mtmBass.getBeginTime()+intervalTime(mtmBass.getDate(), nowDate)-86400000L*28);
-        mtm1.setEndTime(mtmBass.getBeginTime()+intervalTime(mtmBass.getDate(), nowDate)-86400000L*28+86400000L*(mCycle.getNumber()-1));
+        mtm1.setBeginTime(mtmBass.getBeginTime() + intervalTime(mtmBass.getDate(), nowDate) - 86400000L * 28);
+        mtm1.setEndTime(mtmBass.getBeginTime() + intervalTime(mtmBass.getDate(), nowDate) - 86400000L * 28 + 86400000L * (mCycle.getNumber() - 1));
         mtm1.setCon(false);
-        if(nowDate <= mtm1.getEndTime()){
+        if (nowDate <= mtm1.getEndTime()) {
             mtmList.add(mtm1);
         }
         return mtmList;
@@ -216,8 +238,8 @@ public class RiliFragment extends Fragment {
                 calendar.setTime(curDate);
                 calendar.add(Calendar.MONTH, -1);
                 curDate = calendar.getTime();
-                long nowDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+1)+"-1","yyyy-MM-dd");
-                long nextDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+2)+"-1","yyyy-MM-dd");
+                long nowDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-1", "yyyy-MM-dd");
+                long nextDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 2) + "-1", "yyyy-MM-dd");
                 List<MenstruationModel> mtmList = calculateMt(nowDate, nextDate);
                 tvDate.setText(dateView.clickLeftMonth(mtmList));
             }
@@ -225,15 +247,15 @@ public class RiliFragment extends Fragment {
         /**
          * 下一月
          */
-        v. findViewById(R.id.iv_click_right_month).setOnClickListener(new View.OnClickListener() {
+        v.findViewById(R.id.iv_click_right_month).setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
                 calendar.setTime(curDate);
                 calendar.add(Calendar.MONTH, 1);
                 curDate = calendar.getTime();
-                long nowDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+1)+"-1","yyyy-MM-dd");
-                long nextDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+2)+"-1","yyyy-MM-dd");
+                long nowDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-1", "yyyy-MM-dd");
+                long nextDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 2) + "-1", "yyyy-MM-dd");
                 List<MenstruationModel> mtmList = calculateMt(nowDate, nextDate);
                 tvDate.setText(dateView.clickRightMonth(mtmList));
             }
@@ -241,29 +263,29 @@ public class RiliFragment extends Fragment {
         /**
          * 回到当月
          */
-        v. findViewById(R.id.tv_today).setOnClickListener(new View.OnClickListener() {
+        v.findViewById(R.id.tv_today).setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
                 calendar.setTime(curDate);
-                calendar.add(Calendar.MONTH, getNowTime("yyyy")*12 + getNowTime("MM") - (calendar.get(Calendar.MONTH)+1)-calendar.get(Calendar.YEAR)*12);
+                calendar.add(Calendar.MONTH, getNowTime("yyyy") * 12 + getNowTime("MM") - (calendar.get(Calendar.MONTH) + 1) - calendar.get(Calendar.YEAR) * 12);
                 curDate = calendar.getTime();
-                long nowDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+1)+"-1","yyyy-MM-dd");
-                long nextDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+2)+"-1","yyyy-MM-dd");
+                long nowDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-1", "yyyy-MM-dd");
+                long nextDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 2) + "-1", "yyyy-MM-dd");
                 List<MenstruationModel> mtmList = mtDao.getMTModelList(nowDate, nextDate);
-                for(int i=0; i<mtmList.size(); i++){
+                for (int i = 0; i < mtmList.size(); i++) {
                     mtmList.get(i).setCon(true);
                 }
-                if(mtmList.size()==0){
+                if (mtmList.size() == 0) {
                     MenstruationModel mtm = new MenstruationModel();
-                    mtm.setBeginTime(list.get(list.size()-1).getBeginTime()+intervalTime(list.get(list.size()-1).getBeginTime(), nowDate));
-                    mtm.setEndTime(list.get(list.size()-1).getBeginTime()+intervalTime(list.get(list.size()-1).getBeginTime(), nowDate)+86400000L*(mCycle.getNumber()-1));
+                    mtm.setBeginTime(list.get(list.size() - 1).getBeginTime() + intervalTime(list.get(list.size() - 1).getBeginTime(), nowDate));
+                    mtm.setEndTime(list.get(list.size() - 1).getBeginTime() + intervalTime(list.get(list.size() - 1).getBeginTime(), nowDate) + 86400000L * (mCycle.getNumber() - 1));
                     mtm.setCon(false);
-                    if(mtm.getBeginTime() > DateChange.getDate()){
+                    if (mtm.getBeginTime() > DateChange.getDate()) {
                         mtmList.add(mtm);
-                    }else {
+                    } else {
                         mtm.setBeginTime(DateChange.getDate());
-                        mtm.setEndTime(DateChange.getDate() + 86400000L*4);
+                        mtm.setEndTime(DateChange.getDate() + 86400000L * 4);
                         mtm.setCon(false);
                         mtmList.add(mtm);
                     }
@@ -281,13 +303,13 @@ public class RiliFragment extends Fragment {
             @Override
             public void onClick(View arg0) {
                 long startTime = mtDao.getStartTimeNumber(nowTime);
-                if((startTime-nowTime)/86400000<9 && (startTime-nowTime)/86400000>0){
+                if ((startTime - nowTime) / 86400000 < 9 && (startTime - nowTime) / 86400000 > 0) {
                     mtDao.updateMTStartTime(nowTime, startTime);
-                }else {
+                } else {
                     MenstruationModel mtm = new MenstruationModel();
-                    mtm.setDate(DateChange.dateTimeStamp(DateChange.timeStamp2Date(nowTime+"", "yyyy-MM")+"-1", "yyyy-MM-dd"));
+                    mtm.setDate(DateChange.dateTimeStamp(DateChange.timeStamp2Date(nowTime + "", "yyyy-MM") + "-1", "yyyy-MM-dd"));
                     mtm.setBeginTime(nowTime);
-                    mtm.setEndTime(nowTime+86400000L*(mCycle.getNumber()-1));
+                    mtm.setEndTime(nowTime + 86400000L * (mCycle.getNumber() - 1));
                     mtm.setCycle(mCycle.getCycle());
                     mtm.setDurationDay(mCycle.getNumber());
                     mtDao.setMTModel(mtm);
@@ -313,28 +335,28 @@ public class RiliFragment extends Fragment {
     /**
      * 刷新UI
      */
-    private void refreshUI(){
-        long nowDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+1)+"-1","yyyy-MM-dd");
-        long nextDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+2)+"-1","yyyy-MM-dd");
+    private void refreshUI() {
+        long nowDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-1", "yyyy-MM-dd");
+        long nextDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 2) + "-1", "yyyy-MM-dd");
         //获取当月数据
         List<MenstruationModel> mtmList = mtDao.getMTModelList(nowDate, nextDate);
         //获取全部数据
         list = mtDao.getMTModelList(0, 0);
-        for(int i=0; i<mtmList.size(); i++){
+        for (int i = 0; i < mtmList.size(); i++) {
             mtmList.get(i).setCon(true);
         }
         //下一次的月经是否在当月
         MenstruationModel mtm = new MenstruationModel();
-        mtm.setBeginTime(mtmBass.getBeginTime()+86400000L*28);
-        mtm.setEndTime(mtmBass.getBeginTime()+86400000L*28+86400000L*(mCycle.getNumber()-1));
+        mtm.setBeginTime(mtmBass.getBeginTime() + 86400000L * 28);
+        mtm.setEndTime(mtmBass.getBeginTime() + 86400000L * 28 + 86400000L * (mCycle.getNumber() - 1));
         mtm.setDate(nowDate);
         mtm.setCon(false);
-        if(nextDate > mtm.getBeginTime()){
-            if(mtm.getBeginTime() > DateChange.getDate()){
+        if (nextDate > mtm.getBeginTime()) {
+            if (mtm.getBeginTime() > DateChange.getDate()) {
                 mtmList.add(mtm);
-            }else {
+            } else {
                 mtm.setBeginTime(DateChange.getDate());
-                mtm.setEndTime(DateChange.getDate() + 86400000L*4);
+                mtm.setEndTime(DateChange.getDate() + 86400000L * 4);
                 mtmList.add(mtm);
             }
         }
@@ -343,18 +365,20 @@ public class RiliFragment extends Fragment {
 
     /**
      * 计算间隔时间
+     *
      * @param startTime
      * @param endTime
      * @return
      */
-    private long intervalTime(long startTime, long endTime){
-        int i = (int) ((endTime-startTime)/86400000/mCycle.getCycle());
-        i = (endTime-startTime)/86400000%mCycle.getCycle()==0 ? i-1 : i;
-        return   i*86400000L*mCycle.getCycle();
+    private long intervalTime(long startTime, long endTime) {
+        int i = (int) ((endTime - startTime) / 86400000 / mCycle.getCycle());
+        i = (endTime - startTime) / 86400000 % mCycle.getCycle() == 0 ? i - 1 : i;
+        return i * 86400000L * mCycle.getCycle();
     }
 
     /**
      * 获取当天日期
+     *
      * @param format
      * @return
      */

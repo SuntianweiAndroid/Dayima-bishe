@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.bishe.myapplication.Myadapter;
 import com.bishe.myapplication.R;
 
 import java.util.ArrayList;
@@ -90,27 +91,19 @@ public class CommomDialog2 extends Dialog implements View.OnClickListener {
         submitTxt.setOnClickListener(this);
         cancelTxt = (TextView) findViewById(R.id.cancel);
         cancelTxt.setOnClickListener(this);
-        List<Map<String, Object>> list_map = new ArrayList<Map<String, Object>>(); //定义一个适配器对象
+        final List<String> stringList = new ArrayList<>();
         if (type.equals("jingqi")) {
+            stringList.clear();
             for (int i = 2; i < 16; i++) {
-                Map<String, Object> items = new HashMap<String, Object>(); //创建一个键值对的Map集合，用来存放名字和头像
-                items.put("day", i + "天");  //放入头像， 根据下标获取数组
-                list_map.add(items);   //把这个存放好数据的Map集合放入到list中，这就完成类数据源的准备工作
+                stringList.add(i + "天");
             }
         } else if (type.equals("zhouqi")) {
+            stringList.clear();
             for (int i = 15; i < 91; i++) {
-                Map<String, Object> items = new HashMap<String, Object>(); //创建一个键值对的Map集合，用来存放名字和头像
-                items.put("day", i + "天");  //放入头像， 根据下标获取数组
-                list_map.add(items);   //把这个存放好数据的Map集合放入到list中，这就完成类数据源的准备工作
+                stringList.add(i + "天");
             }
         }
-        SimpleAdapter simpleAdapter = new SimpleAdapter(
-                mContext,/*传入一个上下文作为参数*/
-                list_map,/*传入相对应的数据源，这个数据源不仅仅是数据而且还是和界面相耦合的混合体。*/
-                R.layout.layout_register_item, /*设置具体某个items的布局，需要是新的布局，而不是ListView控件的布局*/
-                new String[]{"day"}, /*传入上面定义的键值对的键名称,会自动根据传入的键找到对应的值*/
-                new int[]{R.id.tv_item});/*传入items布局文件中需要指定传入的控件，这里直接上id即可*/
-        listView.setAdapter(simpleAdapter);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -119,6 +112,18 @@ public class CommomDialog2 extends Dialog implements View.OnClickListener {
                 Log.i("stw", "onItemClick:diaolog== " + selectTime);
             }
         });
+
+        final Myadapter myadapter = new Myadapter(stringList, mContext);
+        listView.setAdapter(myadapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                myadapter.setSelect(position);
+                myadapter.notifyDataSetChanged();
+                selectTime = Integer.parseInt(getNumbers(stringList.get(position)));
+            }
+        });
+
         if (!TextUtils.isEmpty(positiveName)) {
             submitTxt.setText(positiveName);
         }

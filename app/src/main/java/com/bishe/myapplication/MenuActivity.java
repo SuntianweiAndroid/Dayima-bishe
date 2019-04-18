@@ -3,6 +3,7 @@ package com.bishe.myapplication;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
@@ -12,7 +13,7 @@ import com.bishe.myapplication.fragment.RiliFragment;
 import com.bishe.myapplication.fragment.HomeFragment;
 import com.bishe.myapplication.fragment.SettingFragment;
 
-public class MenuActivity extends FragmentActivity implements View.OnClickListener {
+public class MenuActivity extends FragmentActivity  implements View.OnClickListener {
     private HomeFragment homeFragment;
     private SettingFragment settingFragment;
     private RiliFragment riliFragment;
@@ -43,7 +44,25 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
                 replace(R.id.fragment, f).commit();
 
     }
-
+//    /*
+////     * 去除（隐藏）所有的Fragment
+////     * */
+////    private void hideFragment(FragmentTransaction transaction) {
+////        if (f1 != null) {
+////            //transaction.hide(f1);隐藏方法也可以实现同样的效果，不过我一般使用去除
+////            transaction.remove(f1);
+////        }
+////        if (f2 != null) {
+////            //transaction.hide(f2);
+////            transaction.remove(f2);
+////        }
+////        if (f3 != null) {
+////            //transaction.hide(f3);
+////            transaction.remove(f3);
+////        }
+////
+////
+////    }
     private void initFragment() {
         homeFragment = new HomeFragment();
         settingFragment = new SettingFragment();
