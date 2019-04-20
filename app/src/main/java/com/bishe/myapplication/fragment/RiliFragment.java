@@ -1,5 +1,6 @@
 package com.bishe.myapplication.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -42,6 +43,12 @@ public class RiliFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        setContentView(R.layout.fragment_rili);
+//        mContext = this;
+//        initView();
+//        initData();
+//        setListener();
+
     }
 
     @Override
@@ -49,29 +56,66 @@ public class RiliFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_rili, container, false);
         mContext = getActivity();
         initView(v);
-
+        initData();
         setListener(v);
-        dateView.requestLayout();
-        dateView.requestLayout();
-        dateView.requestLayout();
-        dateView.invalidate();
-        dateView.invalidate();
-        dateView.invalidate();
+//        dateView.requestLayout();
+//        dateView.requestLayout();
+//        dateView.requestLayout();
+//        dateView.invalidate();
+//        dateView.invalidate();
+//        dateView.invalidate();
         return v;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        initData();
-    }
+//    @Override
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//        initData();
+//    }
 
     @Override
     public void onResume() {
         super.onResume();
-        initData();
+
 
     }
+
+//    private void initView() {
+//        tvDate = (TextView) findViewById(R.id.tv_date);
+//        dateView = (DateView) findViewById(R.id.date_view);
+//        dateView.setOnItemClickListener(new DateView.OnItemListener() {
+//
+//            @Override
+//            public void onClick(long time, DateCardModel d) {
+//                nowTime = time;
+//                dcm = d;
+//                if (time > DateChange.getDate()) {
+//                    llMtCome.setVisibility(View.GONE);
+//                    llMtBack.setVisibility(View.GONE);
+//
+//                    return;
+//                } else if (dcm.type == 1) {
+//                    MenstruationMt mt = mtDao.getMTMT(nowTime);
+//                    llMtCome.setVisibility(View.GONE);
+//                    llMtBack.setVisibility(View.VISIBLE);
+//
+//                } else if (mtDao.getEndTimeNumber(nowTime) < 6) {
+//                    llMtCome.setVisibility(View.GONE);
+//                    llMtBack.setVisibility(View.VISIBLE);
+//
+//                } else if (dcm.type != 1) {
+//                    llMtCome.setVisibility(View.VISIBLE);
+//                    llMtBack.setVisibility(View.GONE);
+//
+//                }
+//            }
+//        });
+//        tvDate.setText(dateView.getYearAndmonth());
+//        llMtCome = (LinearLayout) findViewById(R.id.ll_mt_come);
+//        llMtBack = (LinearLayout) findViewById(R.id.ll_mt_back);
+//
+//
+//    }
 
     private void initView(View v) {
         tvDate = (TextView) v.findViewById(R.id.tv_date);
@@ -118,36 +162,36 @@ public class RiliFragment extends Fragment {
         curDate = new Date();
         calendar.setTime(curDate);
         mtDao = new MenstruationDao(mContext);
-        mCycle= mtDao.getMTCycle();
-        long nowDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+1)+"-1","yyyy-MM-dd");
-        long nextDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+2)+"-1","yyyy-MM-dd");
+        mCycle = mtDao.getMTCycle();
+        long nowDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-1", "yyyy-MM-dd");
+        long nextDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 2) + "-1", "yyyy-MM-dd");
         //获取当月数据
         List<MenstruationModel> mtmList = mtDao.getMTModelList(nowDate, nextDate);
         //获取全部数据
         list = mtDao.getMTModelList(0, 0);
         //当数据库中没有本月记录时，根据上一次的记录预测本月记录
-        for(int i=0; i<mtmList.size(); i++){
+        for (int i = 0; i < mtmList.size(); i++) {
             mtmList.get(i).setCon(true);
         }
-        if(mtmList.size()==0){
+        if (mtmList.size() == 0) {
             MenstruationModel mtm = new MenstruationModel();
             mtm.setDate(nowDate);
-            mtm.setBeginTime(list.get(list.size()-1).getBeginTime()+intervalTime(list.get(list.size()-1).getBeginTime(), nowDate));
-            mtm.setEndTime(list.get(list.size()-1).getBeginTime()+intervalTime(list.get(list.size()-1).getBeginTime(), nowDate)+86400000L*(mCycle.getNumber()-1));
+            mtm.setBeginTime(list.get(list.size() - 1).getBeginTime() + intervalTime(list.get(list.size() - 1).getBeginTime(), nowDate));
+            mtm.setEndTime(list.get(list.size() - 1).getBeginTime() + intervalTime(list.get(list.size() - 1).getBeginTime(), nowDate) + 86400000L * (mCycle.getNumber() - 1));
             mtm.setCon(false);
             //如果当月没有记录，就根据之前的数据来预测现在的来月经时间，如果根据之前预测的时间小于当天时间就从现在开始记录
-            if(mtm.getBeginTime() > DateChange.getDate()){
+            if (mtm.getBeginTime() > DateChange.getDate()) {
                 mtmList.add(mtm);
-            }else {
+            } else {
                 mtm.setBeginTime(DateChange.getDate());
-                mtm.setEndTime(DateChange.getDate() + 86400000L *4);
+                mtm.setEndTime(DateChange.getDate() + 86400000L * 4);
                 mtmList.add(mtm);
             }
             //记录预测的基准
             mtmBass = mtm;
-        }else {
+        } else {
             //记录预测的基准
-            mtmBass = mtmList.get(mtmList.size()-1);
+            mtmBass = mtmList.get(mtmList.size() - 1);
         }
 //        mtmBass = calculateMt(nowDate, nextDate).get(0);
         //下一次的月经是否在当月
@@ -226,6 +270,111 @@ public class RiliFragment extends Fragment {
         return mtmList;
     }
 
+
+//    private void setListener() {
+//        /**
+//         * 上一月
+//         */
+//        findViewById(R.id.iv_click_left_month).setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View arg0) {
+//                calendar.setTime(curDate);
+//                calendar.add(Calendar.MONTH, -1);
+//                curDate = calendar.getTime();
+//                long nowDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-1", "yyyy-MM-dd");
+//                long nextDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 2) + "-1", "yyyy-MM-dd");
+//                List<MenstruationModel> mtmList = calculateMt(nowDate, nextDate);
+//                tvDate.setText(dateView.clickLeftMonth(mtmList));
+//            }
+//        });
+//        /**
+//         * 下一月
+//         */
+//        findViewById(R.id.iv_click_right_month).setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View arg0) {
+//                calendar.setTime(curDate);
+//                calendar.add(Calendar.MONTH, 1);
+//                curDate = calendar.getTime();
+//                long nowDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-1", "yyyy-MM-dd");
+//                long nextDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 2) + "-1", "yyyy-MM-dd");
+//                List<MenstruationModel> mtmList = calculateMt(nowDate, nextDate);
+//                tvDate.setText(dateView.clickRightMonth(mtmList));
+//            }
+//        });
+//        /**
+//         * 回到当月
+//         */
+//        findViewById(R.id.tv_today).setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View arg0) {
+//                calendar.setTime(curDate);
+//                calendar.add(Calendar.MONTH, getNowTime("yyyy") * 12 + getNowTime("MM") - (calendar.get(Calendar.MONTH) + 1) - calendar.get(Calendar.YEAR) * 12);
+//                curDate = calendar.getTime();
+//                long nowDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-1", "yyyy-MM-dd");
+//                long nextDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 2) + "-1", "yyyy-MM-dd");
+//                List<MenstruationModel> mtmList = mtDao.getMTModelList(nowDate, nextDate);
+//                for (int i = 0; i < mtmList.size(); i++) {
+//                    mtmList.get(i).setCon(true);
+//                }
+//                if (mtmList.size() == 0) {
+//                    MenstruationModel mtm = new MenstruationModel();
+//                    mtm.setBeginTime(list.get(list.size() - 1).getBeginTime() + intervalTime(list.get(list.size() - 1).getBeginTime(), nowDate));
+//                    mtm.setEndTime(list.get(list.size() - 1).getBeginTime() + intervalTime(list.get(list.size() - 1).getBeginTime(), nowDate) + 86400000L * (mCycle.getNumber() - 1));
+//                    mtm.setCon(false);
+//                    if (mtm.getBeginTime() > DateChange.getDate()) {
+//                        mtmList.add(mtm);
+//                    } else {
+//                        mtm.setBeginTime(DateChange.getDate());
+//                        mtm.setEndTime(DateChange.getDate() + 86400000L * 4);
+//                        mtm.setCon(false);
+//                        mtmList.add(mtm);
+//                    }
+//                }
+//                mtmList.add(mtmBass);
+//                tvDate.setText(dateView.recurToday(mtmList));
+//            }
+//        });
+//
+//        /**
+//         * 姨妈来了
+//         */
+//        llMtCome.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View arg0) {
+//                long startTime = mtDao.getStartTimeNumber(nowTime);
+//                if ((startTime - nowTime) / 86400000 < 9 && (startTime - nowTime) / 86400000 > 0) {
+//                    mtDao.updateMTStartTime(nowTime, startTime);
+//                } else {
+//                    MenstruationModel mtm = new MenstruationModel();
+//                    mtm.setDate(DateChange.dateTimeStamp(DateChange.timeStamp2Date(nowTime + "", "yyyy-MM") + "-1", "yyyy-MM-dd"));
+//                    mtm.setBeginTime(nowTime);
+//                    mtm.setEndTime(nowTime + 86400000L * (mCycle.getNumber() - 1));
+//                    mtm.setCycle(mCycle.getCycle());
+//                    mtm.setDurationDay(mCycle.getNumber());
+//                    mtDao.setMTModel(mtm);
+//                }
+//                refreshUI();
+//            }
+//        });
+//
+//        /**
+//         * 姨妈走了
+//         */
+//        llMtBack.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View arg0) {
+//                mtDao.updateMTEndTime(nowTime);
+//                refreshUI();
+//            }
+//        });
+//
+//    }
 
     private void setListener(View v) {
         /**

@@ -123,6 +123,8 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 }, "zhouqi").setTitle("设置周期").show();
                 break;
             case R.id.seting_tixing:
+                getFragmentManager().beginTransaction().addToBackStack(null)  //将当前fragment加入到返回栈中
+                                   .replace(R.id.fragment, new SettingTixingFragment()).commit();
                 Toast.makeText(getActivity(), "暂未开发", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_seting_out:

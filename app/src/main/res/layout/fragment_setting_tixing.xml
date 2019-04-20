@@ -12,178 +12,163 @@
         android:background="#9999"
         android:orientation="horizontal">
 
+        <ImageButton
+            android:id="@+id/img_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@mipmap/back" />
+
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginLeft="15sp"
             android:gravity="center"
-            android:text="设置"
-            android:textSize="25sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/seting_zhanghao"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginRight="10dp"
-            android:background="@mipmap/seting_zhanghao" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            android:gravity="left"
-            android:text="账号"
-
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/tv_zhanghao"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="right|center"
-            android:text="122122"
-            android:textSize="20sp" />
-
-        <ImageView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:background="@mipmap/seting_kuohao" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1.5dp"
-        android:layout_margin="15dp"
-        android:background="#6666" />
-
-    <LinearLayout
-        android:id="@+id/seting_jingqiday"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginRight="10dp"
-            android:background="@mipmap/seting_day" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            android:gravity="left"
-            android:text="经期天数"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/tv_jignqiday"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="right|center"
-            android:text="6天"
-            android:textSize="20sp" />
-
-        <ImageView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:background="@mipmap/seting_kuohao" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1.5dp"
-        android:layout_margin="15dp"
-        android:background="#6666" />
-
-    <LinearLayout
-        android:id="@+id/seting_zhouqiday"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginRight="10dp"
-            android:background="@mipmap/seting_day" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            android:gravity="left"
-            android:text="周期天数"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/tv_zhouqiday"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="right|center"
-            android:text="9天"
-            android:textSize="20sp" />
-
-        <ImageView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:background="@mipmap/seting_kuohao" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1.5dp"
-        android:layout_margin="15dp"
-        android:background="#6666" />
-
-    <LinearLayout
-        android:id="@+id/seting_tixing"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginRight="10dp"
-            android:background="@mipmap/seting_tixing" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            android:gravity="left"
             android:text="提醒"
+            android:textSize="25sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/seting_jingqi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="经期开始提醒"
+
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/tv_tixing"
+            android:id="@+id/tv_jingqi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right|center"
+            android:text="已开启"
+            android:textSize="20sp" />
+
+        <ImageView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@mipmap/seting_kuohao" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:layout_margin="15dp"
+        android:background="#6666" />
+
+    <LinearLayout
+        android:id="@+id/seting_jingqi_tuichi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="经期推迟提醒"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_jingqi_tuichi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right|center"
+            android:text="已开启"
+            android:textSize="20sp" />
+
+        <ImageView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@mipmap/seting_kuohao" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:layout_margin="15dp"
+        android:background="#6666" />
+
+    <LinearLayout
+        android:id="@+id/seting_yiyun"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="易孕期提醒"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_yiyun"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right|center"
+            android:text="已开启"
+            android:textSize="20sp" />
+
+        <ImageView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@mipmap/seting_kuohao" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:layout_margin="15dp"
+        android:background="#6666" />
+
+    <LinearLayout
+        android:id="@+id/seting_pailuan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="排卵期提醒"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_pailuan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -205,12 +190,5 @@
         android:layout_margin="15dp"
         android:background="#6666" />
 
-    <Button
-        android:id="@+id/btn_seting_out"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/button_style"
-        android:text="退出登录" />
 
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.bishe.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -90,6 +91,8 @@ public class MenuActivity extends FragmentActivity  implements View.OnClickListe
                 changeFragment(homeFragment);
                 break;
             case R.id.date:
+//                Intent intent = new Intent(this, RiliFragment.class);
+//                startActivity(intent);
                 changeFragment(riliFragment);
                 break;
             case R.id.yueliang:

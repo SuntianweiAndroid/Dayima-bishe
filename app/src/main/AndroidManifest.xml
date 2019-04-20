@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".registeract.RiqiActivity"></activity>
+        <!--<activity android:name=".fragment.RiliFragment"></activity>-->
         <activity android:name=".registeract.JinqiActivity" />
         <activity android:name=".registeract.ZhouqiActivity" />
         <activity android:name=".registeract.RegisterActivity" />
