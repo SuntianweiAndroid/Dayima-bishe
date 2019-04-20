@@ -7,274 +7,135 @@
     android:orientation="vertical"
     tools:context=".fragment.RiliFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="月经期"
-        android:textSize="20sp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="还有4天"
-        android:textSize="20sp" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="8dp">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_today"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="回今天"
-            android:textColor="@color/theme_color"
-            android:textSize="20sp" />
+        <com.bishe.myapplication.testrili.DateView
+            android:id="@+id/date_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="32dp"
+            android:layout_marginTop="3dp"
+            android:background="@color/white"
             android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/iv_click_left_month"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="5dp"
-                android:src="@mipmap/dym_nian_l" />
+            android:orientation="horizontal"
+            android:padding="3dp">
 
             <TextView
-                android:id="@+id/tv_date"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:background="@drawable/select_bg" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp"
+                android:text="月经期"
                 android:textColor="@color/theme_color"
-                android:textSize="20sp" />
+                android:textSize="12sp" />
 
-            <ImageView
-                android:id="@+id/iv_click_right_month"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="5dp"
-                android:src="@mipmap/dym_nian_r" />
+            <TextView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginLeft="16dp"
+                android:background="@drawable/select_bg" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:text="预测期"
+                android:textColor="@color/forecast"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginLeft="14dp"
+                android:background="@drawable/select_bg" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:text="安全期"
+                android:textColor="@color/safety"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginLeft="16dp"
+                android:background="@drawable/select_bg" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:text="易孕期"
+                android:textColor="@color/risk"
+                android:textSize="12sp" />
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FEF2F6"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="日"
-            android:textColor="@color/theme_color"
-            android:textSize="12sp" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="一"
-            android:textColor="@color/gray_text"
-            android:textSize="12sp" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="二"
-            android:textColor="@color/gray_text"
-            android:textSize="12sp" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="三"
-            android:textColor="@color/gray_text"
-            android:textSize="12sp" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="四"
-            android:textColor="@color/gray_text"
-            android:textSize="12sp" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="五"
-            android:textColor="@color/gray_text"
-            android:textSize="12sp" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="六"
-            android:textColor="@color/theme_color"
-            android:textSize="12sp" />
-    </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_mt_come"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="3dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp">
 
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:background="@color/white"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="3dp">
+                android:layout_weight="1"
+                android:drawableLeft="@mipmap/dym_lai"
+                android:drawablePadding="3dp"
+                android:text="姨妈来了"
+                android:textColor="@color/gray_text"
+                android:textSize="12sp" />
 
-                <TextView
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
-                    android:background="@drawable/period" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:text="月经期"
-                    android:textColor="@color/theme_color"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
-                    android:layout_marginLeft="16dp"
-                    android:background="@drawable/forecast" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:text="预测期"
-                    android:textColor="@color/forecast"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
-                    android:layout_marginLeft="14dp"
-                    android:background="@drawable/safety" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:text="安全期"
-                    android:textColor="@color/safety"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
-                    android:layout_marginLeft="16dp"
-                    android:background="@drawable/risk" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:text="易孕期"
-                    android:textColor="@color/risk"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_mt_come"
-                android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="12dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableLeft="@mipmap/dym_lai"
-                    android:drawablePadding="3dp"
-                    android:text="姨妈来了"
-                    android:textColor="@color/gray_text"
-                    android:textSize="12sp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/dym_xuan" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_mt_back"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="12dp"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableLeft="@mipmap/dym_zou"
-                    android:drawablePadding="3dp"
-                    android:text="姨妈走了"
-                    android:textColor="@color/gray_text"
-                    android:textSize="12sp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/dym_xuan" />
-            </LinearLayout>
-            <com.bishe.myapplication.view.DateView
-                android:id="@+id/date_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:src="@mipmap/dym_xuan" />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_mt_back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@mipmap/dym_zou"
+                android:drawablePadding="3dp"
+                android:text="姨妈走了"
+                android:textColor="@color/gray_text"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/dym_xuan" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 </LinearLayout>
