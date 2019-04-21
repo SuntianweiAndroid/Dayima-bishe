@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +17,6 @@ import com.bishe.myapplication.dayimarili.DateView;
 import com.bishe.myapplication.dayimarili.MenstruationCycle;
 import com.bishe.myapplication.dayimarili.MenstruationModel;
 import com.bishe.myapplication.dayimarili.db.MenstruationDao;
-
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -38,6 +36,8 @@ public class RiliFragment extends Fragment {
     private DateCardModel dcm;//点击的月份
     private List<MenstruationModel> list;
     private Context mContext;
+    private View view;
+    private TextView mRiliJilu;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,8 +54,8 @@ public class RiliFragment extends Fragment {
         return v;
     }
 
-    private void initView(View v) {
-        tvDate = (TextView) v.findViewById(R.id.tv_date);
+    private void initView(final View v) {
+
         dateView = (DateView) v.findViewById(R.id.date_view);
         dateView.setOnItemClickListener(new DateView.OnItemListener() {
 
@@ -64,29 +64,33 @@ public class RiliFragment extends Fragment {
                 nowTime = time;
                 dcm = d;
                 if (time > DateChange.getDate()) {
+                    llMtBack.setVisibility(View.VISIBLE);
                     llMtCome.setVisibility(View.GONE);
-                    llMtBack.setVisibility(View.GONE);
+                    mRiliJilu.setVisibility(View.GONE);
+                    v.findViewById(R.id.back_taday).setVisibility(View.VISIBLE);
                     Toast.makeText(getActivity(), "无法记录未来哦", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (dcm.type == 1) {
-                    llMtCome.setVisibility(View.GONE);
-                    llMtBack.setVisibility(View.VISIBLE);
+                    llMtCome.setVisibility(View.VISIBLE);
+                    llMtBack.setVisibility(View.GONE);
+                    mRiliJilu.setVisibility(View.VISIBLE);
+                    v.findViewById(R.id.back_taday).setVisibility(View.GONE);
 
                 } else if (mtDao.getEndTimeNumber(nowTime) < 6) {
-                    llMtCome.setVisibility(View.GONE);
-                    llMtBack.setVisibility(View.VISIBLE);
-
+                    llMtCome.setVisibility(View.VISIBLE);
+                    llMtBack.setVisibility(View.GONE);
+                    v.findViewById(R.id.back_taday).setVisibility(View.GONE);
                 } else if (dcm.type != 1) {
                     llMtCome.setVisibility(View.VISIBLE);
                     llMtBack.setVisibility(View.GONE);
-
+                    v.findViewById(R.id.back_taday).setVisibility(View.GONE);
                 }
             }
         });
-
+        tvDate = (TextView) v.findViewById(R.id.tv_date);
         llMtCome = (TextView) v.findViewById(R.id.ll_mt_come);
         llMtBack = (TextView) v.findViewById(R.id.ll_mt_back);
-
+        mRiliJilu = (TextView) v.findViewById(R.id.rili_jilu);
 
     }
 
