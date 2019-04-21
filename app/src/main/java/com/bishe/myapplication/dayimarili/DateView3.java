@@ -4,8 +4,10 @@ package com.bishe.myapplication.dayimarili;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.GridLayout;
 
 import java.text.SimpleDateFormat;
@@ -40,17 +42,13 @@ public class DateView3 extends GridLayout {
 
     public DateView3(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView();
-    }
-
-    private void initView() {
-//        setColumnCount(7);
-        Log.i(TAG, "initView: *****");
-//        calendar = Calendar.getInstance();
-//        curDate = new Date();
     }
 
     public void initData(List<MenstruationModel> mtmList) {
+        WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+        width = displayMetrics.widthPixels;
         setColumnCount(7);
         calendar = Calendar.getInstance();
         curDate = new Date();
@@ -58,7 +56,7 @@ public class DateView3 extends GridLayout {
         calculateDate();
         calculateType(mtmList);
         if (is) {
-            int cardWidth = width /10;
+            int cardWidth = width / 9;
             addCards(cardWidth, cardWidth);
             is = false;
         }
@@ -369,6 +367,20 @@ public class DateView3 extends GridLayout {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
         return year + "." + month;
+    }
+
+    /**
+     * 获得当前应该显示的年月
+     *
+     * @return
+     */
+    public String getYearAndmonthandweek() {
+        calendar.setTime(curDate);
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DATE);//获取日
+        int week = calendar.get(Calendar.DAY_OF_WEEK)-1;
+        return "预测经期:" + month + "月"+ day + "日"  + ",    周" + week;
     }
 
     private OnItemListener onItemListener;

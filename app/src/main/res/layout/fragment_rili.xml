@@ -137,11 +137,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical">
 
             <com.bishe.myapplication.dayimarili.DateView
                 android:id="@+id/date_view"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <LinearLayout
@@ -209,59 +210,39 @@
                     android:textSize="12sp" />
             </LinearLayout>
 
-            <LinearLayout
+
+            <TextView
                 android:id="@+id/ll_mt_come"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:background="@color/white"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:padding="12dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|center_horizontal"
-                    android:layout_margin="15dp"
-                    android:background="@drawable/text_style"
-                    android:gravity="center"
-                    android:paddingLeft="30dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="30dp"
-                    android:paddingBottom="10dp"
-                    android:text="姨妈来了？"
-                    android:textSize="15sp" />
+                android:layout_gravity="center|center_horizontal"
+                android:layout_margin="15dp"
+                android:background="@drawable/text_style"
+                android:gravity="center"
+                android:paddingLeft="30dp"
+                android:paddingTop="10dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="10dp"
+                android:text="姨妈来了？"
+                android:textSize="15sp" />
 
 
-            </LinearLayout>
-
-            <LinearLayout
+            <TextView
                 android:id="@+id/ll_mt_back"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:background="@color/white"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:padding="12dp"
-                android:visibility="gone">
+                android:layout_gravity="center|center_horizontal"
+                android:layout_margin="15dp"
+                android:background="@drawable/text_style"
+                android:gravity="center"
+                android:paddingLeft="30dp"
+                android:paddingTop="10dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="10dp"
+                android:text="姨妈走了？"
+                android:textSize="15sp"
+                android:visibility="gone" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|center_horizontal"
-                    android:layout_margin="15dp"
-                    android:background="@drawable/text_style"
-                    android:gravity="center"
-                    android:paddingLeft="30dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="30dp"
-                    android:paddingBottom="10dp"
-                    android:text="姨妈走了？"
-                    android:textSize="15sp" />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/back_taday"
@@ -292,8 +273,5 @@
                     android:text="回今天" />
             </LinearLayout>
         </LinearLayout>
-
-
     </ScrollView>
-
 </LinearLayout>

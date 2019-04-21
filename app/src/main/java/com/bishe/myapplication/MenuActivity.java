@@ -1,22 +1,20 @@
 package com.bishe.myapplication;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
+import com.bishe.myapplication.fragment.HomeFragment;
 import com.bishe.myapplication.fragment.JiluFragment;
 import com.bishe.myapplication.fragment.RiliFragment;
-import com.bishe.myapplication.fragment.HomeFragment;
 import com.bishe.myapplication.fragment.SettingFragment;
-import com.bishe.myapplication.fragment.SettingTixingFragment;
 
-public class MenuActivity extends FragmentActivity  implements View.OnClickListener {
+public class MenuActivity extends FragmentActivity implements View.OnClickListener {
     private HomeFragment homeFragment;
     private SettingFragment settingFragment;
     private RiliFragment riliFragment;
@@ -26,6 +24,10 @@ public class MenuActivity extends FragmentActivity  implements View.OnClickListe
     private ImageButton mDate;
     private ImageButton mYueliang;
     private ImageButton mBtnSetting;
+    private LinearLayout mLayoutHome;
+    private LinearLayout mLayoutDate;
+    private LinearLayout mLayoutYueliang;
+    private LinearLayout mLayoutSetting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,10 @@ public class MenuActivity extends FragmentActivity  implements View.OnClickListe
         initView();
         initFragment();
         changeFragment(homeFragment);
+        mLayoutHome.setBackgroundResource(R.drawable.menu_btn_false);
+        mLayoutDate.setBackgroundResource(R.drawable.menu_btn_true);
+        mLayoutYueliang.setBackgroundResource(R.drawable.menu_btn_true);
+        mLayoutSetting.setBackgroundResource(R.drawable.menu_btn_true);
     }
 
     /**
@@ -48,7 +54,8 @@ public class MenuActivity extends FragmentActivity  implements View.OnClickListe
                 replace(R.id.fragment, f).commit();
 
     }
-//    /*
+
+    //    /*
 ////     * 去除（隐藏）所有的Fragment
 ////     * */
 ////    private void hideFragment(FragmentTransaction transaction) {
@@ -84,6 +91,14 @@ public class MenuActivity extends FragmentActivity  implements View.OnClickListe
         mYueliang.setOnClickListener(this);
         mBtnSetting = (ImageButton) findViewById(R.id.btn_setting);
         mBtnSetting.setOnClickListener(this);
+        mLayoutHome = (LinearLayout) findViewById(R.id.layout_home);
+        mLayoutHome.setOnClickListener(this);
+        mLayoutDate = (LinearLayout) findViewById(R.id.layout_date);
+        mLayoutDate.setOnClickListener(this);
+        mLayoutYueliang = (LinearLayout) findViewById(R.id.layout_yueliang);
+        mLayoutYueliang.setOnClickListener(this);
+        mLayoutSetting = (LinearLayout) findViewById(R.id.layout_setting);
+        mLayoutSetting.setOnClickListener(this);
     }
 
     @Override
@@ -92,17 +107,34 @@ public class MenuActivity extends FragmentActivity  implements View.OnClickListe
             default:
                 break;
             case R.id.btn_home:
+                mLayoutHome.setBackgroundResource(R.drawable.menu_btn_false);
+                mLayoutDate.setBackgroundResource(R.drawable.menu_btn_true);
+                mLayoutYueliang.setBackgroundResource(R.drawable.menu_btn_true);
+                mLayoutSetting.setBackgroundResource(R.drawable.menu_btn_true);
                 changeFragment(homeFragment);
                 break;
             case R.id.date:
+                mLayoutHome.setBackgroundResource(R.drawable.menu_btn_true);
+                mLayoutDate.setBackgroundResource(R.drawable.menu_btn_false);
+                mLayoutYueliang.setBackgroundResource(R.drawable.menu_btn_true);
+                mLayoutSetting.setBackgroundResource(R.drawable.menu_btn_true);
                 changeFragment(riliFragment);
                 break;
             case R.id.yueliang:
+                mLayoutHome.setBackgroundResource(R.drawable.menu_btn_true);
+                mLayoutDate.setBackgroundResource(R.drawable.menu_btn_true);
+                mLayoutYueliang.setBackgroundResource(R.drawable.menu_btn_false);
+                mLayoutSetting.setBackgroundResource(R.drawable.menu_btn_true);
                 changeFragment(jiluFragment);
                 break;
             case R.id.btn_setting:
+                mLayoutHome.setBackgroundResource(R.drawable.menu_btn_true);
+                mLayoutDate.setBackgroundResource(R.drawable.menu_btn_true);
+                mLayoutYueliang.setBackgroundResource(R.drawable.menu_btn_true);
+                mLayoutSetting.setBackgroundResource(R.drawable.menu_btn_false);
                 changeFragment(settingFragment);
                 break;
+
         }
     }
 }

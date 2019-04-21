@@ -4,8 +4,10 @@ package com.bishe.myapplication.dayimarili;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.GridLayout;
 
 import java.text.SimpleDateFormat;
@@ -40,17 +42,13 @@ public class DateView2 extends GridLayout {
 
     public DateView2(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView();
-    }
-
-    private void initView() {
-//        setColumnCount(7);
-        Log.i(TAG, "initView: *****");
-//        calendar = Calendar.getInstance();
-//        curDate = new Date();
     }
 
     public void initData(List<MenstruationModel> mtmList) {
+        WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+        width = displayMetrics.widthPixels;
         setColumnCount(7);
         calendar = Calendar.getInstance();
         curDate = new Date();
@@ -58,7 +56,7 @@ public class DateView2 extends GridLayout {
         calculateDate();
         calculateType(mtmList);
         if (is) {
-            int cardWidth = width /10;
+            int cardWidth = width / 9;
             addCards(cardWidth, cardWidth);
             is = false;
         }
@@ -66,12 +64,12 @@ public class DateView2 extends GridLayout {
     }
 
     String TAG = "stw";
-    int width = 720;
+    int width = 1080;
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        this.width = w;
+//        this.width = w;
         Log.i(TAG, "onSizeChanged: ");
 //		if(is){
 //			int cardWidth = w/7;

@@ -7,9 +7,10 @@
     <color name="button_true">#F18C8C</color>
     <color name="button_false">#EB2525</color>
     <color name="button_text">#FDFCFC</color>
-    <color name="button_menu_false">#E6E3E3</color>
+    <color name="layout_backgrand">#E6E3E3</color>
     <color name="button_menu_true">#DAD7D7</color>
-    <color name="dd">#101110</color>
+    <color name="menu_btn_true">#B4B9B9</color>
+    <color name="menu_btn_false">#667A7A</color>
 
 
     <color name="date_picker_bg">#FFFFFF</color>

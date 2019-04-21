@@ -4,8 +4,10 @@ package com.bishe.myapplication.dayimarili;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.GridLayout;
 
 import com.bishe.myapplication.utils.MySharedPreferences;
@@ -47,13 +49,18 @@ public class DateView extends GridLayout {
     }
 
     private void initView() {
-        setColumnCount(7);
-        Log.i(TAG, "initView: *****");
-        calendar = Calendar.getInstance();
-        curDate = new Date();
+//        setColumnCount(7);
+//        Log.i(TAG, "initView: *****");
+//        calendar = Calendar.getInstance();
+//        curDate = new Date();
     }
 
     public void initData(List<MenstruationModel> mtmList) {
+        WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+        width = displayMetrics.widthPixels;
+        setColumnCount(7);
         calendar = Calendar.getInstance();
         curDate = new Date();
         Log.i(TAG, "initData: 初始化数据");

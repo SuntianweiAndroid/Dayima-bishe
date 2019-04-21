@@ -7,20 +7,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bishe.myapplication.R;
 import com.bishe.myapplication.dayimarili.DateCardModel;
 import com.bishe.myapplication.dayimarili.DateChange;
-import com.bishe.myapplication.dayimarili.DateView;
 import com.bishe.myapplication.dayimarili.DateView2;
 import com.bishe.myapplication.dayimarili.DateView3;
 import com.bishe.myapplication.dayimarili.MenstruationCycle;
 import com.bishe.myapplication.dayimarili.MenstruationModel;
 import com.bishe.myapplication.dayimarili.db.MenstruationDao;
-
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -44,6 +41,15 @@ public class HomeFragment extends Fragment {
     private List<MenstruationModel> list;
     private Context mContext;
     private List<MenstruationModel> mtmList3;
+    private View view;
+    /**
+     * 上次经期:3月10号 周日
+     */
+    private TextView mTvUpDay;
+    /**
+     * 预测经期:5月10号 周日
+     */
+    private TextView mTvDownDay;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -121,8 +127,8 @@ public class HomeFragment extends Fragment {
 
         llMtCome = (TextView) v.findViewById(R.id.ll_mt_come);
         llMtBack = (TextView) v.findViewById(R.id.ll_mt_back);
-
-
+        mTvUpDay = (TextView) v.findViewById(R.id.tv_up_day);
+        mTvDownDay = (TextView) v.findViewById(R.id.tv_down_day);
     }
 
     /**
@@ -182,7 +188,21 @@ public class HomeFragment extends Fragment {
         }
         dateView.initData(mtmList);
         tvDate.setText(dateView.getYearAndmonth());
-        //初始化 的哥日历表格
+        //初始化上一月日历表格计算时间
+
+        long ss = mtmBass.getBeginTime() - 86400000L * mtDao.getMTCycle().getCycle();
+        Date date = new Date(ss);
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.setTime(date);
+        int year = calendar2.get(Calendar.YEAR);
+        int month = calendar2.get(Calendar.MONTH) + 1;
+        int day = calendar2.get(Calendar.DATE);//获取日
+        int week = calendar2.get(Calendar.DAY_OF_WEEK)-1;
+
+        mTvUpDay.setText("上次经期:"+ + month + "月"  + day+ "日" + ",    周" + week);
+//
+
+        //初始化下一月日历表格
         Calendar calendar = Calendar.getInstance();
         Date curDate = new Date();
         calendar.setTime(curDate);
@@ -194,6 +214,7 @@ public class HomeFragment extends Fragment {
         dateView3.initData(mtmList);
         tvDate2.setText(dateView3.clickRightMonth(mtmList3));
         tvDate2.setText(dateView3.getYearAndmonth());
+        mTvDownDay.setText(dateView3.getYearAndmonthandweek());
     }
 
     /**
@@ -350,7 +371,6 @@ public class HomeFragment extends Fragment {
 //                tvDate2.setText(dateView3.clickRightMonth(mtmList3));
 //                tvDate2.setText(dateView3.getYearAndmonth());
                 refreshUI();
-
 
 
             }

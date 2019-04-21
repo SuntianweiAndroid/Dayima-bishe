@@ -10,11 +10,11 @@ import java.util.Date;
  */
 public class DateChange {
     /**
-     * æ—¶é—´æˆ³è½¬æ¢æˆæ—¥æœŸæ ¼å¼å­—ç¬¦ï¿½?
-     * hhï¿½?2å°æ—¶ï¿½?
-     * HHï¿½?4å°æ—¶ï¿½?
+     * Ê±¼ä´Á×ª»»³ÉÈÕÆÚ¸ñÊ½×Ö·û??
+     * hh??2Ğ¡Ê±??
+     * HH??4Ğ¡Ê±??
      *
-     * @param seconds ç²¾ç¡®åˆ°ç§’çš„å­—ç¬¦ä¸²
+     * @param seconds ¾«È·µ½ÃëµÄ×Ö·û´®
      */
     public static String timeStamp2Date(String seconds, String format) {
         if (seconds == null || seconds.isEmpty() || seconds.equals("null")) {
@@ -27,9 +27,9 @@ public class DateChange {
     }
 
     /**
-     * æ—¥æœŸæ ¼å¼å­—ç¬¦ä¸²è½¬æ¢æˆæ—¶é—´ï¿½?
+     * ÈÕÆÚ¸ñÊ½×Ö·û´®×ª»»³ÉÊ±¼ä??
      *
-     * @param format å¦‚ï¼šyyyy-MM-dd HH:mm:ss
+     * @param format Èç£ºyyyy-MM-dd HH:mm:ss
      */
     public static String date2TimeStamp(String date_str, String format) {
         try {
@@ -42,9 +42,9 @@ public class DateChange {
     }
 
     /**
-     * æ—¥æœŸæ ¼å¼å­—ç¬¦ä¸²è½¬æ¢æˆæ—¶é—´ï¿½?
+     * ÈÕÆÚ¸ñÊ½×Ö·û´®×ª»»³ÉÊ±¼ä??
      *
-     * @param format å¦‚ï¼šyyyy-MM-dd HH:mm:ss
+     * @param format Èç£ºyyyy-MM-dd HH:mm:ss
      */
     public static long dateTimeStamp(String date_str, String format) {
         try {
@@ -57,7 +57,7 @@ public class DateChange {
     }
 
     /**
-     * è·å–å½“å¤©æ—¥æœŸæ—¶é—´ï¿½?
+     * »ñÈ¡µ±ÌìÈÕÆÚÊ±¼ä??
      *
      * @return
      */
@@ -78,7 +78,7 @@ public class DateChange {
     }
 
     /**
-     * å–å¾—å½“å‰æ—¶é—´æˆ³ï¼ˆç²¾ç¡®åˆ°ç§’ï¿½?
+     * È¡µÃµ±Ç°Ê±¼ä´Á£¨¾«È·µ½Ãë??
      */
     public static String timeStamp() {
         long time = System.currentTimeMillis();
@@ -87,24 +87,24 @@ public class DateChange {
     }
 
     /**
-     * è®¡ç®—ä¸¤ä¸ªæ—¥æœŸç›¸å·®å¤©æ•°
+     * ¼ÆËãÁ½¸öÈÕÆÚÏà²îÌìÊı
      *
-     * @return **å‘¨**å¤©
+     * @return **ÖÜ**Ìì
      */
     public static String getTime(long endTime, long startTime) {
         int M = (int) ((endTime - startTime) / 86400000l / 7);
         int D = (int) ((endTime - startTime) / 86400000l % 7);
         if (M != 0 && D != 0) {
-            return M + "å‘¨" + D + "å¤©";
+            return M + "ÖÜ" + D + "Ìì";
         } else if (M == 0 && D != 0) {
-            return D + "å¤©";
+            return D + "Ìì";
         } else if (M != 0 && D == 0) {
-            return M + "å‘¨";
+            return M + "ÖÜ";
         }
-        return "1å¤©";
+        return "1Ìì";
     }
 
-    //  è¾“å‡ºç»“æœï¿½?
+    //  Êä³ö½á¹û??
     //  timeStamp=1417792627
     //  date=2014-12-05 23:17:07
     //  1417792627

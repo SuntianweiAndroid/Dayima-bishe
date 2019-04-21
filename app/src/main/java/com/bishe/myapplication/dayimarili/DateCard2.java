@@ -24,8 +24,8 @@ public class DateCard2 extends FrameLayout {
     private String safety = "#101110"; //3
     private String risk = "#101110"; //4
 
-    private TextView tvNumber, tvToday;
-    private ImageView iv;
+    private TextView tvNumber;
+//    private ImageView iv;
     private LinearLayout ll, layout;
 
     public DateCard2(Context context) {
@@ -57,35 +57,35 @@ public class DateCard2 extends FrameLayout {
         tvNumber = new TextView(getContext());
         tvNumber.setTextSize(14);
         tvNumber.setTextColor(Color.parseColor("#BBBBBB"));
-        tvNumber.setPadding(5, 0, 0, 0);
+//        tvNumber.setPadding(5, 0, 0, 0);
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         ll.addView(tvNumber, params);
 
         LinearLayout l = new LinearLayout(getContext());
         l.setOrientation(LinearLayout.HORIZONTAL);
         LayoutParams lparams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        l.setPadding(5, 0, 0, 0);
+//        l.setPadding(5, 0, 0, 0);
         l.setGravity(Gravity.CENTER_VERTICAL);
         l.setLayoutParams(lparams);
         ll.addView(l);
 
         //显示姨妈来了、走了图标
-        iv = new ImageView(getContext());
-        LayoutParams ivParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        iv.setImageResource(R.drawable.dym_nian_r);
-        iv.setLayoutParams(ivParams);
-        iv.setVisibility(View.GONE);
-        l.addView(iv);
+//        iv = new ImageView(getContext());
+//        LayoutParams ivParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+//        iv.setImageResource(R.drawable.dym_nian_r);
+//        iv.setLayoutParams(ivParams);
+//        iv.setVisibility(View.GONE);
+//        l.addView(iv);
 
         //显示今天
-        tvToday = new TextView(getContext());
-        LayoutParams tvParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        tvToday.setLayoutParams(tvParams);
-        tvToday.setTextColor(Color.parseColor("#FE8FB0"));
-        tvToday.setTextSize(12);
-        tvToday.setVisibility(View.GONE);
-        tvToday.setGravity(Gravity.RIGHT);
-        l.addView(tvToday);
+//        tvToday = new TextView(getContext());
+//        LayoutParams tvParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+//        tvToday.setLayoutParams(tvParams);
+//        tvToday.setTextColor(Color.parseColor("#FE8FB0"));
+//        tvToday.setTextSize(12);
+//        tvToday.setVisibility(View.GONE);
+//        tvToday.setGravity(Gravity.RIGHT);
+//        l.addView(tvToday);
     }
 
     /**
@@ -123,13 +123,13 @@ public class DateCard2 extends FrameLayout {
      */
     public void setToMonth(boolean istoMonth) {
         if (!istoMonth) {
-            iv.setVisibility(View.GONE);
+//            iv.setVisibility(View.GONE);
             tvNumber.setVisibility(View.GONE);
-            tvToday.setVisibility(View.GONE);
+//            tvToday.setVisibility(View.GONE);
         } else {
-            iv.setVisibility(View.VISIBLE);
+//            iv.setVisibility(View.VISIBLE);
             tvNumber.setVisibility(View.VISIBLE);
-            tvToday.setVisibility(View.VISIBLE);
+//            tvToday.setVisibility(View.VISIBLE);
         }
     }
 
@@ -139,16 +139,16 @@ public class DateCard2 extends FrameLayout {
      * @param isToday
      */
     public void setToDay(boolean isToday, int type) {
-        if (isToday) {
-            tvToday.setVisibility(View.VISIBLE);
-        } else {
-            tvToday.setVisibility(View.GONE);
-        }
-        if (type == 1 || type == 2) {
-            tvToday.setTextColor(Color.WHITE);
-        } else {
-            tvToday.setTextColor(Color.parseColor("#FE8FB0"));
-        }
+//        if (isToday) {
+//            tvToday.setVisibility(View.VISIBLE);
+//        } else {
+//            tvToday.setVisibility(View.GONE);
+//        }
+//        if (type == 1 || type == 2) {
+//            tvToday.setTextColor(Color.WHITE);
+//        } else {
+//            tvToday.setTextColor(Color.parseColor("#FE8FB0"));
+//        }
     }
 
     /**
@@ -187,15 +187,15 @@ public class DateCard2 extends FrameLayout {
      * @param isStart
      */
     public void setStart(int isStart) {
-        if (isStart == 1) {
-            iv.setVisibility(View.VISIBLE);
-            iv.setImageResource(R.drawable.dym_kaishi);
-        } else if (isStart == 2) {
-            iv.setVisibility(View.VISIBLE);
-            iv.setImageResource(R.drawable.dym_jieshu);
-        } else {
-            iv.setVisibility(View.GONE);
-        }
+//        if (isStart == 1) {
+//            iv.setVisibility(View.VISIBLE);
+//            iv.setImageResource(R.drawable.dym_kaishi);
+//        } else if (isStart == 2) {
+//            iv.setVisibility(View.VISIBLE);
+//            iv.setImageResource(R.drawable.dym_jieshu);
+//        } else {
+//            iv.setVisibility(View.GONE);
+//        }
     }
 
 }
