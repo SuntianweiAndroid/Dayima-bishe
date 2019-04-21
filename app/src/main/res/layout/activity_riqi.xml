@@ -16,8 +16,8 @@
 
         <ImageButton
             android:id="@+id/img_back"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@mipmap/back" />
 
@@ -28,7 +28,7 @@
             android:layout_marginLeft="15sp"
             android:gravity="center"
             android:text="3/3日期"
-            android:textSize="25sp" />
+            android:textSize="30sp" />
     </LinearLayout>
 
     <TextView

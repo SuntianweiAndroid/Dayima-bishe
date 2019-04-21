@@ -124,7 +124,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.seting_tixing:
                 getFragmentManager().beginTransaction().addToBackStack(null)  //将当前fragment加入到返回栈中
-                                   .replace(R.id.fragment, new SettingTixingFragment()).commit();
+                        .replace(R.id.fragment, new SettingTixingFragment()).commit();
                 Toast.makeText(getActivity(), "暂未开发", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_seting_out:
@@ -153,6 +153,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         MySharedPreferences.setIslogin(false);
+                        MySharedPreferences.clearAll();
                         Intent intent = new Intent(context, LogInActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);

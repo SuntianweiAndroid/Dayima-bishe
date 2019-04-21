@@ -34,7 +34,7 @@ public class ZhouqiActivity extends MyBaseActivity implements View.OnClickListen
      * 确定
      */
     private Button mBtnTrue;
-
+    private int zhouqi = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +57,7 @@ public class ZhouqiActivity extends MyBaseActivity implements View.OnClickListen
                 myadapter.notifyDataSetChanged();
                 int zhouqiTiem = Integer.parseInt(getNumbers(stringList.get(position)));
                 Log.i("stw", "onItemClick: 周期==" + zhouqiTiem);
+                zhouqi = zhouqiTiem;
                 MySharedPreferences.setZhouqiTime(zhouqiTiem);
             }
         });
@@ -80,7 +81,11 @@ public class ZhouqiActivity extends MyBaseActivity implements View.OnClickListen
                 finish();
                 break;
             case R.id.btn_true:
-                intentClass(JinqiActivity.class);
+                if (zhouqi==0) {
+                    showToast(this,"请选择周期天数！");
+                }else {
+                    intentClass(JinqiActivity.class);
+                }
                 break;
         }
     }

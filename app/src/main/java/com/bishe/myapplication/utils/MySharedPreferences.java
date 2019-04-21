@@ -23,6 +23,10 @@ public class MySharedPreferences {
         return MySharedPreferences;
     }
 
+    public static void clearAll() {
+        sharedPreferences.edit().clear().commit();
+    }
+
     public static void setName(String str) {
         editor.putString("name", str);
         editor.commit();
@@ -76,6 +80,7 @@ public class MySharedPreferences {
     public static long getRiqiTime() {
         return sharedPreferences.getLong("Riqi", 0);
     }
+
     public static void setRiqiTime2(String jingqi) {
         editor.putString("Riqi", jingqi);
         editor.commit();

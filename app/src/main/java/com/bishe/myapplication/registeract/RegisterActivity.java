@@ -42,11 +42,11 @@ public class RegisterActivity extends MyBaseActivity implements View.OnClickList
                 String pwd = mEdtPwd.getText().toString();
                 if (name.equals("") || pwd.equals("")) {
                     showToast(this, "请填写正确的用户名密码！");
+                } else {
+                    MySharedPreferences.setName(name);
+                    MySharedPreferences.setPwd(pwd);
+                    intentClass(ZhouqiActivity.class);
                 }
-                MySharedPreferences.setName(name);
-                MySharedPreferences.setPwd(pwd);
-
-                intentClass(ZhouqiActivity.class);
                 break;
         }
     }

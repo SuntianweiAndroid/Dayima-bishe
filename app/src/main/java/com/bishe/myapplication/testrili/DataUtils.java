@@ -1,5 +1,7 @@
 package com.bishe.myapplication.testrili;
 
+import com.bishe.myapplication.utils.MySharedPreferences;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -60,6 +62,7 @@ public class DataUtils {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		String finishday=DataUtils.getSomeDays(date, MySharedPreferences.getJingqiTime());
 		int max = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 		for (int i = 1; i <=max; i++) {
 			DateEntity entity = new DateEntity();
@@ -239,4 +242,5 @@ public class DataUtils {
 		}
 		return new Lunar(today).toString() ;
 	}
+
 }

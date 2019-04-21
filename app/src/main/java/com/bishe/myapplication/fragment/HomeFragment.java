@@ -13,6 +13,7 @@ import com.bishe.myapplication.utils.MySharedPreferences;
 
 public class HomeFragment extends Fragment {
     TextView info;
+    TextView yuejingtishi;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bishe.myapplication.R;
+import com.bishe.myapplication.utils.MySharedPreferences;
 
 
 /**
@@ -65,8 +66,8 @@ public class DateView extends LinearLayout implements View.OnClickListener {
     }
 
     public void initDate(String dateString) {
+        currentDateTv.setText(dateString);
         gestureDetector = new GestureDetector(getContext(), onGestureListener);
-
         this.date = dateString;
         if (TextUtils.isEmpty(date)) {
             this.date = DataUtils.getCurrDate("yyyy-MM-dd");
@@ -92,6 +93,10 @@ public class DateView extends LinearLayout implements View.OnClickListener {
                 return gestureDetector.onTouchEvent(event);
             }
         });
+    }
+
+    private void jisuan() {
+
     }
     /**
      * 手势监听是否是左右滑动

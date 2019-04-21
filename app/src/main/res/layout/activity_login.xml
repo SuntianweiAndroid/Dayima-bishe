@@ -68,7 +68,7 @@
                 android:layout_weight="2"
                 android:gravity="center"
                 android:text="账号"
-                android:textSize="25sp" />
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/edt_name"
@@ -92,7 +92,7 @@
                 android:layout_weight="2"
                 android:gravity="center"
                 android:text="密码"
-                android:textSize="25sp" />
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/edt_pwd"

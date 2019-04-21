@@ -32,6 +32,8 @@ public class JinqiActivity extends MyBaseActivity implements View.OnClickListene
      * 确定
      */
     private Button mBtnTrue;
+    private int jingqi=0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,7 @@ public class JinqiActivity extends MyBaseActivity implements View.OnClickListene
 
     private void initDev() {
         final List<String> stringList = new ArrayList<>();
-        for (int i = 2; i <16; i++) {
+        for (int i = 2; i < 16; i++) {
             stringList.add(i + "天");
         }
         final Myadapter myadapter = new Myadapter(stringList, this);
@@ -53,9 +55,10 @@ public class JinqiActivity extends MyBaseActivity implements View.OnClickListene
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 myadapter.setSelect(position);
                 myadapter.notifyDataSetChanged();
-                int zhouqiTiem = Integer.parseInt(getNumbers(stringList.get(position)));
-                Log.i("stw", "onItemClick: 经期==" + zhouqiTiem);
-                MySharedPreferences.setZhouqiTime(zhouqiTiem);
+                int jingqiTiem = Integer.parseInt(getNumbers(stringList.get(position)));
+                Log.i("stw", "onItemClick: 经期==" + jingqiTiem);
+                jingqi = jingqiTiem;
+                MySharedPreferences.setZhouqiTime(jingqiTiem);
             }
         });
     }
@@ -78,8 +81,11 @@ public class JinqiActivity extends MyBaseActivity implements View.OnClickListene
                 finish();
                 break;
             case R.id.btn_true:
-                intentClass(RiqiActivity.class);
-
+                if (jingqi == 0) {
+                    showToast(this, "请选择经期天数");
+                } else {
+                    intentClass(RiqiActivity.class);
+                }
                 break;
         }
     }

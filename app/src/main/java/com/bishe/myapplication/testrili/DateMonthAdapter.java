@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bishe.myapplication.R;
+import com.bishe.myapplication.utils.MySharedPreferences;
 
 import java.util.ArrayList;
 
@@ -61,12 +62,14 @@ public class DateMonthAdapter extends BaseAdapter<DateEntity> {
 
             holder.luna.setText(info.luna);
             holder.data.setText(info.day);
+
             if (dateString.equals(info.date)) {
                 if (info.isToday) {
                     holder.bg.setBackgroundColor(ContextCompat.getColor(mContext, R.color.color_ffffff));
                     holder.data.setTextColor(ContextCompat.getColor(mContext, R.color.color_28d19d));
                     holder.luna.setTextColor(ContextCompat.getColor(mContext, R.color.color_28d19d));
                 } else {
+
                     holder.bg.setBackgroundResource(R.drawable.select_bg);
                     holder.data.setTextColor(ContextCompat.getColor(mContext, R.color.color_ffffff));
                     holder.luna.setTextColor(ContextCompat.getColor(mContext, R.color.color_ffffff));
@@ -108,12 +111,19 @@ public class DateMonthAdapter extends BaseAdapter<DateEntity> {
             }
 
         }
+        String finishday = DataUtils.getSomeDays(dateString, MySharedPreferences.getJingqiTime());
+        if (info.isToday &&info.date.equals(finishday)) {
+            for (int i = 0; i < 6; i++) {
+                holder.bg.setBackgroundResource(R.drawable.select_bg);
+                holder.data.setTextColor(ContextCompat.getColor(mContext, R.color.color_ffffff));
+            }
+        }
         return convertView;
     }
 
     public class ViewHolder {
         TextView data;
-        TextView luna ;
-        View bg ;
+        TextView luna;
+        View bg;
     }
 }

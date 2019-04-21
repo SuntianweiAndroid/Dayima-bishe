@@ -7,6 +7,8 @@
     <color name="button_true">#F18C8C</color>
     <color name="button_false">#EB2525</color>
     <color name="button_text">#FDFCFC</color>
+    <color name="button_menu_false">#999999</color>
+    <color name="button_menu_true">#DAD7D7</color>
 
 
     <color name="date_picker_bg">#FFFFFF</color>
