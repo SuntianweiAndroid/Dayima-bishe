@@ -7,18 +7,26 @@
     android:orientation="vertical"
     tools:context=".fragment.RiliFragment">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#6666"
+        android:gravity="center"
+        android:text="日历"
+        android:textSize="30sp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:layout_marginTop="5dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@color/button_menu_false"
+            android:layout_height="40dp"
+            android:background="@color/button_menu_true"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -69,7 +77,7 @@
             android:gravity="center"
             android:padding="5dp"
             android:text="一"
-            android:textColor="@color/gray_text"
+
             android:textSize="12sp" />
 
         <TextView
@@ -79,7 +87,7 @@
             android:gravity="center"
             android:padding="5dp"
             android:text="二"
-            android:textColor="@color/gray_text"
+
             android:textSize="12sp" />
 
         <TextView
@@ -89,7 +97,7 @@
             android:gravity="center"
             android:padding="5dp"
             android:text="三"
-            android:textColor="@color/gray_text"
+
             android:textSize="12sp" />
 
         <TextView
@@ -99,7 +107,7 @@
             android:gravity="center"
             android:padding="5dp"
             android:text="四"
-            android:textColor="@color/gray_text"
+
             android:textSize="12sp" />
 
         <TextView
@@ -109,7 +117,7 @@
             android:gravity="center"
             android:padding="5dp"
             android:text="五"
-            android:textColor="@color/gray_text"
+
             android:textSize="12sp" />
 
         <TextView
@@ -256,10 +264,11 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/back_taday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/back_taday"
                 android:gravity="right">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -267,12 +276,14 @@
                     android:gravity="center"
                     android:text="回今天" />
             </LinearLayout>
+
             <LinearLayout
+                android:id="@+id/jilu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/jilu"
-                android:visibility="gone"
-                android:gravity="right">
+                android:gravity="right"
+                android:visibility="gone">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

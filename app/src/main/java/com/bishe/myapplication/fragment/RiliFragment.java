@@ -130,21 +130,21 @@ public class RiliFragment extends Fragment {
             mtmBass = mtmList.get(mtmList.size()-1);
         }
         //下一次的月经是否在当月
-        MenstruationModel mtm = new MenstruationModel();
-        mtm.setBeginTime(mtmBass.getBeginTime()+ 86400000L *28);
-        mtm.setEndTime(mtmBass.getBeginTime()+ 86400000L *28+ 86400000L *(mCycle.getNumber()-1));
-        mtm.setDate(nowDate);
-        mtm.setCon(false);
-        if(nextDate > mtm.getBeginTime()){
-            if(mtm.getBeginTime() > DateChange.getDate()){
-                mtmList.add(mtm);
-            }else {
-                mtm.setBeginTime(DateChange.getDate());
-                mtm.setEndTime(DateChange.getDate() + 86400000L*4);
-                mtmList.add(mtm);
-            }
-            mtmBass = mtm;
-        }
+//        MenstruationModel mtm = new MenstruationModel();
+//        mtm.setBeginTime(mtmBass.getBeginTime()+ 86400000L *28);
+//        mtm.setEndTime(mtmBass.getBeginTime()+ 86400000L *28+ 86400000L *(mCycle.getNumber()-1));
+//        mtm.setDate(nowDate);
+//        mtm.setCon(false);
+//        if(nextDate > mtm.getBeginTime()){
+//            if(mtm.getBeginTime() > DateChange.getDate()){
+//                mtmList.add(mtm);
+//            }else {
+//                mtm.setBeginTime(DateChange.getDate());
+//                mtm.setEndTime(DateChange.getDate() + 86400000L*4);
+//                mtmList.add(mtm);
+//            }
+//            mtmBass = mtm;
+//        }
         dateView.initData(mtmList);
 //        dateView.refreshUI(mtmList);
     }

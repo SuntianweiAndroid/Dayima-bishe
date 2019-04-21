@@ -124,7 +124,7 @@ public class RiqiActivity extends MyBaseActivity implements View.OnClickListener
                     mtDao.setMTCycle(mc);
                     MenstruationModel mtm = new MenstruationModel();
                     mtm.setBeginTime(DateChange.dateTimeStamp(MySharedPreferences.getRiqiTime2(), "yyyy-MM-dd"));
-                    mtm.setEndTime(DateChange.dateTimeStamp(MySharedPreferences.getRiqiTime2(), "yyyy-MM-dd") + 86400000l * (MySharedPreferences.getJingqiTime() - 1));
+                    mtm.setEndTime(DateChange.dateTimeStamp(MySharedPreferences.getRiqiTime2(), "yyyy-MM-dd") + 86400000L* (MySharedPreferences.getJingqiTime() - 1));
                     mtm.setCycle(MySharedPreferences.getZhouqiTime());
                     mtm.setDurationDay(MySharedPreferences.getJingqiTime());
                     mtm.setDate(DateChange.dateTimeStamp(MySharedPreferences.getRiqiTime2(), "yyyy-MM-dd"));

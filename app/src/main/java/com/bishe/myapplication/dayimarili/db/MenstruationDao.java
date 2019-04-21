@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * SQLite²ú¼ì¼ÇÂ¼±í¹¤¾ßÀà
+ * SQLiteï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  * Created by Administrator on 2015/5/26.
  */
 public class MenstruationDao {
@@ -26,7 +26,7 @@ public class MenstruationDao {
     }
 
     /**
-     * ÏòÊý¾Ý¿âÌí¼ÓÔÂ¾­Æ½¾ùÖÜÆÚÓëÆ½¾ùÌì??
+     * ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½Â¾ï¿½Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½ï¿½ï¿½??
      * @param mc
      */
     public void setMTCycle(MenstruationCycle mc){
@@ -40,7 +40,7 @@ public class MenstruationDao {
     }
     
     /**
-     * ÐÞ¸ÄÔÂ¾­Æ½¾ùÖÜÆÚÓëÆ½¾ùÌì??
+     * ï¿½Þ¸ï¿½ï¿½Â¾ï¿½Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½ï¿½ï¿½??
      * @param mc
      */
     public void upMTCycle(MenstruationCycle  mc){
@@ -53,7 +53,7 @@ public class MenstruationDao {
         }
     }
     /**
-     * ÃèÊö£º²éÑ¯ÔÂ¾­Æ½¾ùÖÜÆÚÓëÆ½¾ùÌìÊý
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½Â¾ï¿½Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @return
      */
     public MenstruationCycle getMTCycle(){
@@ -75,12 +75,11 @@ public class MenstruationDao {
     //======================================================
 
     /**
-     * ÏòÊý¾Ý¿âÌí¼ÓÔÂ¾­????½áÊøÊ±¼äµÈÊý??
+     * ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½Â¾ï¿½????ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½??
      * @param mt
      */
     public void setMTModel(MenstruationModel mt){
         SQLiteDatabase db= dbHelper.getWritableDatabase();
-        
         if(db.isOpen()) {
         	Cursor cursor = db.rawQuery("SELECT MIN(startTime) FROM " + MenstruationDBHelper.TB_NAME_MT_TIME + " WHERE " +
                     " startTime > ? ", new String[]{mt.getBeginTime()+""});
@@ -93,7 +92,7 @@ public class MenstruationDao {
             		" VALUES (?, ?, ?, ?, ?) ",
                     new Object[]{mt.getDate(), mt.getBeginTime(), mt.getEndTime(), mt.getCycle(), mt.getDurationDay()});
             
-            //»ñÈ¡ÉÏÒ»´ÎÔÂ¾­Êý??
+            //ï¿½ï¿½È¡ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Â¾ï¿½ï¿½ï¿½??
             Cursor cursor1 = db.rawQuery("SELECT Max(startTime) FROM " + MenstruationDBHelper.TB_NAME_MT_TIME + " WHERE " +
                     " startTime < ? ", new String[]{mt.getBeginTime()+""});
             long startTime = 0;
@@ -113,8 +112,8 @@ public class MenstruationDao {
        
     }
     /**
-     * ÃèÊö£º»ñÈ¡ÔÂ¾­¿ªÊ¼½áÊøÊ±¼äµÈÊý¾Ý
-     * @param time È«²¿¼ÇÂ¼??£¬Ä³ÔÂ¼ÇÂ¼Îªµ±ÌìÊ±¼ä??
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½Â¾ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @param time È«ï¿½ï¿½ï¿½ï¿½Â¼??ï¿½ï¿½Ä³ï¿½Â¼ï¿½Â¼Îªï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½??
      * @return
      */
     public List<MenstruationModel> getMTModelList(long time, long nextTime){
@@ -148,8 +147,8 @@ public class MenstruationDao {
     }
     
     /**
-     * ÃèÊö£º»ñÈ¡ÔÂ¾­¿ªÊ¼½áÊøÊ±¼äµÈÊý¾Ý
-     * @param time È«²¿¼ÇÂ¼??£¬Ä³ÔÂ¼ÇÂ¼Îªµ±ÌìÊ±¼ä??
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½Â¾ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @param time È«ï¿½ï¿½ï¿½ï¿½Â¼??ï¿½ï¿½Ä³ï¿½Â¼ï¿½Â¼Îªï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½??
      * @return
      */
     public MenstruationModel getMTModel(long startTime, long endTime){
@@ -174,7 +173,7 @@ public class MenstruationDao {
     }
     
     /**
-     * ¼ÆËã½áÊøÏà²îÌìÊý
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @param nowTime
      */
     public int getEndTimeNumber(long nowTime){
@@ -196,7 +195,7 @@ public class MenstruationDao {
     }
     
     /**
-     * ¼ÆËã????Ïà²îÌìÊý
+     * ï¿½ï¿½ï¿½ï¿½????ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @param nowTime
      */
     public long getStartTimeNumber(long nowTime){
@@ -215,7 +214,7 @@ public class MenstruationDao {
     }
     
     /**
-     * ÐÞ¸Ä½áÊøÊ±¼ä
+     * ï¿½Þ¸Ä½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
      * @param newTime
      * @param oldTime
      */
@@ -240,7 +239,7 @@ public class MenstruationDao {
     }
     
     /**
-     * ÐÞ¸Ä????Ê±¼ä
+     * ï¿½Þ¸ï¿½????Ê±ï¿½ï¿½
      * @param newTime
      * @param oldTime
      */
@@ -248,7 +247,7 @@ public class MenstruationDao {
     	SQLiteDatabase db= dbHelper.getWritableDatabase();
         
     	if(db.isOpen()) {
-    		//ÐÞ¸Äµ±ÔÂÐÅÏ¢
+    		//ï¿½Þ¸Äµï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
     		Cursor cursor2 = db.rawQuery("SELECT endTime FROM " + MenstruationDBHelper.TB_NAME_MT_TIME + " WHERE " +
                     " startTime = ?", new String[]{oldTime+""});
             long endTime = 0;
@@ -258,7 +257,7 @@ public class MenstruationDao {
     		db.execSQL("UPDATE " + MenstruationDBHelper.TB_NAME_MT_TIME + " SET startTime = ?, number = ? "
             		+ " WHERE startTime == ? ",
                     new Object[]{newTime, (endTime-newTime)/86400000l+1, oldTime});
-    		//ÐÞ¸Äµ±ÔÂÖÜÆÚ
+    		//ï¿½Þ¸Äµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     		Cursor cursor1 = db.rawQuery("SELECT MIN(startTime) FROM " + MenstruationDBHelper.TB_NAME_MT_TIME + " WHERE " +
                     " startTime > ?", new String[]{oldTime+""});
             long nextTime = 0;
@@ -271,7 +270,7 @@ public class MenstruationDao {
                         new Object[]{(nextTime-newTime)/86400000l+1, newTime});
             }
     		
-            //ÐÞ¸ÄÉÏÔÂÐÅÏ¢
+            //ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
     		Cursor cursor = db.rawQuery("SELECT MAX(startTime) FROM " + MenstruationDBHelper.TB_NAME_MT_TIME + " WHERE " +
                     " startTime < ?", new String[]{newTime+""});
             long time = 0;

@@ -1,4 +1,8 @@
 <resources>
     <dimen name="picker_view_height">160dp</dimen>
     <dimen name="date_unit_text_size">14sp</dimen>
+    <dimen name="historyscore_tb">5dp</dimen>
+    <dimen name="histogram_tb">8dp</dimen>
+    <dimen name="rili_w">200dp</dimen>
+    <dimen name="rili_h">150dp</dimen>
 </resources>

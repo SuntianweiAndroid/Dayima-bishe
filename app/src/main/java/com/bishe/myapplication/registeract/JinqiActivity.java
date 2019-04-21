@@ -58,7 +58,7 @@ public class JinqiActivity extends MyBaseActivity implements View.OnClickListene
                 int jingqiTiem = Integer.parseInt(getNumbers(stringList.get(position)));
                 Log.i("stw", "onItemClick: 经期==" + jingqiTiem);
                 jingqi = jingqiTiem;
-                MySharedPreferences.setZhouqiTime(jingqiTiem);
+                MySharedPreferences.setJingqiTime(jingqiTiem);
             }
         });
     }

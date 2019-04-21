@@ -8,9 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
 
-import com.bishe.myapplication.utils.MySharedPreferences;
-
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,46 +18,47 @@ import java.util.List;
  *
  * @author Administrator zxm
  */
-public class DateView extends GridLayout {
+public class DateView3 extends GridLayout {
     private boolean is = true;
     private Date curDate; // 当前日历显示的月
     private Calendar calendar;
     private int number = 42;
     private int[] date = new int[number]; // 日历显示数字
-    private DateCard[] dateCard = new DateCard[number];
+    private DateCard2[] dateCard = new DateCard2[number];
     private DateCardModel[] dateList = new DateCardModel[number];
     private int lastNumber, toNumber; //这个月显示上月天数， 这个月天数
     private String dateClick = "";//记录点击的日期
 
-    public DateView(Context context) {
+    public DateView3(Context context) {
         super(context, null);
 
     }
 
-    public DateView(Context context, @Nullable AttributeSet attrs) {
+    public DateView3(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public DateView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public DateView3(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView();
     }
 
     private void initView() {
-        setColumnCount(7);
+//        setColumnCount(7);
         Log.i(TAG, "initView: *****");
-        calendar = Calendar.getInstance();
-        curDate = new Date();
+//        calendar = Calendar.getInstance();
+//        curDate = new Date();
     }
 
     public void initData(List<MenstruationModel> mtmList) {
+        setColumnCount(7);
         calendar = Calendar.getInstance();
         curDate = new Date();
         Log.i(TAG, "initData: 初始化数据");
         calculateDate();
         calculateType(mtmList);
         if (is) {
-            int cardWidth = width / 7;
+            int cardWidth = width /10;
             addCards(cardWidth, cardWidth);
             is = false;
         }
@@ -85,11 +83,11 @@ public class DateView extends GridLayout {
 
     private void addCards(int cardWidth, int cardHeight) {
         Log.i(TAG, "addCards: 画数据");
-        DateCard c;
+        DateCard2 c;
         int i = 0;
         for (int y = 0; y < number / 7; y++) {
             for (int x = 0; x < 7; x++) {
-                c = new DateCard(getContext());
+                c = new DateCard2(getContext());
                 c.initData(dateList[i]);
                 addView(c, cardWidth, cardHeight);
                 dateCard[i] = c;
@@ -370,7 +368,7 @@ public class DateView extends GridLayout {
         calendar.setTime(curDate);
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
-        return year + "年" + month + "月";
+        return year + "." + month;
     }
 
     private OnItemListener onItemListener;
