@@ -11,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.menstruationtest.DateCardModel;
-import com.example.menstruationtest.R;
+import com.bishe.myapplication.R;
+
 
 /**
  * 大姨妈日历控件卡片类

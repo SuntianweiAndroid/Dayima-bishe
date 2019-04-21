@@ -3,7 +3,7 @@ package com.bishe.myapplication.dayimarili;
 
 public class MenstruationModel {
 	private int id;
-	private long beginTime; //月经�?��时间
+	private long beginTime; //月经开始时间
     private long endTime; //月经结束时间
     private long date; //月份
     private int cycle; //月经周期
