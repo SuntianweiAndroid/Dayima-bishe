@@ -1,9 +1,11 @@
 package com.bishe.myapplication.fragment;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +19,16 @@ import com.bishe.myapplication.dayimarili.DateView;
 import com.bishe.myapplication.dayimarili.MenstruationCycle;
 import com.bishe.myapplication.dayimarili.MenstruationModel;
 import com.bishe.myapplication.dayimarili.db.MenstruationDao;
+import com.bishe.myapplication.utils.CommomDialog2;
+import com.bishe.myapplication.utils.CommomDialog3;
+import com.bishe.myapplication.utils.MySharedPreferences;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class RiliFragment extends Fragment {
+public class RiliFragment extends Fragment implements View.OnClickListener {
     private TextView tvDate;
     private DateView dateView;
     private TextView llMtCome, llMtBack;
@@ -91,6 +96,7 @@ public class RiliFragment extends Fragment {
         llMtCome = (TextView) v.findViewById(R.id.ll_mt_come);
         llMtBack = (TextView) v.findViewById(R.id.ll_mt_back);
         mRiliJilu = (TextView) v.findViewById(R.id.rili_jilu);
+//        mRiliJilu.setOnClickListener(this);
 
     }
 
@@ -313,6 +319,17 @@ public class RiliFragment extends Fragment {
                 refreshUI();
             }
         });
+        mRiliJilu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new CommomDialog3(getActivity(),R.style.DialogTheme,"", new CommomDialog3.OnCloseListener() {
+                    @Override
+                    public void onClick(Dialog dialog, boolean confirm) {
+
+                    }
+                }).setTitle("添加记录").show();
+            }
+        });
 
     }
 
@@ -371,6 +388,15 @@ public class RiliFragment extends Fragment {
         SimpleDateFormat dateFormat = new SimpleDateFormat(format);// 可以方便地修改日期格式
         String hehe = dateFormat.format(now);
         return Integer.parseInt(hehe);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case  R.id.rili_jilu:
+
+                break;
+        }
     }
 }
 
