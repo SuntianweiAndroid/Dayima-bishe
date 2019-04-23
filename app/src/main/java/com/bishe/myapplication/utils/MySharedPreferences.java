@@ -89,4 +89,50 @@ public class MySharedPreferences {
     public static String getRiqiTime2() {
         return sharedPreferences.getString("Riqi", "");
     }
+
+
+    public static void setJiLuState(String jilustate) {
+        editor.putString("jilustate", jilustate);
+        editor.commit();
+    }
+
+    public static void setJiLuTime(long jilutime) {
+        editor.putLong("jilutime", jilutime);
+        editor.commit();
+    }
+
+    public static long getJiLuTime() {
+        return sharedPreferences.getLong("jilutime", 0L);
+    }
+
+    public static String getJiLuState() {
+        return sharedPreferences.getString("jilustate", "");
+    }
+
+    public static void setJingqiState(String jingqistate) {
+        editor.putString("jingqistate", jingqistate);
+        editor.commit();
+    }
+
+    public static String getJingqiState() {
+        return sharedPreferences.getString("jingqistate", "");
+    }
+
+    public static void setaiaiState(String aiaitate) {
+        editor.putString("aiaitate", aiaitate);
+        editor.commit();
+    }
+
+    public static String getaiaiState() {
+        return sharedPreferences.getString("aiaitate", "");
+    }
+
+    public static void setxinqingState(String xinqingstate) {
+        editor.putString("xinqingstate", xinqingstate);
+        editor.commit();
+    }
+
+    public static String getxinqingState() {
+        return sharedPreferences.getString("xinqingstate", "");
+    }
 }

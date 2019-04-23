@@ -18,6 +18,7 @@ import com.bishe.myapplication.dayimarili.DateChange;
 import com.bishe.myapplication.dayimarili.DateView;
 import com.bishe.myapplication.dayimarili.MenstruationCycle;
 import com.bishe.myapplication.dayimarili.MenstruationModel;
+import com.bishe.myapplication.dayimarili.MenstruationMt;
 import com.bishe.myapplication.dayimarili.db.MenstruationDao;
 import com.bishe.myapplication.utils.CommomDialog2;
 import com.bishe.myapplication.utils.CommomDialog3;
@@ -68,6 +69,8 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
             public void onClick(long time, DateCardModel d) {
                 nowTime = time;
                 dcm = d;
+
+
                 if (time > DateChange.getDate()) {
                     llMtBack.setVisibility(View.VISIBLE);
                     llMtCome.setVisibility(View.GONE);
@@ -80,14 +83,23 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
                     llMtBack.setVisibility(View.GONE);
                     mRiliJilu.setVisibility(View.VISIBLE);
                     v.findViewById(R.id.back_taday).setVisibility(View.GONE);
-
+                    MenstruationMt mt = mtDao.getMTMT(nowTime);
+                    if (mt != null) {
+                        llMtCome.setVisibility(View.GONE);
+                      TextView view=  v.findViewById(R.id.btn_tixing);
+                        view.setText(mt.getQuantity()+"");
+                    } else {
+                        llMtCome.setVisibility(View.VISIBLE);
+                    }
                 } else if (mtDao.getEndTimeNumber(nowTime) < 6) {
                     llMtCome.setVisibility(View.VISIBLE);
                     llMtBack.setVisibility(View.GONE);
+                    mRiliJilu.setVisibility(View.VISIBLE);
                     v.findViewById(R.id.back_taday).setVisibility(View.GONE);
                 } else if (dcm.type != 1) {
                     llMtCome.setVisibility(View.VISIBLE);
                     llMtBack.setVisibility(View.GONE);
+                    mRiliJilu.setVisibility(View.VISIBLE);
                     v.findViewById(R.id.back_taday).setVisibility(View.GONE);
                 }
             }
@@ -96,7 +108,7 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
         llMtCome = (TextView) v.findViewById(R.id.ll_mt_come);
         llMtBack = (TextView) v.findViewById(R.id.ll_mt_back);
         mRiliJilu = (TextView) v.findViewById(R.id.rili_jilu);
-//        mRiliJilu.setOnClickListener(this);
+        mRiliJilu.setOnClickListener(this);
 
     }
 
@@ -319,17 +331,6 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
                 refreshUI();
             }
         });
-        mRiliJilu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new CommomDialog3(getActivity(),R.style.DialogTheme,"", new CommomDialog3.OnCloseListener() {
-                    @Override
-                    public void onClick(Dialog dialog, boolean confirm) {
-
-                    }
-                }).setTitle("添加记录").show();
-            }
-        });
 
     }
 
@@ -392,9 +393,41 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case  R.id.rili_jilu:
+        switch (v.getId()) {
 
+
+            case R.id.rili_jilu:
+                boolean isJinqi = false;
+                //判断点击当前时间是否为在预测大姨妈期间
+                if (nowTime > mtmBass.getBeginTime() && nowTime < mtmBass.getEndTime()) {
+                    isJinqi = true;
+                } else {
+                    isJinqi = false;
+                }
+
+                SimpleDateFormat sdf = new SimpleDateFormat("MM月dd日");
+                String time = sdf.format(new Date(nowTime));
+                new CommomDialog3(getActivity(), R.style.DialogTheme, isJinqi, "", new CommomDialog3.OnCloseListener() {
+                    @Override
+                    public void onClick(Dialog dialog, boolean is, String confirm) {
+                        if (is) {
+                            MenstruationMt mt = mtDao.getMTMT(nowTime);
+                            if (mt != null) {
+                                mt.setQuantity(confirm);
+                                mtDao.updateMTM(mt);
+                            } else {
+                                mt = new MenstruationMt();
+                                mt.setDate(nowTime);
+                                mt.setQuantity(confirm);
+                                mtDao.setMTMT(mt);
+                            }
+                        }
+                    }
+
+
+                }).setTitle(time).show();
+                break;
+            default:
                 break;
         }
     }

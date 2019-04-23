@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.bishe.myapplication.LogInActivity;
 import com.bishe.myapplication.R;
+import com.bishe.myapplication.dayimarili.MenstruationCycle;
+import com.bishe.myapplication.dayimarili.db.MenstruationDao;
 import com.bishe.myapplication.utils.CommomDialog;
 import com.bishe.myapplication.utils.CommomDialog2;
 import com.bishe.myapplication.utils.MySharedPreferences;
@@ -106,6 +108,10 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                         if (confirm) {
                             MySharedPreferences.setJingqiTime(selectTime);
                             mTvJignqiday.setText(selectTime + "天");
+                            MenstruationCycle mc = new MenstruationCycle();
+                            mc.setNumber(MySharedPreferences.getJingqiTime());
+                            mc.setCycle(MySharedPreferences.getZhouqiTime());
+                            new MenstruationDao(getActivity()).upMTCycle(mc);
                         }
                     }
                 }, "jingqi").setTitle("设置经期").show();
@@ -118,6 +124,10 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                         if (confirm) {
                             MySharedPreferences.setZhouqiTime(selectTime);
                             mTvZhouqiday.setText(selectTime + "天");
+                            MenstruationCycle mc = new MenstruationCycle();
+                            mc.setNumber(MySharedPreferences.getJingqiTime());
+                            mc.setCycle(MySharedPreferences.getZhouqiTime());
+                            new MenstruationDao(getActivity()).upMTCycle(mc);
                         }
                     }
                 }, "zhouqi").setTitle("设置周期").show();

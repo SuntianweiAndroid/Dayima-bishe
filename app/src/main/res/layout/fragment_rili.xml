@@ -221,6 +221,10 @@
                 android:text="暂无记录，点击添加"
                 android:textSize="15sp" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/btn_tixing"/>
 
             <TextView
                 android:id="@+id/ll_mt_back"
@@ -233,26 +237,23 @@
                 android:visibility="gone" />
 
 
+            <TextView
+                android:id="@+id/back_taday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="@drawable/select_green_bg"
+                android:gravity="center"
+                android:text="回今天"
+                android:visibility="gone" />
 
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/select_green_bg"
-                    android:gravity="center"
-                    android:id="@+id/back_taday"
-                    android:visibility="gone"
-                    android:layout_gravity="right"
-                    android:text="回今天" />
-
-
-
-                <TextView
-                    android:layout_width="60dp"
-                    android:id="@+id/rili_jilu"
-                    android:layout_height="60dp"
-                    android:layout_gravity="right"
-                    android:background="@mipmap/bg_jilu" />
+            <TextView
+                android:id="@+id/rili_jilu"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="right"
+                android:background="@mipmap/bg_jilu" />
 
         </LinearLayout>
     </ScrollView>

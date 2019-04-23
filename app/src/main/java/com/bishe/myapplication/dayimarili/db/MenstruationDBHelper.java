@@ -53,12 +53,7 @@ public class MenstruationDBHelper extends SQLiteOpenHelper {
     	 * 大姨妈流量痛经表
     	 */
     	db.execSQL( "CREATE TABLE IF NOT EXISTS " +
-    			TB_NAME_MT+ " ( " +
-                " _id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                " date INTEGER,"+ //日期
-                " quantity  INTEGER, " + //月经流量程度�?~5�?
-                " pain  INTEGER " + //痛经程度�?~5�?
-                " )"
+    			TB_NAME_MT+ " ( " + " _id INTEGER PRIMARY KEY AUTOINCREMENT, " + " date INTEGER,"+ " quantity  STRING"+" )"
     		);
     }
 
