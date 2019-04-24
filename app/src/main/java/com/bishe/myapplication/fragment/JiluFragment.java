@@ -51,8 +51,8 @@ public class JiluFragment extends Fragment {
         List<MenstruationModel> mtmList = mtDao.getMTModelList(0, 0);
         slvSuggest.setAdapter(new SlvSuggestAdapter(getActivity(), mtmList));
         hv.setHistogramList(mtmList);
-        mJingqiDay.setText(mtCycle.getNumber());
-        mZhouqiDay.setText(mtCycle.getCycle());
+        mJingqiDay.setText(mtCycle.getNumber()+"");
+        mZhouqiDay.setText(mtCycle.getCycle()+"");
         return view;
     }
 
