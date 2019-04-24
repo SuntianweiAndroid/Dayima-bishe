@@ -16,12 +16,12 @@ public class MenstruationDBHelper extends SQLiteOpenHelper {
 	public static final String TB_NAME_MT_TIME= "menstruation_time";
 
 	public MenstruationDBHelper(Context context) {
-		super(context, "xmjk.db", null, 1);
+		super(context, "dayima.db", null, 1);
 	}
 
 	public MenstruationDBHelper(Context context, String name,
 			SQLiteDatabase.CursorFactory factory, int version) {
-		super(context, "xmjk.db", null, 1);
+		super(context, "dayima.db", null, 1);
 	}
 
     @Override

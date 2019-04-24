@@ -44,8 +44,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:drawableBottom="@mipmap/bg_redline"
-            android:text="经期" />
+            android:text="经期"
+            android:textColor="#111111" />
 
         <TextView
             android:id="@+id/tv_title_aiai"
@@ -53,7 +53,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="爱爱" />
+            android:text="爱爱"
+            android:textColor="#111111" />
 
         <TextView
             android:id="@+id/tv_title_xinqing"
@@ -61,7 +62,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="心情" />
+            android:text="心情"
+            android:textColor="#111111" />
 
         <TextView
             android:id="@+id/tv_title_zhengzhuang"
@@ -69,7 +71,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="症状" />
+            android:text="症状"
+            android:textColor="#111111" />
     </LinearLayout>
 
     <View
@@ -109,8 +112,8 @@
                 android:id="@+id/fram_layout1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:background="@drawable/bg_dialog_rili">
+                android:background="@drawable/bg_dialog_rili"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="15dp"
@@ -135,8 +138,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:visibility="gone"
-                android:background="@drawable/bg_dialog_rili">
+                android:background="@drawable/bg_dialog_rili"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="15dp"
@@ -152,8 +155,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="18dp"
                     android:layout_marginBottom="10dp"
-                    android:gravity="center"
-                    android:text="支付宝打" />
+                    android:gravity="center"/>
 
             </FrameLayout>
 
@@ -203,6 +205,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/bg_dialog_rili"
                 android:gravity="center"
                 android:text="ddd" />
 
@@ -213,7 +216,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-
+                android:background="@drawable/bg_dialog_rili"
                 android:gravity="center"
                 android:text="ddd" />
 
@@ -221,7 +224,7 @@
                 android:id="@+id/tv_dwon3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:background="@drawable/bg_dialog_rili"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
 
@@ -232,7 +235,7 @@
                 android:id="@+id/tv_dwon4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:background="@drawable/bg_dialog_rili"
                 android:layout_weight="1"
 
                 android:gravity="center"
@@ -251,7 +254,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-
+                android:background="@drawable/bg_dialog_rili"
                 android:gravity="center"
                 android:text="ddd" />
 
@@ -262,7 +265,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-
+                android:background="@drawable/bg_dialog_rili"
                 android:gravity="center"
                 android:text="ddd" />
 
@@ -272,7 +275,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-
+                android:background="@drawable/bg_dialog_rili"
                 android:gravity="center"
                 android:text="ddd" />
 
@@ -281,7 +284,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-
+                android:background="@drawable/bg_dialog_rili"
                 android:gravity="center"
                 android:text="ddd" />
         </LinearLayout>

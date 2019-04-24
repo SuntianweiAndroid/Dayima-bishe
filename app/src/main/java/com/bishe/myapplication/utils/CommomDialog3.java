@@ -2,6 +2,7 @@ package com.bishe.myapplication.utils;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -191,8 +192,12 @@ public class CommomDialog3 extends Dialog implements View.OnClickListener {
         mTvTitleXinqing.setOnClickListener(this);
         mTvTitleZhengzhuang = (TextView) findViewById(R.id.tv_title_zhengzhuang);
         mTvTitleZhengzhuang.setOnClickListener(this);
+        mTvTop1.setText("");
+        mTvTop2.setText("");
         if (isJinqi) {
-//            mTvTitleJingqi.setCompoundDrawables(null, null, null,mContext.getResources().getDrawable(R.mipmap.bg_redline));
+            Drawable bottom = mContext.getResources().getDrawable(R.mipmap.bg_redline);
+            bottom.setBounds(0, 0, bottom.getMinimumWidth(), bottom.getMinimumHeight());
+            mTvTitleJingqi.setCompoundDrawables(null, null, null, bottom);
             mTvTitleAiai.setCompoundDrawables(null, null, null, null);
             mTvTitleXinqing.setCompoundDrawables(null, null, null, null);
             mTvTitleZhengzhuang.setCompoundDrawables(null, null, null, null);
@@ -208,7 +213,9 @@ public class CommomDialog3 extends Dialog implements View.OnClickListener {
             mTvDwon7.setText("很痛");
             mTvDwon8.setText("很少");
         } else {
-            mTvTitleAiai.setCompoundDrawables(null, null, null, mContext.getResources().getDrawable(R.mipmap.bg_redline));
+            Drawable bottom = mContext.getResources().getDrawable(R.mipmap.bg_redline);
+            bottom.setBounds(0, 0, bottom.getMinimumWidth(), bottom.getMinimumHeight());
+            mTvTitleAiai.setCompoundDrawables(null, null, null, bottom);
             mTvTitleJingqi.setCompoundDrawables(null, null, null, null);
             mTvTitleXinqing.setCompoundDrawables(null, null, null, null);
             mTvTitleZhengzhuang.setCompoundDrawables(null, null, null, null);
@@ -227,6 +234,8 @@ public class CommomDialog3 extends Dialog implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        Drawable bottom = mContext.getResources().getDrawable(R.mipmap.bg_redline);
+        bottom.setBounds(0, 0, bottom.getMinimumWidth(), bottom.getMinimumHeight());
         switch (v.getId()) {
             case R.id.cancel:
                 if (listener != null) {
@@ -265,21 +274,25 @@ public class CommomDialog3 extends Dialog implements View.OnClickListener {
                         mTvDwon1.setVisibility(View.VISIBLE);
                         frameLayout1.setVisibility(View.GONE);
                         mTvDwon1.setText(mTvTop1.getText().toString());
+                        mTvTop1.setText("");
                         break;
                     case 2:
                         mTvDwon2.setVisibility(View.VISIBLE);
                         frameLayout1.setVisibility(View.GONE);
                         mTvDwon2.setText(mTvTop1.getText().toString());
+                        mTvTop1.setText("");
                         break;
                     case 3:
                         mTvDwon3.setVisibility(View.VISIBLE);
                         frameLayout1.setVisibility(View.GONE);
                         mTvDwon3.setText(mTvTop1.getText().toString());
+                        mTvTop1.setText("");
                         break;
                     case 4:
                         mTvDwon4.setVisibility(View.VISIBLE);
                         frameLayout1.setVisibility(View.GONE);
                         mTvDwon4.setText(mTvTop1.getText().toString());
+                        mTvTop1.setText("");
                         break;
                 }
 
@@ -294,21 +307,25 @@ public class CommomDialog3 extends Dialog implements View.OnClickListener {
                         mTvDwon5.setVisibility(View.VISIBLE);
                         frameLayout2.setVisibility(View.GONE);
                         mTvDwon5.setText(mTvTop2.getText().toString());
+                        mTvTop2.setText("");
                         break;
                     case 6:
                         mTvDwon6.setVisibility(View.VISIBLE);
                         frameLayout2.setVisibility(View.GONE);
                         mTvDwon6.setText(mTvTop2.getText().toString());
+                        mTvTop2.setText("");
                         break;
                     case 7:
                         mTvDwon7.setVisibility(View.VISIBLE);
                         mTvTop2.setVisibility(View.GONE);
                         mTvDwon7.setText(mTvTop2.getText().toString());
+                        mTvTop2.setText("");
                         break;
                     case 8:
                         mTvDwon8.setVisibility(View.VISIBLE);
                         frameLayout2.setVisibility(View.GONE);
                         mTvDwon8.setText(mTvTop2.getText().toString());
+                        mTvTop2.setText("");
                         break;
                 }
                 break;
@@ -323,16 +340,16 @@ public class CommomDialog3 extends Dialog implements View.OnClickListener {
                 frameLayout1.setVisibility(View.VISIBLE);
                 switch (yemian) {
                     case 1:
-                        jingqiState = "jingqi," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        jingqiState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     case 2:
-                        aiaiState = "aiai," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        aiaiState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     case 3:
-                        xinqingState = "xinqing," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        xinqingState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     case 4:
-                        zhengzhuangState = "zhengzhuang," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        zhengzhuangState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     default:
                         break;
@@ -349,16 +366,16 @@ public class CommomDialog3 extends Dialog implements View.OnClickListener {
                 frameLayout1.setVisibility(View.VISIBLE);
                 switch (yemian) {
                     case 1:
-                        jingqiState = "jingqi," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        jingqiState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     case 2:
-                        aiaiState = "aiai," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        aiaiState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     case 3:
-                        xinqingState = "xinqing," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        xinqingState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     case 4:
-                        zhengzhuangState = "zhengzhuang," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        zhengzhuangState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     default:
                         break;
@@ -375,16 +392,16 @@ public class CommomDialog3 extends Dialog implements View.OnClickListener {
                 frameLayout1.setVisibility(View.VISIBLE);
                 switch (yemian) {
                     case 1:
-                        jingqiState = "jingqi," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        jingqiState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     case 2:
-                        aiaiState = "aiai," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        aiaiState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     case 3:
-                        xinqingState = "xinqing," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        xinqingState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     case 4:
-                        zhengzhuangState = "zhengzhuang," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        zhengzhuangState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     default:
                         break;
@@ -401,16 +418,16 @@ public class CommomDialog3 extends Dialog implements View.OnClickListener {
                 frameLayout1.setVisibility(View.VISIBLE);
                 switch (yemian) {
                     case 1:
-                        jingqiState = "jingqi," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        jingqiState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     case 2:
-                        aiaiState = "aiai," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        aiaiState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     case 3:
-                        xinqingState = "xinqing," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        xinqingState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     case 4:
-                        zhengzhuangState = "zhengzhuang," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        zhengzhuangState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     default:
                         break;
@@ -427,16 +444,16 @@ public class CommomDialog3 extends Dialog implements View.OnClickListener {
                 frameLayout2.setVisibility(View.VISIBLE);
                 switch (yemian) {
                     case 1:
-                        jingqiState = "jingqi," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        jingqiState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     case 2:
-                        aiaiState = "aiai," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        aiaiState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     case 3:
-                        xinqingState = "xinqing," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        xinqingState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     case 4:
-                        zhengzhuangState = "zhengzhuang," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        zhengzhuangState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     default:
                         break;
@@ -453,16 +470,16 @@ public class CommomDialog3 extends Dialog implements View.OnClickListener {
                 frameLayout2.setVisibility(View.VISIBLE);
                 switch (yemian) {
                     case 1:
-                        jingqiState = "jingqi," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        jingqiState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     case 2:
-                        aiaiState = "aiai," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        aiaiState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     case 3:
-                        xinqingState = "xinqing," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        xinqingState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     case 4:
-                        zhengzhuangState = "zhengzhuang," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        zhengzhuangState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     default:
                         break;
@@ -479,16 +496,16 @@ public class CommomDialog3 extends Dialog implements View.OnClickListener {
                 frameLayout2.setVisibility(View.VISIBLE);
                 switch (yemian) {
                     case 1:
-                        jingqiState = "jingqi," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        jingqiState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     case 2:
-                        aiaiState = "aiai," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        aiaiState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     case 3:
-                        xinqingState = "xinqing," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        xinqingState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     case 4:
-                        zhengzhuangState = "zhengzhuang," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        zhengzhuangState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     default:
                         break;
@@ -505,16 +522,16 @@ public class CommomDialog3 extends Dialog implements View.OnClickListener {
                 frameLayout2.setVisibility(View.VISIBLE);
                 switch (yemian) {
                     case 1:
-                        jingqiState = "jingqi," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        jingqiState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     case 2:
-                        aiaiState = "aiai," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        aiaiState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     case 3:
-                        xinqingState = "xinqing," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        xinqingState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     case 4:
-                        zhengzhuangState = "zhengzhuang," + mTvTop1.getText().toString() + "," + mTvTop2.getText().toString();
+                        zhengzhuangState = mTvTop1.getText().toString() + "," + mTvTop2.getText().toString()+",";
                         break;
                     default:
                         break;
@@ -525,11 +542,10 @@ public class CommomDialog3 extends Dialog implements View.OnClickListener {
                 break;
 
             case R.id.tv_title_jingqi:
-
-                mTvTitleJingqi.setBackground(mContext.getResources().getDrawable(R.mipmap.bg_redline));
-                mTvTitleAiai.setBackground(null);
-                mTvTitleXinqing.setBackground(null);
-                mTvTitleZhengzhuang.setBackground(null);
+                mTvTitleAiai.setCompoundDrawables(null, null, null, null);
+                mTvTitleJingqi.setCompoundDrawables(null, null, null, bottom);
+                mTvTitleXinqing.setCompoundDrawables(null, null, null, null);
+                mTvTitleZhengzhuang.setCompoundDrawables(null, null, null, null);
 
                 yemian = 1;
                 mTvTop1.setText("");
@@ -564,10 +580,10 @@ public class CommomDialog3 extends Dialog implements View.OnClickListener {
                 mTvDwon8.setText("很少");
                 break;
             case R.id.tv_title_aiai:
-                mTvTitleAiai.setBackground(mContext.getResources().getDrawable(R.mipmap.bg_redline));
-                mTvTitleJingqi.setBackground(null);
-                mTvTitleXinqing.setBackground(null);
-                mTvTitleZhengzhuang.setBackground(null);
+                mTvTitleAiai.setCompoundDrawables(null, null, null, bottom);
+                mTvTitleJingqi.setCompoundDrawables(null, null, null, null);
+                mTvTitleXinqing.setCompoundDrawables(null, null, null, null);
+                mTvTitleZhengzhuang.setCompoundDrawables(null, null, null, null);
                 yemian = 2;
                 mTvTop1.setText("");
                 mTvTop2.setText("");
@@ -592,10 +608,10 @@ public class CommomDialog3 extends Dialog implements View.OnClickListener {
                 frameLayout2.setVisibility(View.GONE);
                 break;
             case R.id.tv_title_xinqing:
-                mTvTitleAiai.setBackground(null);
-                mTvTitleJingqi.setBackground(null);
-                mTvTitleXinqing.setBackground(mContext.getResources().getDrawable(R.mipmap.bg_redline));
-                mTvTitleZhengzhuang.setBackground(null);
+                mTvTitleAiai.setCompoundDrawables(null, null, null, null);
+                mTvTitleJingqi.setCompoundDrawables(null, null, null, null);
+                mTvTitleXinqing.setCompoundDrawables(null, null, null, bottom);
+                mTvTitleZhengzhuang.setCompoundDrawables(null, null, null, null);
                 yemian = 3;
                 mTvTop1.setText("");
                 mTvTop2.setText("");
@@ -629,10 +645,10 @@ public class CommomDialog3 extends Dialog implements View.OnClickListener {
                 frameLayout2.setVisibility(View.INVISIBLE);
                 break;
             case R.id.tv_title_zhengzhuang:
-                mTvTitleAiai.setBackground(null);
-                mTvTitleJingqi.setBackground(null);
-                mTvTitleXinqing.setBackground(null);
-                mTvTitleZhengzhuang.setBackground(mContext.getResources().getDrawable(R.mipmap.bg_redline));
+                mTvTitleAiai.setCompoundDrawables(null, null, null, null);
+                mTvTitleJingqi.setCompoundDrawables(null, null, null, null);
+                mTvTitleXinqing.setCompoundDrawables(null, null, null, null);
+                mTvTitleZhengzhuang.setCompoundDrawables(null, null, null, bottom);
                 yemian = 4;
                 mTvTop1.setText("");
                 mTvTop2.setText("");
@@ -669,7 +685,10 @@ public class CommomDialog3 extends Dialog implements View.OnClickListener {
     }
 
     private int yemian = 0;
-    private String jingqiState, aiaiState, xinqingState, zhengzhuangState;
+    private String jingqiState="";
+    String aiaiState="";
+    String xinqingState="";
+    String zhengzhuangState="";
     private int select = 0;
     private int select2 = 0;
 

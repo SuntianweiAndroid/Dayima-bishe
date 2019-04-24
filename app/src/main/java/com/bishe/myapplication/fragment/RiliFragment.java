@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,11 +21,10 @@ import com.bishe.myapplication.dayimarili.MenstruationCycle;
 import com.bishe.myapplication.dayimarili.MenstruationModel;
 import com.bishe.myapplication.dayimarili.MenstruationMt;
 import com.bishe.myapplication.dayimarili.db.MenstruationDao;
-import com.bishe.myapplication.utils.CommomDialog2;
 import com.bishe.myapplication.utils.CommomDialog3;
-import com.bishe.myapplication.utils.MySharedPreferences;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -44,6 +44,18 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
     private Context mContext;
     private View view;
     private TextView mRiliJilu;
+    private TextView mBtnTixing;
+    private TextView mBtnTixing2;
+    private TextView mBtnTixing3;
+    /**
+     * dddd
+     */
+    private TextView mBtnTixing4;
+    private LinearLayout mLinerlayoutJilu;
+    private TextView mBtnTixing5;
+    private TextView mBtnTixing6;
+    private LinearLayout mLinerlayoutJilu1;
+    private TextView mBtnTixing7;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,38 +81,173 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
             public void onClick(long time, DateCardModel d) {
                 nowTime = time;
                 dcm = d;
-
-
                 if (time > DateChange.getDate()) {
                     llMtBack.setVisibility(View.VISIBLE);
                     llMtCome.setVisibility(View.GONE);
+                    mLinerlayoutJilu.setVisibility(View.GONE);
+                    mLinerlayoutJilu1.setVisibility(View.GONE);
                     mRiliJilu.setVisibility(View.GONE);
                     v.findViewById(R.id.back_taday).setVisibility(View.VISIBLE);
                     Toast.makeText(getActivity(), "无法记录未来哦", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (dcm.type == 1) {
                     llMtCome.setVisibility(View.VISIBLE);
+                    mLinerlayoutJilu.setVisibility(View.GONE);
+                    mLinerlayoutJilu1.setVisibility(View.GONE);
                     llMtBack.setVisibility(View.GONE);
-                    mRiliJilu.setVisibility(View.VISIBLE);
+                    mRiliJilu.setVisibility(View.GONE);
                     v.findViewById(R.id.back_taday).setVisibility(View.GONE);
                     MenstruationMt mt = mtDao.getMTMT(nowTime);
                     if (mt != null) {
                         llMtCome.setVisibility(View.GONE);
-                      TextView view=  v.findViewById(R.id.btn_tixing);
-                        view.setText(mt.getQuantity()+"");
+                        String jilu = mt.getQuantity();
+                        String[] splitstr = jilu.split(",");
+                        for (String res : splitstr) {
+                            Log.e("输出截图的内容：", res);
+                        }
+                        List<String> jilu2 = new ArrayList<>();
+                        for (int i = 0; i < splitstr.length; i++) {
+                            if (!splitstr[i].equals("")) {
+                                jilu2.add(splitstr[i]);
+
+                            }
+                        }
+                        if (splitstr.length > 4) {
+                            mLinerlayoutJilu.setVisibility(View.VISIBLE);
+                            mLinerlayoutJilu1.setVisibility(View.VISIBLE);
+
+                        } else {
+                            mLinerlayoutJilu.setVisibility(View.VISIBLE);
+                        }
+                        mBtnTixing.setVisibility(View.INVISIBLE);
+                        mBtnTixing2.setVisibility(View.INVISIBLE);
+                        mBtnTixing3.setVisibility(View.INVISIBLE);
+                        mBtnTixing4.setVisibility(View.INVISIBLE);
+                        mBtnTixing5.setVisibility(View.INVISIBLE);
+                        mBtnTixing6.setVisibility(View.INVISIBLE);
+                        mBtnTixing7.setVisibility(View.INVISIBLE);
+                        for (int i = 0; i < jilu2.size(); i++) {
+                            switch (i) {
+                                case 0:
+                                    mBtnTixing.setText(jilu2.get(i));
+                                    mBtnTixing.setVisibility(View.VISIBLE);
+                                    break;
+                                case 1:
+                                    mBtnTixing2.setText(jilu2.get(i));
+                                    mBtnTixing2.setVisibility(View.VISIBLE);
+                                    break;
+                                case 2:
+                                    mBtnTixing3.setText(jilu2.get(i));
+                                    mBtnTixing3.setVisibility(View.VISIBLE);
+                                    break;
+                                case 3:
+                                    mBtnTixing4.setText(jilu2.get(i));
+                                    mBtnTixing4.setVisibility(View.VISIBLE);
+                                    break;
+                                case 4:
+                                    mBtnTixing5.setText(jilu2.get(i));
+                                    mBtnTixing5.setVisibility(View.VISIBLE);
+                                    break;
+                                case 5:
+                                    mBtnTixing6.setText(jilu2.get(i));
+                                    mBtnTixing6.setVisibility(View.VISIBLE);
+                                    break;
+                                case 6:
+                                    mBtnTixing7.setText(jilu2.get(i));
+                                    mBtnTixing7.setVisibility(View.VISIBLE);
+                                    break;
+                            }
+
+                        }
+//                        TextView view = v.findViewById(R.id.btn_tixing);
+//                        view.setText(mt.getQuantity() + "");
                     } else {
                         llMtCome.setVisibility(View.VISIBLE);
+                        mLinerlayoutJilu.setVisibility(View.GONE);
+                        mLinerlayoutJilu1.setVisibility(View.GONE);
                     }
                 } else if (mtDao.getEndTimeNumber(nowTime) < 6) {
                     llMtCome.setVisibility(View.VISIBLE);
                     llMtBack.setVisibility(View.GONE);
+                    mLinerlayoutJilu.setVisibility(View.GONE);
+                    mLinerlayoutJilu1.setVisibility(View.GONE);
                     mRiliJilu.setVisibility(View.VISIBLE);
                     v.findViewById(R.id.back_taday).setVisibility(View.GONE);
                 } else if (dcm.type != 1) {
-                    llMtCome.setVisibility(View.VISIBLE);
-                    llMtBack.setVisibility(View.GONE);
-                    mRiliJilu.setVisibility(View.VISIBLE);
-                    v.findViewById(R.id.back_taday).setVisibility(View.GONE);
+                    MenstruationMt mt = mtDao.getMTMT(nowTime);
+                    if (mt != null) {
+                        mRiliJilu.setVisibility(View.GONE);
+                        llMtCome.setVisibility(View.GONE);
+                        String jilu = mt.getQuantity();
+                        String[] splitstr = jilu.split(",");
+                        for (String res : splitstr) {
+                            Log.e("输出截图的内容：", res);
+                        }
+                        List<String> jilu2 = new ArrayList<>();
+                        for (int i = 0; i < splitstr.length; i++) {
+                            if (!splitstr[i].equals("")) {
+                                jilu2.add(splitstr[i]);
+
+                            }
+                        }
+                        if (jilu2.size() > 5) {
+                            mLinerlayoutJilu.setVisibility(View.VISIBLE);
+                            mLinerlayoutJilu1.setVisibility(View.VISIBLE);
+
+                        } else {
+                            mLinerlayoutJilu.setVisibility(View.VISIBLE);
+                        }
+                        mBtnTixing.setVisibility(View.INVISIBLE);
+                        mBtnTixing2.setVisibility(View.INVISIBLE);
+                        mBtnTixing3.setVisibility(View.INVISIBLE);
+                        mBtnTixing4.setVisibility(View.INVISIBLE);
+                        mBtnTixing5.setVisibility(View.INVISIBLE);
+                        mBtnTixing6.setVisibility(View.INVISIBLE);
+                        mBtnTixing7.setVisibility(View.INVISIBLE);
+                        for (int i = 0; i < jilu2.size(); i++) {
+                            switch (i) {
+                                case 0:
+                                    mBtnTixing.setText(jilu2.get(i));
+                                    mBtnTixing.setVisibility(View.VISIBLE);
+                                    break;
+                                case 1:
+                                    mBtnTixing2.setText(jilu2.get(i));
+                                    mBtnTixing2.setVisibility(View.VISIBLE);
+                                    break;
+                                case 2:
+                                    mBtnTixing3.setText(jilu2.get(i));
+                                    mBtnTixing3.setVisibility(View.VISIBLE);
+                                    break;
+                                case 3:
+                                    mBtnTixing4.setText(jilu2.get(i));
+                                    mBtnTixing4.setVisibility(View.VISIBLE);
+                                    break;
+                                case 4:
+                                    mBtnTixing5.setText(jilu2.get(i));
+                                    mBtnTixing5.setVisibility(View.VISIBLE);
+                                    break;
+                                case 5:
+                                    mBtnTixing6.setText(jilu2.get(i));
+                                    mBtnTixing6.setVisibility(View.VISIBLE);
+                                    break;
+                                case 6:
+                                    mBtnTixing7.setText(jilu2.get(i));
+                                    mBtnTixing7.setVisibility(View.VISIBLE);
+                                    break;
+                            }
+
+                        }
+//                        TextView view = v.findViewById(R.id.btn_tixing);
+//                        view.setText(mt.getQuantity() + "");
+                    } else {
+                        llMtCome.setVisibility(View.VISIBLE);
+                        llMtBack.setVisibility(View.GONE);
+                        mLinerlayoutJilu.setVisibility(View.GONE);
+                        mLinerlayoutJilu1.setVisibility(View.GONE);
+                        mRiliJilu.setVisibility(View.VISIBLE);
+                        v.findViewById(R.id.back_taday).setVisibility(View.GONE);
+                    }
+
                 }
             }
         });
@@ -110,8 +257,20 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
         mRiliJilu = (TextView) v.findViewById(R.id.rili_jilu);
         mRiliJilu.setOnClickListener(this);
 
+        mBtnTixing = (TextView) v.findViewById(R.id.btn_tixing);
+        mBtnTixing2 = (TextView) v.findViewById(R.id.btn_tixing2);
+        mBtnTixing3 = (TextView) v.findViewById(R.id.btn_tixing3);
+        mBtnTixing4 = (TextView) v.findViewById(R.id.btn_tixing4);
+        mLinerlayoutJilu = (LinearLayout) v.findViewById(R.id.linerlayout_jilu);
+        mBtnTixing5 = (TextView) v.findViewById(R.id.btn_tixing5);
+        mBtnTixing6 = (TextView) v.findViewById(R.id.btn_tixing6);
+        mLinerlayoutJilu1 = (LinearLayout) v.findViewById(R.id.linerlayout_jilu1);
+        mBtnTixing7 = (TextView) v.findViewById(R.id.btn_tixing7);
     }
 
+    private void jiluShow() {
+
+    }
     /**
      * 初始化大姨妈数据
      */
