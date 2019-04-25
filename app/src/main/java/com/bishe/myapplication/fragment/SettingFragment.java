@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.bishe.myapplication.LogInActivity;
 import com.bishe.myapplication.R;
 import com.bishe.myapplication.dayimarili.MenstruationCycle;
+import com.bishe.myapplication.dayimarili.db.MenstruationDBHelper;
 import com.bishe.myapplication.dayimarili.db.MenstruationDao;
 import com.bishe.myapplication.utils.CommomDialog;
 import com.bishe.myapplication.utils.CommomDialog2;
@@ -164,6 +165,8 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                     public void onClick(DialogInterface dialog, int which) {
                         MySharedPreferences.setIslogin(false);
                         MySharedPreferences.clearAll();
+                        MenstruationDao mtDao = new MenstruationDao(getActivity());
+                        mtDao.deleteALL();
                         Intent intent = new Intent(context, LogInActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);

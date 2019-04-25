@@ -3,12 +3,14 @@ package com.bishe.myapplication.dayimarili.db;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
 
 import com.bishe.myapplication.dayimarili.MenstruationCycle;
 import com.bishe.myapplication.dayimarili.MenstruationModel;
 import com.bishe.myapplication.dayimarili.MenstruationMt;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +34,7 @@ public class MenstruationDao {
      * @param mc
      */
     public void setMTCycle(MenstruationCycle mc) {
+
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         if (db.isOpen()) {
             db.execSQL("INSERT INTO " + MenstruationDBHelper.TB_NAME_MT_CYCLE + " (number, cycle) " +
@@ -91,7 +94,7 @@ public class MenstruationDao {
                     " startTime > ? ", new String[]{mt.getBeginTime() + ""});
             while (cursor.moveToNext()) {
                 if (cursor.getLong(0) != 0) {
-                    mt.setCycle((int) ((cursor.getLong(0) - mt.getBeginTime()) / 86400000l) + 1);
+                    mt.setCycle((int) ((cursor.getLong(0) - mt.getBeginTime()) / 86400000L) + 1);
                 }
             }
             db.execSQL("INSERT INTO " + MenstruationDBHelper.TB_NAME_MT_TIME + " (date, startTime, endTime, cycle, number) " +
@@ -342,7 +345,6 @@ public class MenstruationDao {
 
     /**
      * 修改数据库时间
-     *
      */
     public void updateMTM(MenstruationMt mt) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -351,5 +353,34 @@ public class MenstruationDao {
                     new Object[]{mt.getQuantity(), mt.getDate()});
             db.close();
         }
+    }
+
+    public void deleteALL() {
+//        SQLiteDatabase db = dbHelper.getWritableDatabase();
+//        db.delete("menstruation_cycle", "id=?", new String[]{"1"});
+//        db.delete("menstruation_time", "id=?", new String[]{"1"});
+//        db.delete(MenstruationDBHelper.TB_NAME_MT, "id=?", new String[]{"1"});
+//        dbHelper.deleteAll(mContext);
+//        SQLiteDatabase.deleteDatabase(mContext.getDatabasePath("dayima.db"));
+//        SQLiteOpenHelper dbHelper = new DatabaseHelper(SQLiteActivity.this,
+//                "test_carson");
+        // 调用getReadableDatabase()方法创建或打开一个可以读的数据库
+        //通过返回的SQLiteDatabase对象对数据库进行操作
+//        SQLiteDatabase sqliteDatabase = dbHelper.getReadableDatabase();
+        //删除名为test.db数据库
+//        SQLiteDatabase.deleteDatabase(new File("test.db"));
+//
+//        // 创建DatabaseHelper对象
+//        MenstruationDBHelper dbHelper3 = new MenstruationDBHelper(mContext, "dayima.db", 1);
+//
+//        // 调用getWritableDatabase()方法创建或打开一个可以读的数据库
+//        SQLiteDatabase sqliteDatabase3 = dbHelper3.getWritableDatabase();
+//
+//        //删除数据
+//        sqliteDatabase3.delete("user", "id=?", new String[]{"1"});
+//
+//        //关闭数据库
+//        sqliteDatabase3.close();
+
     }
 }

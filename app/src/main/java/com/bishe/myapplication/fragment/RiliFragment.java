@@ -95,11 +95,12 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
                     mLinerlayoutJilu.setVisibility(View.GONE);
                     mLinerlayoutJilu1.setVisibility(View.GONE);
                     llMtBack.setVisibility(View.GONE);
-                    mRiliJilu.setVisibility(View.GONE);
+                    mRiliJilu.setVisibility(View.VISIBLE);
                     v.findViewById(R.id.back_taday).setVisibility(View.GONE);
                     MenstruationMt mt = mtDao.getMTMT(nowTime);
                     if (mt != null) {
                         llMtCome.setVisibility(View.GONE);
+                        mRiliJilu.setVisibility(View.GONE);
                         String jilu = mt.getQuantity();
                         String[] splitstr = jilu.split(",");
                         for (String res : splitstr) {
@@ -456,41 +457,6 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        /**
-         * 姨妈来了
-         */
-        llMtCome.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                long startTime = mtDao.getStartTimeNumber(nowTime);
-                if ((startTime - nowTime) / 86400000 < 9 && (startTime - nowTime) / 86400000 > 0) {
-                    mtDao.updateMTStartTime(nowTime, startTime);
-                } else {
-                    MenstruationModel mtm = new MenstruationModel();
-                    mtm.setDate(DateChange.dateTimeStamp(DateChange.timeStamp2Date(nowTime + "", "yyyy-MM") + "-1", "yyyy-MM-dd"));
-                    mtm.setBeginTime(nowTime);
-                    mtm.setEndTime(nowTime + 86400000L * (mCycle.getNumber() - 1));
-                    mtm.setCycle(mCycle.getCycle());
-                    mtm.setDurationDay(mCycle.getNumber());
-                    mtDao.setMTModel(mtm);
-                }
-                refreshUI();
-            }
-        });
-
-        /**
-         * 姨妈走了
-         */
-        llMtBack.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                mtDao.updateMTEndTime(nowTime);
-                refreshUI();
-            }
-        });
-
     }
 
     /**
@@ -558,7 +524,7 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
             case R.id.rili_jilu:
                 boolean isJinqi = false;
                 //判断点击当前时间是否为在预测大姨妈期间
-                if (nowTime > mtmBass.getBeginTime() && nowTime < mtmBass.getEndTime()) {
+                if (nowTime >= mtmBass.getBeginTime() && nowTime <=mtmBass.getEndTime()) {
                     isJinqi = true;
                 } else {
                     isJinqi = false;

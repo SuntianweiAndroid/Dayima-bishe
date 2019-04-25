@@ -216,53 +216,55 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
+                android:layout_marginTop="10dp"
                 android:drawableLeft="@mipmap/qubiezhen"
                 android:gravity="center"
                 android:text="暂无记录，点击添加"
                 android:textSize="15sp" />
 
             <LinearLayout
+                android:id="@+id/linerlayout_jilu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/linerlayout_jilu"
-                android:visibility="gone"
-                android:orientation="horizontal">
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/btn_tixing"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:background="@drawable/bg_dialog_rili"
                     android:layout_marginLeft="5dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_dialog_rili"
+                    android:gravity="center" />
 
                 <TextView
                     android:id="@+id/btn_tixing2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
-                    android:gravity="center"
+                    android:layout_weight="1"
                     android:background="@drawable/bg_dialog_rili"
-                    android:layout_weight="1" />
+                    android:gravity="center" />
 
                 <TextView
                     android:id="@+id/btn_tixing3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
-                    android:gravity="center"
+                    android:layout_weight="1"
                     android:background="@drawable/bg_dialog_rili"
-                    android:layout_weight="1" />
+                    android:gravity="center" />
 
                 <TextView
                     android:id="@+id/btn_tixing4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
-                    android:gravity="center"
-                    android:background="@drawable/bg_dialog_rili"
                     android:layout_weight="1"
+                    android:background="@drawable/bg_dialog_rili"
+                    android:gravity="center"
                     android:text="dddd" />
 
                 <ImageView
@@ -272,39 +274,39 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linerlayout_jilu1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/linerlayout_jilu1"
-                android:visibility="gone"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal">
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/btn_tixing5"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:background="@drawable/bg_dialog_rili"
                     android:layout_marginLeft="5dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_dialog_rili"
+                    android:gravity="center" />
 
                 <TextView
                     android:id="@+id/btn_tixing6"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:background="@drawable/bg_dialog_rili"
                     android:layout_marginLeft="5dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_dialog_rili"
+                    android:gravity="center" />
 
                 <TextView
                     android:id="@+id/btn_tixing7"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:background="@drawable/bg_dialog_rili"
                     android:layout_marginLeft="5dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_dialog_rili"
+                    android:gravity="center" />
 
                 <View
                     android:layout_width="match_parent"
@@ -323,6 +325,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:text="无法记录未来哦"
                 android:textSize="15sp"
