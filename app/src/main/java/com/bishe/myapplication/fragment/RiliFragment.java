@@ -269,9 +269,7 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
         mBtnTixing7 = (TextView) v.findViewById(R.id.btn_tixing7);
     }
 
-    private void jiluShow() {
 
-    }
     /**
      * 初始化大姨妈数据
      */

@@ -144,6 +144,9 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                     public void onClick(Dialog dialog, boolean confirm) {
                         if (confirm) {
                             MySharedPreferences.setIslogin(false);
+                            MySharedPreferences.clearAll();
+                            MenstruationDao mtDao = new MenstruationDao(getActivity());
+                            mtDao.deleteALL();
                             Intent intent = new Intent(getActivity(), LogInActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);

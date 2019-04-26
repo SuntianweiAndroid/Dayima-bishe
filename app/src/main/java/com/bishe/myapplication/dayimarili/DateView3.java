@@ -378,9 +378,36 @@ public class DateView3 extends GridLayout {
         calendar.setTime(curDate);
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
-        int day = calendar.get(Calendar.DATE);//获取日
-        int week = calendar.get(Calendar.DAY_OF_WEEK)-1;
-        return "预测经期:" + month + "月"+ day + "日"  + ",    周" + week;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);//获取日
+        int week = calendar.get(Calendar.DAY_OF_WEEK) ;
+        String weeks = "";
+        switch (week) {
+            case 1:
+                weeks = "周日";
+                break;
+            case 2:
+                weeks = "周一";
+                break;
+            case 3:
+                weeks = "周二";
+                break;
+            case 4:
+                weeks = "周三";
+                break;
+            case 5:
+                weeks = "周四";
+                break;
+            case 6:
+                weeks = "周五";
+                break;
+            case 7:
+                weeks = "周六";
+                break;
+            default:
+                weeks = "";
+                break;
+        }
+        return "预测经期:" + month + "月" + day + "日" + weeks;
     }
 
     private OnItemListener onItemListener;

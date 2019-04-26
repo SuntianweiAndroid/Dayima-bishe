@@ -214,7 +214,40 @@ public class HomeFragment extends Fragment {
         dateView3.initData(mtmList);
         tvDate2.setText(dateView3.clickRightMonth(mtmList3));
         tvDate2.setText(dateView3.getYearAndmonth());
-        mTvDownDay.setText(dateView3.getYearAndmonthandweek());
+        Date date3 = new Date(mtmBass.getBeginTime() +86400000L * mtDao.getMTCycle().getCycle());
+        Calendar calendar3 = Calendar.getInstance();
+        calendar3.setTime(date3);
+        int month3 = calendar3.get(Calendar.MONTH) + 1;
+        int day3 = calendar3.get(Calendar.DATE);//获取日
+        int week3 = calendar3.get(Calendar.DAY_OF_WEEK)-1;
+        String weeks = "";
+        switch (week3) {
+            case 1:
+                weeks = "周日";
+                break;
+            case 2:
+                weeks = "周一";
+                break;
+            case 3:
+                weeks = "周二";
+                break;
+            case 4:
+                weeks = "周三";
+                break;
+            case 5:
+                weeks = "周四";
+                break;
+            case 6:
+                weeks = "周五";
+                break;
+            case 7:
+                weeks = "周六";
+                break;
+            default:
+                weeks = "";
+                break;
+        }
+        mTvDownDay.setText("预测经期:"+ + month3 + "月"  + day3+ "日" + ",    " + weeks);
     }
 
     /**

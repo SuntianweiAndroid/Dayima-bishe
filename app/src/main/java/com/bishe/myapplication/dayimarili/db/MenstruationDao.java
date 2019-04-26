@@ -356,31 +356,6 @@ public class MenstruationDao {
     }
 
     public void deleteALL() {
-//        SQLiteDatabase db = dbHelper.getWritableDatabase();
-//        db.delete("menstruation_cycle", "id=?", new String[]{"1"});
-//        db.delete("menstruation_time", "id=?", new String[]{"1"});
-//        db.delete(MenstruationDBHelper.TB_NAME_MT, "id=?", new String[]{"1"});
-//        dbHelper.deleteAll(mContext);
-//        SQLiteDatabase.deleteDatabase(mContext.getDatabasePath("dayima.db"));
-//        SQLiteOpenHelper dbHelper = new DatabaseHelper(SQLiteActivity.this,
-//                "test_carson");
-        // 调用getReadableDatabase()方法创建或打开一个可以读的数据库
-        //通过返回的SQLiteDatabase对象对数据库进行操作
-//        SQLiteDatabase sqliteDatabase = dbHelper.getReadableDatabase();
-        //删除名为test.db数据库
-//        SQLiteDatabase.deleteDatabase(new File("test.db"));
-//
-//        // 创建DatabaseHelper对象
-//        MenstruationDBHelper dbHelper3 = new MenstruationDBHelper(mContext, "dayima.db", 1);
-//
-//        // 调用getWritableDatabase()方法创建或打开一个可以读的数据库
-//        SQLiteDatabase sqliteDatabase3 = dbHelper3.getWritableDatabase();
-//
-//        //删除数据
-//        sqliteDatabase3.delete("user", "id=?", new String[]{"1"});
-//
-//        //关闭数据库
-//        sqliteDatabase3.close();
-
+        SQLiteDatabase.deleteDatabase(mContext.getDatabasePath("dayima.db"));
     }
 }
