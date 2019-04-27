@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.GridLayout;
 
+import com.bishe.myapplication.dayimarili.db.MenstruationModel;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,10 +32,11 @@ public class DateView2 extends GridLayout {
     private DateCardModel[] dateList = new DateCardModel[number];
     private int lastNumber, toNumber; //这个月显示上月天数， 这个月天数
     private String dateClick = "";//记录点击的日期
+    private String TAG = "stw";
+    private int width = 1080;
 
     public DateView2(Context context) {
         super(context, null);
-
     }
 
     public DateView2(Context context, @Nullable AttributeSet attrs) {
@@ -45,6 +48,7 @@ public class DateView2 extends GridLayout {
     }
 
     public void initData(List<MenstruationModel> mtmList) {
+        //获取屏幕宽度
         WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(displayMetrics);
@@ -63,20 +67,11 @@ public class DateView2 extends GridLayout {
         onItemListener.onClick(DateChange.dateTimeStamp(dateClick, "yyyy/MM/dd"), dateList[lastNumber + getNowTime("dd")]);
     }
 
-    String TAG = "stw";
-    int width = 1080;
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-//        this.width = w;
         Log.i(TAG, "onSizeChanged: ");
-//		if(is){
-//			int cardWidth = w/7;
-//			addCards(cardWidth,cardWidth);
-//			is = false;
-//		}
-
     }
 
     private void addCards(int cardWidth, int cardHeight) {
@@ -259,13 +254,8 @@ public class DateView2 extends GridLayout {
 
     /**
      * 计算当月显示的状态（1为月经期，2为预测期，3为安全期，4为易孕期, 0为其他）
-     *
-     * @param start 当月月经开始日期
-     * @param end   当月月经结束日期1556121600000 (0x16A50134000)
      */
     public void calculateType(List<MenstruationModel> mtmList) {
-
-
         if (mtmList.size() != 0) {
             for (int i = lastNumber + 1; i <= lastNumber + toNumber; i++) {
                 if (isType1(mtmList, i) != -1) {//月经期或者预测期
@@ -382,78 +372,6 @@ public class DateView2 extends GridLayout {
 
     public interface OnItemListener {
         public void onClick(long time, DateCardModel dcm);
-    }
-
-    /**
-     * 向上一月
-     *
-     * @return
-     */
-    public String clickLeftMonth(List<MenstruationModel> mtmList) {
-        calendar.setTime(curDate);
-        calendar.add(Calendar.MONTH, -1);
-        curDate = calendar.getTime();
-        calculateDate();
-        if (mtmList != null) {
-            calculateType(mtmList);
-        }
-        for (int i = 0; i < number; i++) {
-            dateCard[i].initData(dateList[i]);
-        }
-        setListener();
-        return getYearAndmonth();
-    }
-
-    /**
-     * 向下一月
-     *
-     * @return
-     */
-    public String clickRightMonth(List<MenstruationModel> mtmList) {
-        calendar.setTime(curDate);
-        calendar.add(Calendar.MONTH, 1);
-        curDate = calendar.getTime();
-        calculateDate();
-        if (mtmList != null) {
-            calculateType(mtmList);
-        }
-        for (int i = 0; i < number; i++) {
-            dateCard[i].initData(dateList[i]);
-        }
-        setListener();
-        return getYearAndmonth();
-    }
-
-
-    /**
-     * 回今天
-     *
-     * @return
-     */
-    public String recurToday(List<MenstruationModel> mtmList) {
-        calendar.setTime(curDate);
-        calendar.add(Calendar.MONTH, getNowTime("yyyy") * 12 + getNowTime("MM") - (calendar.get(Calendar.MONTH) + 1) - calendar.get(Calendar.YEAR) * 12);
-        curDate = calendar.getTime();
-        calculateDate();
-        calculateType(mtmList);
-        int position = 1;
-        for (int i = lastNumber + 1; i <= lastNumber + toNumber; i++) {
-            if (getNowTime("yyyy") == calendar.get(Calendar.YEAR)
-                    && getNowTime("MM") == calendar.get(Calendar.MONTH) + 1
-                    && getNowTime("dd") == position) {
-                dateList[i].isClick = true;
-                dateClick = calendar.get(Calendar.YEAR) + "/" + (calendar.get(Calendar.MONTH) + 1) + "/" + dateList[i].date;
-                onItemListener.onClick(DateChange.dateTimeStamp(dateClick, "yyyy/MM/dd"), dateList[i]);
-            } else {
-                dateList[i].isClick = false;
-            }
-            position++;
-        }
-        for (int i = 0; i < number; i++) {
-            dateCard[i].initData(dateList[i]);
-        }
-        setListener();
-        return getYearAndmonth();
     }
 
     /**

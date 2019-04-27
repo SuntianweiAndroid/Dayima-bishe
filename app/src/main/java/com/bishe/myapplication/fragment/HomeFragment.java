@@ -15,8 +15,8 @@ import com.bishe.myapplication.dayimarili.DateCardModel;
 import com.bishe.myapplication.dayimarili.DateChange;
 import com.bishe.myapplication.dayimarili.DateView2;
 import com.bishe.myapplication.dayimarili.DateView3;
-import com.bishe.myapplication.dayimarili.MenstruationCycle;
-import com.bishe.myapplication.dayimarili.MenstruationModel;
+import com.bishe.myapplication.dayimarili.db.MenstruationCycle;
+import com.bishe.myapplication.dayimarili.db.MenstruationModel;
 import com.bishe.myapplication.dayimarili.db.MenstruationDao;
 
 import java.text.SimpleDateFormat;
@@ -41,7 +41,6 @@ public class HomeFragment extends Fragment {
     private List<MenstruationModel> list;
     private Context mContext;
     private List<MenstruationModel> mtmList3;
-    private View view;
     /**
      * 上次经期:3月10号 周日
      */
@@ -71,13 +70,13 @@ public class HomeFragment extends Fragment {
         tvDate2 = (TextView) v.findViewById(R.id.tv_date2);
         dateView = (DateView2) v.findViewById(R.id.date_view);
         dateView3 = (DateView3) v.findViewById(R.id.date_view2);
-//        dateView2 = (DateView) v.findViewById(R.id.date_view2);
         dateView.setOnItemClickListener(new DateView2.OnItemListener() {
 
             @Override
             public void onClick(long time, DateCardModel d) {
                 nowTime = time;
                 dcm = d;
+                //判断经期开始日期是否大于现在时间
                 if (time > DateChange.getDate()) {
                     llMtCome.setVisibility(View.GONE);
                     llMtBack.setVisibility(View.GONE);
@@ -86,15 +85,12 @@ public class HomeFragment extends Fragment {
                 } else if (dcm.type == 1) {
                     llMtCome.setVisibility(View.GONE);
                     llMtBack.setVisibility(View.VISIBLE);
-
                 } else if (mtDao.getEndTimeNumber(nowTime) < 6) {
                     llMtCome.setVisibility(View.GONE);
                     llMtBack.setVisibility(View.VISIBLE);
-
                 } else if (dcm.type != 1) {
                     llMtCome.setVisibility(View.VISIBLE);
                     llMtBack.setVisibility(View.GONE);
-
                 }
             }
         });
@@ -135,10 +131,14 @@ public class HomeFragment extends Fragment {
      * 初始化大姨妈数据
      */
     private void initData() {
+        //获取日历对象
         calendar = Calendar.getInstance();
         curDate = new Date();
+        //设置当前日期
         calendar.setTime(curDate);
+        //获取数据库
         mtDao = new MenstruationDao(mContext);
+        //获取周期与平均天数
         mCycle = mtDao.getMTCycle();
         long nowDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-1", "yyyy-MM-dd");
         long nextDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 2) + "-1", "yyyy-MM-dd");
@@ -189,18 +189,42 @@ public class HomeFragment extends Fragment {
         dateView.initData(mtmList);
         tvDate.setText(dateView.getYearAndmonth());
         //初始化上一月日历表格计算时间
-
-        long ss = mtmBass.getBeginTime() - 86400000L * mtDao.getMTCycle().getCycle();
-        Date date = new Date(ss);
+        long time = mtmBass.getBeginTime() - 86400000L * mtDao.getMTCycle().getCycle();
+        Date date = new Date(time);
         Calendar calendar2 = Calendar.getInstance();
         calendar2.setTime(date);
         int year = calendar2.get(Calendar.YEAR);
         int month = calendar2.get(Calendar.MONTH) + 1;
         int day = calendar2.get(Calendar.DATE);//获取日
-        int week = calendar2.get(Calendar.DAY_OF_WEEK)-1;
-
-        mTvUpDay.setText("上次经期:"+ + month + "月"  + day+ "日" + ",    周" + week);
-//
+        int week2 = calendar2.get(Calendar.DAY_OF_WEEK)-1;
+        String weeks2;
+        switch (week2) {
+            case 1:
+                weeks2 = "周日";
+                break;
+            case 2:
+                weeks2 = "周一";
+                break;
+            case 3:
+                weeks2 = "周二";
+                break;
+            case 4:
+                weeks2 = "周三";
+                break;
+            case 5:
+                weeks2 = "周四";
+                break;
+            case 6:
+                weeks2 = "周五";
+                break;
+            case 7:
+                weeks2 = "周六";
+                break;
+            default:
+                weeks2 = "";
+                break;
+        }
+        mTvUpDay.setText("上次经期:"+ + month + "月"  + day+ "日" + ",    " + week2);
 
         //初始化下一月日历表格
         Calendar calendar = Calendar.getInstance();
@@ -308,38 +332,6 @@ public class HomeFragment extends Fragment {
 
 
     private void setListener(View v) {
-//        /**
-//         * 上一月
-//         */
-//        v.findViewById(R.id.iv_click_left_month).setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View arg0) {
-//                calendar.setTime(curDate);
-//                calendar.add(Calendar.MONTH, -1);
-//                curDate = calendar.getTime();
-//                long nowDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-1", "yyyy-MM-dd");
-//                long nextDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 2) + "-1", "yyyy-MM-dd");
-//                List<MenstruationModel> mtmList = calculateMt(nowDate, nextDate);
-//                tvDate.setText(dateView.clickLeftMonth(mtmList));
-//            }
-//        });
-//        /**
-//         * 下一月
-//         */
-//        v.findViewById(R.id.iv_click_right_month).setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View arg0) {
-//                calendar.setTime(curDate);
-//                calendar.add(Calendar.MONTH, 1);
-//                curDate = calendar.getTime();
-//                long nowDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-1", "yyyy-MM-dd");
-//                long nextDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 2) + "-1", "yyyy-MM-dd");
-//                List<MenstruationModel> mtmList = calculateMt(nowDate, nextDate);
-//                tvDate.setText(dateView.clickRightMonth(mtmList));
-//            }
-//        });
         /**
          * 回到当月
          */
@@ -394,17 +386,7 @@ public class HomeFragment extends Fragment {
                     mtm.setDurationDay(mCycle.getNumber());
                     mtDao.setMTModel(mtm);
                 }
-
-//                calendar.setTime(curDate);
-//                calendar.add(Calendar.MONTH, 1);
-//                curDate = calendar.getTime();
-//                long nowDate3 = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-1", "yyyy-MM-dd");
-//                long nextDate3 = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 2) + "-1", "yyyy-MM-dd");
-//                List<MenstruationModel> mtmList3 = calculateMt(nowDate3, nextDate3);
-//                tvDate2.setText(dateView3.clickRightMonth(mtmList3));
-//                tvDate2.setText(dateView3.getYearAndmonth());
                 refreshUI();
-
 
             }
         });
@@ -417,18 +399,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View arg0) {
                 mtDao.updateMTEndTime(nowTime);
-//                Calendar calendar = Calendar.getInstance();
-//                Date curDate = new Date();
-//                calendar.setTime(curDate);
-//                calendar.add(Calendar.MONTH, 1);
-//                curDate = calendar.getTime();
-//                long nowDate3 = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-1", "yyyy-MM-dd");
-//                long nextDate3 = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 2) + "-1", "yyyy-MM-dd");
-//                List<MenstruationModel> mtmList3 = calculateMt(nowDate3, nextDate3);
-//                tvDate2.setText(dateView3.clickRightMonth(mtmList3));
-//                tvDate2.setText(dateView3.getYearAndmonth());
                 refreshUI();
-
             }
         });
 
@@ -464,7 +435,6 @@ public class HomeFragment extends Fragment {
         }
         dateView.refreshUI(mtmList);
         dateView3.recurToday(mtmList3);
-
 
     }
 

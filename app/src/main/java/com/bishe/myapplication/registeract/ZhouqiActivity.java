@@ -21,7 +21,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+/**
+ * 选择周期天数界面
+ */
 public class ZhouqiActivity extends MyBaseActivity implements View.OnClickListener {
 
     private ListView mZhouqiList;
@@ -35,6 +37,7 @@ public class ZhouqiActivity extends MyBaseActivity implements View.OnClickListen
      */
     private Button mBtnTrue;
     private int zhouqi = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,21 +46,30 @@ public class ZhouqiActivity extends MyBaseActivity implements View.OnClickListen
         initDev();
     }
 
+    /**
+     * 初始化数据
+     */
     private void initDev() {
+        //周期选择范围15--91天
         final List<String> stringList = new ArrayList<>();
         for (int i = 15; i < 91; i++) {
             stringList.add(i + "天");
         }
+        //实例化自定义adapter（适配器）
         final Myadapter myadapter = new Myadapter(stringList, this);
+        //适配周期listview数据
         mZhouqiList.setAdapter(myadapter);
+        //设置周期listview item点击事件
         mZhouqiList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 myadapter.setSelect(position);
+                //刷新listview数据
                 myadapter.notifyDataSetChanged();
                 int zhouqiTiem = Integer.parseInt(getNumbers(stringList.get(position)));
                 Log.i("stw", "onItemClick: 周期==" + zhouqiTiem);
                 zhouqi = zhouqiTiem;
+                //保存周期数据
                 MySharedPreferences.setZhouqiTime(zhouqiTiem);
             }
         });
@@ -81,9 +93,11 @@ public class ZhouqiActivity extends MyBaseActivity implements View.OnClickListen
                 finish();
                 break;
             case R.id.btn_true:
-                if (zhouqi==0) {
-                    showToast(this,"请选择周期天数！");
-                }else {
+                //判断是否选择了周期天数否则提示
+                if (zhouqi == 0) {
+                    showToast(this, "请选择周期天数！");
+                } else {
+                    //跳转经期选择界面
                     intentClass(JinqiActivity.class);
                 }
                 break;

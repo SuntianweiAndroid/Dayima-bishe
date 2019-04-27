@@ -11,7 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bishe.myapplication.R;
-
+/**
+ * 提醒设置界面
+ */
 public class SettingTixingFragment extends Fragment implements View.OnClickListener {
 
 

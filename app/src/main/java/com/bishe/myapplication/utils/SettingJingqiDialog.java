@@ -9,20 +9,21 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.bishe.myapplication.Myadapter;
 import com.bishe.myapplication.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CommomDialog2 extends Dialog implements View.OnClickListener {
+/**
+ * 自定义设置界面 经期与周期 对话框
+ */
+public class SettingJingqiDialog extends Dialog implements View.OnClickListener {
     private ListView listView;
     private ImageView imageViewError;
     private TextView titleTxt;
@@ -37,39 +38,39 @@ public class CommomDialog2 extends Dialog implements View.OnClickListener {
     private String type;
     private int selectTime;
 
-    public CommomDialog2(Context context) {
+    public SettingJingqiDialog(Context context) {
         super(context);
         this.mContext = context;
     }
 
-    public CommomDialog2(Context context, int themeResId) {
+    public SettingJingqiDialog(Context context, int themeResId) {
         super(context, themeResId);
         this.mContext = context;
     }
 
-    public CommomDialog2(Context context, int themeResId, OnCloseListener listener, String type) {
+    public SettingJingqiDialog(Context context, int themeResId, OnCloseListener listener, String type) {
         super(context, themeResId);
         this.mContext = context;
         this.type = type;
         this.listener = listener;
     }
 
-    protected CommomDialog2(Context context, boolean cancelable, OnCancelListener cancelListener) {
+    protected SettingJingqiDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
         this.mContext = context;
     }
 
-    public CommomDialog2 setTitle(String title) {
+    public SettingJingqiDialog setTitle(String title) {
         this.title = title;
         return this;
     }
 
-    public CommomDialog2 setPositiveButton(String name) {
+    public SettingJingqiDialog setPositiveButton(String name) {
         this.positiveName = name;
         return this;
     }
 
-    public CommomDialog2 setNegativeButton(String name) {
+    public SettingJingqiDialog setNegativeButton(String name) {
         this.negativeName = name;
         return this;
     }

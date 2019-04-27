@@ -14,6 +14,9 @@ import com.bishe.myapplication.fragment.JiluFragment;
 import com.bishe.myapplication.fragment.RiliFragment;
 import com.bishe.myapplication.fragment.SettingFragment;
 
+/**
+ * 主界面 承托fragment
+ */
 public class MenuActivity extends FragmentActivity implements View.OnClickListener {
     private HomeFragment homeFragment;
     private SettingFragment settingFragment;
@@ -32,7 +35,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏 第一种方法
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
         setContentView(R.layout.activity_menu);
         initView();
         initFragment();
@@ -55,25 +58,9 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
 
     }
 
-    //    /*
-////     * 去除（隐藏）所有的Fragment
-////     * */
-////    private void hideFragment(FragmentTransaction transaction) {
-////        if (f1 != null) {
-////            //transaction.hide(f1);隐藏方法也可以实现同样的效果，不过我一般使用去除
-////            transaction.remove(f1);
-////        }
-////        if (f2 != null) {
-////            //transaction.hide(f2);
-////            transaction.remove(f2);
-////        }
-////        if (f3 != null) {
-////            //transaction.hide(f3);
-////            transaction.remove(f3);
-////        }
-////
-////
-////    }
+    /**
+     * 初始所有fragment
+     */
     private void initFragment() {
         homeFragment = new HomeFragment();
         settingFragment = new SettingFragment();
@@ -107,31 +94,39 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
             default:
                 break;
             case R.id.btn_home:
+                //切换按钮改变颜色
                 mLayoutHome.setBackgroundResource(R.drawable.menu_btn_false);
                 mLayoutDate.setBackgroundResource(R.drawable.menu_btn_true);
                 mLayoutYueliang.setBackgroundResource(R.drawable.menu_btn_true);
                 mLayoutSetting.setBackgroundResource(R.drawable.menu_btn_true);
+                //改变fragment
                 changeFragment(homeFragment);
                 break;
             case R.id.date:
+                //切换按钮改变颜色
                 mLayoutHome.setBackgroundResource(R.drawable.menu_btn_true);
                 mLayoutDate.setBackgroundResource(R.drawable.menu_btn_false);
                 mLayoutYueliang.setBackgroundResource(R.drawable.menu_btn_true);
                 mLayoutSetting.setBackgroundResource(R.drawable.menu_btn_true);
+                //改变fragment
                 changeFragment(riliFragment);
                 break;
             case R.id.yueliang:
+                //切换按钮改变颜色
                 mLayoutHome.setBackgroundResource(R.drawable.menu_btn_true);
                 mLayoutDate.setBackgroundResource(R.drawable.menu_btn_true);
                 mLayoutYueliang.setBackgroundResource(R.drawable.menu_btn_false);
                 mLayoutSetting.setBackgroundResource(R.drawable.menu_btn_true);
+                //改变fragment
                 changeFragment(jiluFragment);
                 break;
             case R.id.btn_setting:
+                //切换按钮改变颜色
                 mLayoutHome.setBackgroundResource(R.drawable.menu_btn_true);
                 mLayoutDate.setBackgroundResource(R.drawable.menu_btn_true);
                 mLayoutYueliang.setBackgroundResource(R.drawable.menu_btn_true);
                 mLayoutSetting.setBackgroundResource(R.drawable.menu_btn_false);
+                //改变fragment
                 changeFragment(settingFragment);
                 break;
 

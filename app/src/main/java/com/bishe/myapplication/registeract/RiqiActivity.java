@@ -1,7 +1,6 @@
 package com.bishe.myapplication.registeract;
 
 import android.os.Bundle;
-import android.text.method.DateTimeKeyListener;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,11 +14,13 @@ import com.bishe.myapplication.date.CustomDatePicker;
 import com.bishe.myapplication.date.DateFormatUtils;
 import com.bishe.myapplication.date.PickerView;
 import com.bishe.myapplication.dayimarili.DateChange;
-import com.bishe.myapplication.dayimarili.MenstruationCycle;
-import com.bishe.myapplication.dayimarili.MenstruationModel;
+import com.bishe.myapplication.dayimarili.db.MenstruationCycle;
+import com.bishe.myapplication.dayimarili.db.MenstruationModel;
 import com.bishe.myapplication.dayimarili.db.MenstruationDao;
 import com.bishe.myapplication.utils.MySharedPreferences;
-
+/**
+ * 选择日期天数界面
+ */
 public class RiqiActivity extends MyBaseActivity implements View.OnClickListener {
 
     private ImageButton mImgBack;
@@ -59,7 +60,9 @@ public class RiqiActivity extends MyBaseActivity implements View.OnClickListener
 
     private CustomDatePicker mDatePicker;
 
-
+    /**
+     * 初始化 提起选择器
+     */
     private void initDatePicker() {
         //设置初始显示时间
         long beginTimestamp = DateFormatUtils.str2Long("2018-01-01", false);
@@ -91,6 +94,7 @@ public class RiqiActivity extends MyBaseActivity implements View.OnClickListener
     }
 
     MenstruationDao mtDao;
+
     private void initView() {
         mImgBack = (ImageButton) findViewById(R.id.img_back);
         mTvTitles = (TextView) findViewById(R.id.tv_titles);
@@ -104,6 +108,7 @@ public class RiqiActivity extends MyBaseActivity implements View.OnClickListener
         mBtnTrue = (Button) findViewById(R.id.btn_true);
         mBtnTrue.setOnClickListener(this);
         mImgBack.setOnClickListener(this);
+        //初始化数据库
         mtDao = new MenstruationDao(this);
     }
 
@@ -115,28 +120,35 @@ public class RiqiActivity extends MyBaseActivity implements View.OnClickListener
                 break;
             case R.id.btn_true:
                 mDatePicker.getSelectTime();
+                //判断是否选择日期
                 if (time.equals("")) {
-                    showToast(this,"请选择日期！");
-                }else {
+                    showToast(this, "请选择日期！");
+                } else {
+                    //大姨妈平均周期与平均天数表插入保存数据
                     MenstruationCycle mc = new MenstruationCycle();
                     mc.setNumber(MySharedPreferences.getJingqiTime());
                     mc.setCycle(MySharedPreferences.getZhouqiTime());
                     mtDao.setMTCycle(mc);
+
+                    //大姨妈开始结束时间等数据表插入保存数据
                     MenstruationModel mtm = new MenstruationModel();
                     mtm.setBeginTime(DateChange.dateTimeStamp(MySharedPreferences.getRiqiTime2(), "yyyy-MM-dd"));
-                    mtm.setEndTime(DateChange.dateTimeStamp(MySharedPreferences.getRiqiTime2(), "yyyy-MM-dd") + 86400000L* (MySharedPreferences.getJingqiTime() - 1));
+                    mtm.setEndTime(DateChange.dateTimeStamp(MySharedPreferences.getRiqiTime2(), "yyyy-MM-dd") + 86400000L * (MySharedPreferences.getJingqiTime() - 1));
                     mtm.setCycle(MySharedPreferences.getZhouqiTime());
                     mtm.setDurationDay(MySharedPreferences.getJingqiTime());
                     mtm.setDate(DateChange.dateTimeStamp(MySharedPreferences.getRiqiTime2(), "yyyy-MM-dd"));
                     mtDao.setMTModel(mtm);
 
                     showToast(this, "注册成功！");
+                    //修改是否登录状态
                     MySharedPreferences.setIslogin(true);
+                    //进入主界面
                     intentClass2(MenuActivity.class);
                     finish();
                 }
                 break;
             case R.id.img_back:
+                //返回
                 finish();
                 break;
 

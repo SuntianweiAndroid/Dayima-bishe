@@ -11,18 +11,19 @@ import android.widget.TextView;
 import com.bishe.myapplication.R;
 import com.bishe.myapplication.SlvSuggestAdapter;
 import com.bishe.myapplication.dayimarili.HistogramView;
-import com.bishe.myapplication.dayimarili.MenstruationCycle;
-import com.bishe.myapplication.dayimarili.MenstruationModel;
+import com.bishe.myapplication.dayimarili.db.MenstruationCycle;
+import com.bishe.myapplication.dayimarili.db.MenstruationModel;
 import com.bishe.myapplication.dayimarili.db.MenstruationDao;
 
 import java.util.List;
 
-
+/**
+ * 记录界面
+ */
 public class JiluFragment extends Fragment {
     private HistogramView hv;
     private MenstruationDao mtDao;
     private ListView slvSuggest;
-    private View view;
     /**
      * 7
      */
@@ -41,7 +42,6 @@ public class JiluFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_jilu, container, false);
         initView(view);
         hv = (HistogramView) view.findViewById(R.id.hv);
@@ -49,8 +49,11 @@ public class JiluFragment extends Fragment {
         mtDao = new MenstruationDao(getActivity());
         MenstruationCycle mtCycle = mtDao.getMTCycle();
         List<MenstruationModel> mtmList = mtDao.getMTModelList(0, 0);
+        //设置历史记录列表数据
         slvSuggest.setAdapter(new SlvSuggestAdapter(getActivity(), mtmList));
+        //设置历史记录数据 柱形图
         hv.setHistogramList(mtmList);
+        //显示平均天数与周期
         mJingqiDay.setText(mtCycle.getNumber()+"");
         mZhouqiDay.setText(mtCycle.getCycle()+"");
         return view;

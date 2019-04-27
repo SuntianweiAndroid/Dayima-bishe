@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.bishe.myapplication.R;
+import com.bishe.myapplication.dayimarili.db.MenstruationModel;
 
 import java.util.ArrayList;
 import java.util.List;

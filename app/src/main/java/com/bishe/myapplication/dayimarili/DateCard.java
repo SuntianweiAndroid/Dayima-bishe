@@ -16,8 +16,6 @@ import com.bishe.myapplication.R;
 
 /**
  * 大姨妈日历控件卡片类
- * @author Administrator zxm
- *
  */
 public class DateCard extends FrameLayout{
 	//颜色

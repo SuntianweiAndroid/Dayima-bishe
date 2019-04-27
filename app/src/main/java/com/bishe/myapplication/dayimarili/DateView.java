@@ -10,9 +10,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.GridLayout;
 
-import com.bishe.myapplication.utils.MySharedPreferences;
+import com.bishe.myapplication.dayimarili.db.MenstruationModel;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;

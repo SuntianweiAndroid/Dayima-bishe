@@ -9,6 +9,9 @@ import android.widget.Toast;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * 自定义父类activity
+ */
 public class MyBaseActivity extends Activity {
 
     @Override

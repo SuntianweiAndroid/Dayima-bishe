@@ -3,20 +3,13 @@ package com.bishe.myapplication.dayimarili.db;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 
-import com.bishe.myapplication.dayimarili.MenstruationCycle;
-import com.bishe.myapplication.dayimarili.MenstruationModel;
-import com.bishe.myapplication.dayimarili.MenstruationMt;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * SQLite????????????
- * Created by Administrator on 2015/5/26.
+ * SQLite数据库 工具类
  */
 public class MenstruationDao {
     private Context mContext;
@@ -29,9 +22,7 @@ public class MenstruationDao {
     }
 
     /**
-     * ?????????????????????????????
-     *
-     * @param mc
+     * 向数据库添加月经平均周期与平均天数
      */
     public void setMTCycle(MenstruationCycle mc) {
 
@@ -45,9 +36,7 @@ public class MenstruationDao {
     }
 
     /**
-     * ??????????????????????
-     *
-     * @param mc
+     * 更新月经平均周期与平均天数
      */
     public void upMTCycle(MenstruationCycle mc) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -60,9 +49,7 @@ public class MenstruationDao {
     }
 
     /**
-     * ????????????????????????????
-     *
-     * @return
+     * 查询月经平均周期与平均天数
      */
     public MenstruationCycle getMTCycle() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -83,9 +70,7 @@ public class MenstruationDao {
     //======================================================
 
     /**
-     * ?????????????????????????????
-     *
-     * @param mt
+     * 向数据库添加月经开始时间 结束时间 等参数
      */
     public void setMTModel(MenstruationModel mt) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -101,7 +86,7 @@ public class MenstruationDao {
                             " VALUES (?, ?, ?, ?, ?) ",
                     new Object[]{mt.getDate(), mt.getBeginTime(), mt.getEndTime(), mt.getCycle(), mt.getDurationDay()});
 
-            //???????????????
+            //获取上一次月经数据
             Cursor cursor1 = db.rawQuery("SELECT Max(startTime) FROM " + MenstruationDBHelper.TB_NAME_MT_TIME + " WHERE " +
                     " startTime < ? ", new String[]{mt.getBeginTime() + ""});
             long startTime = 0;
@@ -122,10 +107,8 @@ public class MenstruationDao {
     }
 
     /**
-     * ???????????????????????????
-     *
-     * @param time ?????????????????????????
-     * @return
+     * 获取月经开始结束时间等数据
+     * 全部记录数据，某月记录为当天时间数据
      */
     public List<MenstruationModel> getMTModelList(long time, long nextTime) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -158,10 +141,7 @@ public class MenstruationDao {
     }
 
     /**
-     * ???????????????????????????
-     *
-     * @param time ?????????????????????????
-     * @return
+     * 获取月经开始结束时间等数据
      */
     public MenstruationModel getMTModel(long startTime, long endTime) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -185,9 +165,7 @@ public class MenstruationDao {
     }
 
     /**
-     * ??????????????
-     *
-     * @param nowTime
+     * 计算开始到结束相差天数
      */
     public int getEndTimeNumber(long nowTime) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -208,9 +186,7 @@ public class MenstruationDao {
     }
 
     /**
-     * ???????????????
-     *
-     * @param nowTime
+     * 计算现在到开始相差天数
      */
     public long getStartTimeNumber(long nowTime) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -228,10 +204,7 @@ public class MenstruationDao {
     }
 
     /**
-     * ?????????
-     *
-     * @param newTime
-     * @param oldTime
+     * 更新结束时间
      */
     public void updateMTEndTime(long newTime) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -254,16 +227,13 @@ public class MenstruationDao {
     }
 
     /**
-     * ??????????
-     *
-     * @param newTime
-     * @param oldTime
+     * 修改开始时间
      */
     public void updateMTStartTime(long newTime, long oldTime) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         if (db.isOpen()) {
-            //?????????
+            //修改当月信息
             Cursor cursor2 = db.rawQuery("SELECT endTime FROM " + MenstruationDBHelper.TB_NAME_MT_TIME + " WHERE " +
                     " startTime = ?", new String[]{oldTime + ""});
             long endTime = 0;
@@ -273,7 +243,7 @@ public class MenstruationDao {
             db.execSQL("UPDATE " + MenstruationDBHelper.TB_NAME_MT_TIME + " SET startTime = ?, number = ? "
                             + " WHERE startTime == ? ",
                     new Object[]{newTime, (endTime - newTime) / 86400000l + 1, oldTime});
-            //??????????
+            //修改当月周期
             Cursor cursor1 = db.rawQuery("SELECT MIN(startTime) FROM " + MenstruationDBHelper.TB_NAME_MT_TIME + " WHERE " +
                     " startTime > ?", new String[]{oldTime + ""});
             long nextTime = 0;
@@ -286,7 +256,7 @@ public class MenstruationDao {
                         new Object[]{(nextTime - newTime) / 86400000l + 1, newTime});
             }
 
-            //??????????
+            //修改上月信息
             Cursor cursor = db.rawQuery("SELECT MAX(startTime) FROM " + MenstruationDBHelper.TB_NAME_MT_TIME + " WHERE " +
                     " startTime < ?", new String[]{newTime + ""});
             long time = 0;
@@ -304,7 +274,7 @@ public class MenstruationDao {
     }
 
     /**
-     * �����ݿ����Ӽ�¼����
+     * 向数据库添加记录数据
      *
      * @param mt
      */
@@ -319,9 +289,9 @@ public class MenstruationDao {
     }
 
     /**
-     * ��������ȡ�¾�������ʹ������??
+     * 描述：获取月经流量与痛经等数据
+     * time 某天记录为当天时间戳
      *
-     * @param time ĳ���¼Ϊ����ʱ���
      * @return
      */
     public MenstruationMt getMTMT(long time) {
@@ -344,7 +314,7 @@ public class MenstruationDao {
 
 
     /**
-     * �޸����ݿ�ʱ��
+     * 修改数据库时间
      */
     public void updateMTM(MenstruationMt mt) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -355,6 +325,9 @@ public class MenstruationDao {
         }
     }
 
+    /**
+     * 删除数据库文件
+     */
     public void deleteALL() {
         SQLiteDatabase.deleteDatabase(mContext.getDatabasePath("dayima.db"));
     }

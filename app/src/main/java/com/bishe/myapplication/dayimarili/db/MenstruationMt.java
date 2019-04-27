@@ -1,5 +1,8 @@
-package com.bishe.myapplication.dayimarili;
+package com.bishe.myapplication.dayimarili.db;
 
+/**
+ * 大姨妈日期 和记录 数据库表格
+ */
 public class MenstruationMt {
     private long date;//日期
     private String quantity;//记录

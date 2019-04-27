@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.bishe.myapplication.dayimarili.DateChange;
-import com.bishe.myapplication.dayimarili.MenstruationModel;
+import com.bishe.myapplication.dayimarili.db.MenstruationModel;
 
 import java.util.List;
 

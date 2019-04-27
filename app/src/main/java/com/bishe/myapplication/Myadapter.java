@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+/**
+ * 自定义 listview 适配器
+ */
 public class Myadapter extends BaseAdapter {
     private List<String> data;
     private boolean isSelect = false;
@@ -37,6 +40,10 @@ public class Myadapter extends BaseAdapter {
         return position;
     }
 
+    /**
+     * 当前listview选择的 position
+     * @param position
+     */
     public void setSelect( int position) {
         this.positions = position;
     }
@@ -64,6 +71,7 @@ public class Myadapter extends BaseAdapter {
         holder = (ViewHolder) convertView.getTag();
         //然后可以直接使用这个类中的控件，对控件进行操作，而不用重复去findViewById了
         holder.tvName.setText(data.get(position));
+        //设置选择后的颜色
         if (positions == position) {
             holder.tvName.setTextColor(context.getResources().getColor(R.color.date_picker_text_light));
         } else {

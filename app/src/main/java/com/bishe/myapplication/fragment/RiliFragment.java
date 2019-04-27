@@ -17,11 +17,11 @@ import com.bishe.myapplication.R;
 import com.bishe.myapplication.dayimarili.DateCardModel;
 import com.bishe.myapplication.dayimarili.DateChange;
 import com.bishe.myapplication.dayimarili.DateView;
-import com.bishe.myapplication.dayimarili.MenstruationCycle;
-import com.bishe.myapplication.dayimarili.MenstruationModel;
-import com.bishe.myapplication.dayimarili.MenstruationMt;
+import com.bishe.myapplication.dayimarili.db.MenstruationCycle;
+import com.bishe.myapplication.dayimarili.db.MenstruationModel;
+import com.bishe.myapplication.dayimarili.db.MenstruationMt;
 import com.bishe.myapplication.dayimarili.db.MenstruationDao;
-import com.bishe.myapplication.utils.CommomDialog3;
+import com.bishe.myapplication.utils.JiluDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -81,6 +81,7 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
             public void onClick(long time, DateCardModel d) {
                 nowTime = time;
                 dcm = d;
+                //判断经期开始日期是否大于现在时间
                 if (time > DateChange.getDate()) {
                     llMtBack.setVisibility(View.VISIBLE);
                     llMtCome.setVisibility(View.GONE);
@@ -90,6 +91,7 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
                     v.findViewById(R.id.back_taday).setVisibility(View.VISIBLE);
                     Toast.makeText(getActivity(), "无法记录未来哦", Toast.LENGTH_SHORT).show();
                     return;
+                    //
                 } else if (dcm.type == 1) {
                     llMtCome.setVisibility(View.VISIBLE);
                     mLinerlayoutJilu.setVisibility(View.GONE);
@@ -101,16 +103,16 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
                     if (mt != null) {
                         llMtCome.setVisibility(View.GONE);
                         mRiliJilu.setVisibility(View.GONE);
+                        //获取记录内容
                         String jilu = mt.getQuantity();
                         String[] splitstr = jilu.split(",");
                         for (String res : splitstr) {
-                            Log.e("输出截图的内容：", res);
+                            Log.e("截取保存记录的内容：", res);
                         }
                         List<String> jilu2 = new ArrayList<>();
                         for (int i = 0; i < splitstr.length; i++) {
                             if (!splitstr[i].equals("")) {
                                 jilu2.add(splitstr[i]);
-
                             }
                         }
                         if (splitstr.length > 4) {
@@ -160,8 +162,6 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
                             }
 
                         }
-//                        TextView view = v.findViewById(R.id.btn_tixing);
-//                        view.setText(mt.getQuantity() + "");
                     } else {
                         llMtCome.setVisibility(View.VISIBLE);
                         mLinerlayoutJilu.setVisibility(View.GONE);
@@ -238,8 +238,6 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
                             }
 
                         }
-//                        TextView view = v.findViewById(R.id.btn_tixing);
-//                        view.setText(mt.getQuantity() + "");
                     } else {
                         llMtCome.setVisibility(View.VISIBLE);
                         llMtBack.setVisibility(View.GONE);
@@ -248,7 +246,6 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
                         mRiliJilu.setVisibility(View.VISIBLE);
                         v.findViewById(R.id.back_taday).setVisibility(View.GONE);
                     }
-
                 }
             }
         });
@@ -274,10 +271,14 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
      * 初始化大姨妈数据
      */
     private void initData() {
+        //获取日历对象
         calendar = Calendar.getInstance();
         curDate = new Date();
+        //设置当前日期
         calendar.setTime(curDate);
+        //获取数据库
         mtDao = new MenstruationDao(mContext);
+        //获取周期与平均天数
         mCycle = mtDao.getMTCycle();
         long nowDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-1", "yyyy-MM-dd");
         long nextDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 2) + "-1", "yyyy-MM-dd");
@@ -315,6 +316,7 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
         mtm.setEndTime(mtmBass.getBeginTime() + 86400000L * 28 + 86400000L * (mCycle.getNumber() - 1));
         mtm.setDate(nowDate);
         mtm.setCon(false);
+        //判断下次时间是否大于保存下次时间
         if (nextDate > mtm.getBeginTime()) {
             if (mtm.getBeginTime() > DateChange.getDate()) {
                 mtmList.add(mtm);
@@ -325,14 +327,14 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
             }
             mtmBass = mtm;
         }
+        //日历控件初始化数据
         dateView.initData(mtmList);
+        //设置主界面时间
         tvDate.setText(dateView.getYearAndmonth());
-//        dateView.refreshUI(mtmList);
     }
 
     /**
      * 获取并预测大姨妈
-     *
      * @param nowDate  当月时间
      * @param nextDate 下月时间
      * @return
@@ -458,41 +460,10 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
     }
 
     /**
-     * 刷新UI
-     */
-    private void refreshUI() {
-        long nowDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-1", "yyyy-MM-dd");
-        long nextDate = DateChange.dateTimeStamp(calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 2) + "-1", "yyyy-MM-dd");
-        //获取当月数据
-        List<MenstruationModel> mtmList = mtDao.getMTModelList(nowDate, nextDate);
-        //获取全部数据
-        list = mtDao.getMTModelList(0, 0);
-        for (int i = 0; i < mtmList.size(); i++) {
-            mtmList.get(i).setCon(true);
-        }
-        //下一次的月经是否在当月
-        MenstruationModel mtm = new MenstruationModel();
-        mtm.setBeginTime(mtmBass.getBeginTime() + 86400000L * 28);
-        mtm.setEndTime(mtmBass.getBeginTime() + 86400000L * 28 + 86400000L * (mCycle.getNumber() - 1));
-        mtm.setDate(nowDate);
-        mtm.setCon(false);
-        if (nextDate > mtm.getBeginTime()) {
-            if (mtm.getBeginTime() > DateChange.getDate()) {
-                mtmList.add(mtm);
-            } else {
-                mtm.setBeginTime(DateChange.getDate());
-                mtm.setEndTime(DateChange.getDate() + 86400000L * 4);
-                mtmList.add(mtm);
-            }
-        }
-        dateView.refreshUI(mtmList);
-    }
-
-    /**
      * 计算间隔时间
      *
-     * @param startTime
-     * @param endTime
+     * @param startTime 开始时间
+     * @param endTime 结束时间
      * @return
      */
     private long intervalTime(long startTime, long endTime) {
@@ -504,7 +475,7 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
     /**
      * 获取当天日期
      *
-     * @param format
+     * @param format  时间格式
      * @return
      */
     public int getNowTime(String format) {
@@ -517,8 +488,6 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
-
             case R.id.rili_jilu:
                 boolean isJinqi = false;
                 //判断点击当前时间是否为在预测大姨妈期间
@@ -527,13 +496,14 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
                 } else {
                     isJinqi = false;
                 }
-
+                //拿到当前开始经期时间
                 SimpleDateFormat sdf = new SimpleDateFormat("MM月dd日");
                 String time = sdf.format(new Date(nowTime));
-                new CommomDialog3(getActivity(), R.style.DialogTheme, isJinqi, "", new CommomDialog3.OnCloseListener() {
+                new JiluDialog(getActivity(), R.style.DialogTheme, isJinqi, "", new JiluDialog.OnCloseListener() {
                     @Override
                     public void onClick(Dialog dialog, boolean is, String confirm) {
                         if (is) {
+                            //保存记录数据到数据库
                             MenstruationMt mt = mtDao.getMTMT(nowTime);
                             if (mt != null) {
                                 mt.setQuantity(confirm);

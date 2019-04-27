@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.GridLayout;
 
+import com.bishe.myapplication.dayimarili.db.MenstruationModel;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -31,9 +33,10 @@ public class DateView3 extends GridLayout {
     private int lastNumber, toNumber; //这个月显示上月天数， 这个月天数
     private String dateClick = "";//记录点击的日期
 
+    private String TAG = "stw";
+    private int width = 720;
     public DateView3(Context context) {
         super(context, null);
-
     }
 
     public DateView3(Context context, @Nullable AttributeSet attrs) {
@@ -45,6 +48,7 @@ public class DateView3 extends GridLayout {
     }
 
     public void initData(List<MenstruationModel> mtmList) {
+        //获取当前屏幕宽度
         WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(displayMetrics);
@@ -63,20 +67,10 @@ public class DateView3 extends GridLayout {
         onItemListener.onClick(DateChange.dateTimeStamp(dateClick, "yyyy/MM/dd"), dateList[lastNumber + getNowTime("dd")]);
     }
 
-    String TAG = "stw";
-    int width = 720;
-
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        this.width = w;
         Log.i(TAG, "onSizeChanged: ");
-//		if(is){
-//			int cardWidth = w/7;
-//			addCards(cardWidth,cardWidth);
-//			is = false;
-//		}
-
     }
 
     private void addCards(int cardWidth, int cardHeight) {
@@ -241,27 +235,9 @@ public class DateView3 extends GridLayout {
         return DateChange.dateTimeStamp(date, "yyyy-MM-dd");
     }
 
-    /**
-     * 刷新UI
-     *
-     * @param mtmList
-     */
-    public void refreshUI(List<MenstruationModel> mtmList) {
-        calendar.setTime(curDate);
-        calculateDate();
-        calculateType(mtmList);
-        for (int i = 0; i < number; i++) {
-            dateCard[i].initData(dateList[i]);
-        }
-        setListener();
-        onItemListener.onClick(DateChange.dateTimeStamp(dateClick, "yyyy/MM/dd"), dateList[lastNumber + getNowTime("dd")]);
-    }
 
     /**
      * 计算当月显示的状态（1为月经期，2为预测期，3为安全期，4为易孕期, 0为其他）
-     *
-     * @param start 当月月经开始日期
-     * @param end   当月月经结束日期1556121600000 (0x16A50134000)
      */
     public void calculateType(List<MenstruationModel> mtmList) {
 
@@ -425,25 +401,6 @@ public class DateView3 extends GridLayout {
         public void onClick(long time, DateCardModel dcm);
     }
 
-    /**
-     * 向上一月
-     *
-     * @return
-     */
-    public String clickLeftMonth(List<MenstruationModel> mtmList) {
-        calendar.setTime(curDate);
-        calendar.add(Calendar.MONTH, -1);
-        curDate = calendar.getTime();
-        calculateDate();
-        if (mtmList != null) {
-            calculateType(mtmList);
-        }
-        for (int i = 0; i < number; i++) {
-            dateCard[i].initData(dateList[i]);
-        }
-        setListener();
-        return getYearAndmonth();
-    }
 
     /**
      * 向下一月

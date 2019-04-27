@@ -1,6 +1,8 @@
-package com.bishe.myapplication.dayimarili;
+package com.bishe.myapplication.dayimarili.db;
 
-
+/**
+ * 大姨妈主数据表格
+ */
 public class MenstruationModel {
 	private int id;
 	private long beginTime; //月经开始时间

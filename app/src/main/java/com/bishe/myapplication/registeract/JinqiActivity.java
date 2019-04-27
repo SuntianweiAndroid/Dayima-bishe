@@ -20,6 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 选择经期天数界面
+ */
 public class JinqiActivity extends MyBaseActivity implements View.OnClickListener {
 
     private ImageButton mImgBack;
@@ -44,12 +47,16 @@ public class JinqiActivity extends MyBaseActivity implements View.OnClickListene
     }
 
     private void initDev() {
+        //初始化经期天数2--16天
         final List<String> stringList = new ArrayList<>();
         for (int i = 2; i < 16; i++) {
             stringList.add(i + "天");
         }
+        //实例化自定义adapter（适配器）
         final Myadapter myadapter = new Myadapter(stringList, this);
+        //适配经期listview数据
         mjingqiList.setAdapter(myadapter);
+        //设置经期listview item点击事件
         mjingqiList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -58,6 +65,7 @@ public class JinqiActivity extends MyBaseActivity implements View.OnClickListene
                 int jingqiTiem = Integer.parseInt(getNumbers(stringList.get(position)));
                 Log.i("stw", "onItemClick: 经期==" + jingqiTiem);
                 jingqi = jingqiTiem;
+                //保存经期时间
                 MySharedPreferences.setJingqiTime(jingqiTiem);
             }
         });
@@ -81,9 +89,11 @@ public class JinqiActivity extends MyBaseActivity implements View.OnClickListene
                 finish();
                 break;
             case R.id.btn_true:
+                //判断是否选择经期
                 if (jingqi == 0) {
                     showToast(this, "请选择经期天数");
                 } else {
+                    //跳转日期选择界面
                     intentClass(RiqiActivity.class);
                 }
                 break;

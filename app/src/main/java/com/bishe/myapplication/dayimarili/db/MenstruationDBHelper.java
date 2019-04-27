@@ -7,9 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.io.File;
 
 /**
- * 大姨妈数据表
- *
- * @author Administrator zxm
+ * 创建大姨妈数据库
  */
 public class MenstruationDBHelper extends SQLiteOpenHelper {
 
@@ -17,10 +15,11 @@ public class MenstruationDBHelper extends SQLiteOpenHelper {
     public static final String TB_NAME_MT_CYCLE = "menstruation_cycle";
     public static final String TB_NAME_MT_TIME = "menstruation_time";
 
+    //数据库名字
     public MenstruationDBHelper(Context context) {
         super(context, "dayima.db", null, 1);
     }
-//参数说明
+    //参数说明
     //context:上下文对象
     //name:数据库名称
     //param:factory
@@ -39,7 +38,7 @@ public class MenstruationDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         /**
-         * 大姨妈平均周期与平均天数�?
+         * 创建大姨妈平均周期与平均天数表
          */
         db.execSQL("CREATE TABLE IF NOT EXISTS " +
                 TB_NAME_MT_CYCLE + " ( " +
@@ -49,20 +48,20 @@ public class MenstruationDBHelper extends SQLiteOpenHelper {
                 " )"
         );
         /**
-         * 大姨妈开始结束时间等数据�?
+         * 创建大姨妈开始结束时间等数据表
          */
         db.execSQL("CREATE TABLE IF NOT EXISTS " +
                 TB_NAME_MT_TIME + " ( " +
                 " _id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 " date INTEGER, " + //月份
-                " startTime  INTEGER, " + //月经�?��时间
+                " startTime  INTEGER, " + //月经开始时间
                 " endTime INTEGER, " + //月经结束时间
                 " cycle  INTEGER, " + //月经周期
                 " number  INTEGER " + //月经天数
                 " )"
         );
         /**
-         * 大姨妈流量痛经表
+         * 创建大姨妈记录表
          */
         db.execSQL("CREATE TABLE IF NOT EXISTS " +
                 TB_NAME_MT + " ( " + " _id INTEGER PRIMARY KEY AUTOINCREMENT, " + " date INTEGER," + " quantity  STRING" + " )"
@@ -76,13 +75,5 @@ public class MenstruationDBHelper extends SQLiteOpenHelper {
 
     }
 
-    public void deleteAll(Context context) {
-
-        context.deleteDatabase("dayima.db");
-//		final File file = context.getDatabasePath("dayima.db");
-//		file.delete();
-
-
-    }
 
 }

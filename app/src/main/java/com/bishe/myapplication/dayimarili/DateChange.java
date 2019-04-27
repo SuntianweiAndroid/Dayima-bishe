@@ -6,15 +6,15 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Created by Administrator on 2015/5/21.
+ * æ—¶é—´è®¡ç®—å·¥å…·ç±»
  */
 public class DateChange {
     /**
-     * Ê±¼ä´Á×ª»»³ÉÈÕÆÚ¸ñÊ½×Ö·û??
-     * hh??2Ğ¡Ê±??
-     * HH??4Ğ¡Ê±??
+     * æ—¶é—´æˆ³è½¬æ¢æˆæ—¥æœŸæ ¼å¼å­—ç¬¦
+     * hh??2å°æ—¶??
+     * HH??4å°æ—¶??
      *
-     * @param seconds ¾«È·µ½ÃëµÄ×Ö·û´®
+     * @param seconds ç²¾ç¡®åˆ°ç§’çš„å­—ç¬¦ä¸²
      */
     public static String timeStamp2Date(String seconds, String format) {
         if (seconds == null || seconds.isEmpty() || seconds.equals("null")) {
@@ -27,9 +27,9 @@ public class DateChange {
     }
 
     /**
-     * ÈÕÆÚ¸ñÊ½×Ö·û´®×ª»»³ÉÊ±¼ä??
+     * æ—¥æœŸæ ¼å¼å­—ç¬¦ä¸²è½¬æ¢æˆæ—¶é—´
      *
-     * @param format Èç£ºyyyy-MM-dd HH:mm:ss
+     * @param format å¦‚ï¼šyyyy-MM-dd HH:mm:ss
      */
     public static String date2TimeStamp(String date_str, String format) {
         try {
@@ -42,9 +42,9 @@ public class DateChange {
     }
 
     /**
-     * ÈÕÆÚ¸ñÊ½×Ö·û´®×ª»»³ÉÊ±¼ä??
+     * æ—¥æœŸæ ¼å¼å­—ç¬¦ä¸²è½¬æ¢æˆæ—¶é—´
      *
-     * @param format Èç£ºyyyy-MM-dd HH:mm:ss
+     * @param format å¦‚ï¼šyyyy-MM-dd HH:mm:ss
      */
     public static long dateTimeStamp(String date_str, String format) {
         try {
@@ -57,7 +57,7 @@ public class DateChange {
     }
 
     /**
-     * »ñÈ¡µ±ÌìÈÕÆÚÊ±¼ä??
+     * è·å–å½“å¤©æ—¥æœŸæ—¶é—´
      *
      * @return
      */
@@ -78,7 +78,7 @@ public class DateChange {
     }
 
     /**
-     * È¡µÃµ±Ç°Ê±¼ä´Á£¨¾«È·µ½Ãë??
+     * å–å¾—å½“å‰æ—¶é—´æˆ³ï¼ˆç²¾ç¡®åˆ°ç§’ï¼‰
      */
     public static String timeStamp() {
         long time = System.currentTimeMillis();
@@ -87,24 +87,24 @@ public class DateChange {
     }
 
     /**
-     * ¼ÆËãÁ½¸öÈÕÆÚÏà²îÌìÊı
+     * è®¡ç®—ä¸¤ä¸ªæ—¥æœŸç›¸å·®å¤©æ•°
      *
-     * @return **ÖÜ**Ìì
+     * @return **å‘¨**å¤©
      */
     public static String getTime(long endTime, long startTime) {
         int M = (int) ((endTime - startTime) / 86400000l / 7);
         int D = (int) ((endTime - startTime) / 86400000l % 7);
         if (M != 0 && D != 0) {
-            return M + "ÖÜ" + D + "Ìì";
+            return M + "å‘¨" + D + "å¤©";
         } else if (M == 0 && D != 0) {
-            return D + "Ìì";
+            return D + "å¤©";
         } else if (M != 0 && D == 0) {
-            return M + "ÖÜ";
+            return M + "å‘¨";
         }
-        return "1Ìì";
+        return "1å¤©";
     }
 
-    //  Êä³ö½á¹û??
+    //  è¾“å‡ºç»“æœ??
     //  timeStamp=1417792627
     //  date=2014-12-05 23:17:07
     //  1417792627

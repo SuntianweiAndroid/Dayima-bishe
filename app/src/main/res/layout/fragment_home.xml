@@ -153,7 +153,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/select_green_bg"
+                    android:background="@drawable/select_red_bg"
                     android:gravity="center"
                     android:text="回今天" />
             </LinearLayout>
@@ -168,7 +168,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/select_green_bg"
+                    android:background="@drawable/select_red_bg"
                     android:gravity="center"
                     android:text="回今天" />
             </LinearLayout>
