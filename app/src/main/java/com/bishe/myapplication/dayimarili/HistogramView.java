@@ -23,7 +23,7 @@ import java.util.List;
  *
  */
 public class HistogramView extends View{
-	private Paint paint_text, paint_line, paint_small, paint_big, paint_base;
+	private Paint paint_text, paint_line, paint_small, paint_big, paint_base,paint;
 	private float tb;
 	private int characterColor = 0xff6E6E6E; // 字的颜色
 	private int lineColor = 0xffBBBBBB; // 线的颜色
@@ -100,6 +100,13 @@ public class HistogramView extends View{
 		paint_base.setStrokeWidth(tb * 0.1f);
 		paint_base.setTextAlign(Align.CENTER);
 		paint_base.setStyle(Style.FILL);
+		paint = new Paint();
+		paint.setAntiAlias(true);
+		paint.setColor(smallColor);
+		paint.setTextSize(tb * 1.2f);
+		paint.setStrokeWidth(tb * 1.5f);
+		paint.setTextAlign(Align.CENTER);
+		paint.setStyle(Style.FILL);
 	}
 	
 	@Override
@@ -242,7 +249,8 @@ public class HistogramView extends View{
 		canvas.drawLine(3.0f*x, 12.9f*y, 4.0f*x, 12.9f*y, paint_big);
 		canvas.drawText("设置天数", 6f*x, 13f*y, paint_text);
 //		canvas.drawText("日/月", 11f*x, 13f*y, paint_big);
-		canvas.drawText("实际天数", 12.5f*x, 13f*y, paint_text);
+        canvas.drawLine(8.0f*x, 12.8f*y, 9.5f*x, 12.8f*y, paint);
+		canvas.drawText("实际天数", 11.5f*x, 13f*y, paint_text);
 
 		
 		//28天临界线

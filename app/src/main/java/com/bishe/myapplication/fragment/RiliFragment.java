@@ -499,6 +499,8 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
                 //拿到当前开始经期时间
                 SimpleDateFormat sdf = new SimpleDateFormat("MM月dd日");
                 String time = sdf.format(new Date(nowTime));
+                String time2 = sdf.format(new Date(mtmBass.getBeginTime()));
+                String time3 = sdf.format(new Date(mtmBass.getEndTime()));
                 new JiluDialog(getActivity(), R.style.DialogTheme, isJinqi, "", new JiluDialog.OnCloseListener() {
                     @Override
                     public void onClick(Dialog dialog, boolean is, String confirm) {
