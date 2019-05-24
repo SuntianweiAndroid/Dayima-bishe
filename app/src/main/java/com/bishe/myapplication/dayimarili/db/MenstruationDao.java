@@ -75,6 +75,8 @@ public class MenstruationDao {
     public void setMTModel(MenstruationModel mt) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         if (db.isOpen()) {
+            db.execSQL("DELETE FROM " + MenstruationDBHelper.TB_NAME_MT_TIME);
+
             Cursor cursor = db.rawQuery("SELECT MIN(startTime) FROM " + MenstruationDBHelper.TB_NAME_MT_TIME + " WHERE " +
                     " startTime > ? ", new String[]{mt.getBeginTime() + ""});
             while (cursor.moveToNext()) {

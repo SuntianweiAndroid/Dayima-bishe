@@ -146,34 +146,14 @@ public class HomeFragment extends Fragment {
         List<MenstruationModel> mtmList = mtDao.getMTModelList(nowDate, nextDate);
         //获取全部数据
         list = mtDao.getMTModelList(0, 0);
-        //当数据库中没有本月记录时，根据上一次的记录预测本月记录
-        for (int i = 0; i < mtmList.size(); i++) {
-            mtmList.get(i).setCon(true);
-        }
-        if (mtmList.size() == 0) {
-            MenstruationModel mtm = new MenstruationModel();
-            mtm.setDate(nowDate);
-            mtm.setBeginTime(list.get(list.size() - 1).getBeginTime() + intervalTime(list.get(list.size() - 1).getBeginTime(), nowDate));
-            mtm.setEndTime(list.get(list.size() - 1).getBeginTime() + intervalTime(list.get(list.size() - 1).getBeginTime(), nowDate) + 86400000L * (mCycle.getNumber() - 1));
-            mtm.setCon(false);
-            //如果当月没有记录，就根据之前的数据来预测现在的来月经时间，如果根据之前预测的时间小于当天时间就从现在开始记录
-            if (mtm.getBeginTime() > DateChange.getDate()) {
-                mtmList.add(mtm);
-            } else {
-                mtm.setBeginTime(DateChange.getDate());
-                mtm.setEndTime(DateChange.getDate() + 86400000L * 4);
-                mtmList.add(mtm);
-            }
-            //记录预测的基准
-            mtmBass = mtm;
-        } else {
-            //记录预测的基准
+        mtmList.get(mtmList.size() - 1).setCon(true);
             mtmBass = mtmList.get(mtmList.size() - 1);
-        }
+
+        long time = mtmBass.getBeginTime() - 86400000L * (mtDao.getMTCycle().getCycle()-1);
         //下一次的月经是否在当月
         MenstruationModel mtm = new MenstruationModel();
-        mtm.setBeginTime(mtmBass.getBeginTime() + 86400000L * 30);
-        mtm.setEndTime(mtmBass.getBeginTime() + 86400000L * 30 + 86400000L * (mCycle.getNumber() - 1));
+        mtm.setBeginTime(mtmBass.getBeginTime() + 86400000L * (mCycle.getCycle() - 1));
+        mtm.setEndTime(mtm.getBeginTime() +  86400000L * (mCycle.getNumber() - 1));
         mtm.setDate(nowDate);
         mtm.setCon(false);
         if (nextDate > mtm.getBeginTime()) {
@@ -181,22 +161,22 @@ public class HomeFragment extends Fragment {
                 mtmList.add(mtm);
             } else {
                 mtm.setBeginTime(DateChange.getDate());
-                mtm.setEndTime(DateChange.getDate() + 86400000L * 4);
+                mtm.setEndTime(DateChange.getDate() + 86400000L *( mCycle.getNumber() - 1));
                 mtmList.add(mtm);
             }
             mtmBass = mtm;
         }
         dateView.initData(mtmList);
         tvDate.setText(dateView.getYearAndmonth());
-        //初始化上一月日历表格计算时间
-        long time = mtmBass.getBeginTime() - 86400000L * mtDao.getMTCycle().getCycle();
+        //计算上一月月经开始时间
+
         Date date = new Date(time);
         Calendar calendar2 = Calendar.getInstance();
         calendar2.setTime(date);
         int year = calendar2.get(Calendar.YEAR);
         int month = calendar2.get(Calendar.MONTH) + 1;
         int day = calendar2.get(Calendar.DATE);//获取日
-        int week2 = calendar2.get(Calendar.DAY_OF_WEEK)-1;
+        int week2 = calendar2.get(Calendar.DAY_OF_WEEK);
         String weeks2;
         switch (week2) {
             case 1:
@@ -224,7 +204,7 @@ public class HomeFragment extends Fragment {
                 weeks2 = "";
                 break;
         }
-        mTvUpDay.setText("上次经期:"+ + month + "月"  + day+ "日" + ",    " + week2);
+        mTvUpDay.setText("上次经期:"+ + month + "月"  + day+ "日" + "    " + weeks2);
 
         //初始化下一月日历表格
         Calendar calendar = Calendar.getInstance();
@@ -243,7 +223,7 @@ public class HomeFragment extends Fragment {
         calendar3.setTime(date3);
         int month3 = calendar3.get(Calendar.MONTH) + 1;
         int day3 = calendar3.get(Calendar.DATE);//获取日
-        int week3 = calendar3.get(Calendar.DAY_OF_WEEK)-1;
+        int week3 = calendar3.get(Calendar.DAY_OF_WEEK);
         String weeks = "";
         switch (week3) {
             case 1:
@@ -271,7 +251,7 @@ public class HomeFragment extends Fragment {
                 weeks = "";
                 break;
         }
-        mTvDownDay.setText("预测经期:"+ + month3 + "月"  + day3+ "日" + ",    " + weeks);
+        mTvDownDay.setText("预测经期:"+ + month3 + "月"  + day3+ "日" + "    " + weeks);
     }
 
     /**
@@ -306,15 +286,15 @@ public class HomeFragment extends Fragment {
             mtmList.add(mtm1);
             //判断下一次的大姨妈是否在本月
             MenstruationModel mtm = new MenstruationModel();
-            mtm.setBeginTime(mtmBass.getBeginTime() + intervalTime(mtmBass.getDate(), nowDate) + 86400000L * 28);
-            mtm.setEndTime(mtmBass.getBeginTime() + intervalTime(mtmBass.getDate(), nowDate) + 86400000L * 28 + 86400000L * (mCycle.getNumber() - 1));
+            mtm.setBeginTime(mtmBass.getBeginTime() + intervalTime(mtmBass.getDate(), nowDate) + 86400000L * (mCycle.getCycle() - 1));
+            mtm.setEndTime(mtm.getBeginTime() + intervalTime(mtm.getDate(), nowDate)  + 86400000L * (mCycle.getNumber() - 1));
             mtm.setCon(false);
             if (nextDate > mtm.getBeginTime()) {
                 if (mtm.getBeginTime() > DateChange.getDate()) {
                     mtmList.add(mtm);
                 } else {
                     mtm.setBeginTime(DateChange.getDate());
-                    mtm.setEndTime(DateChange.getDate() + 86400000L * 4);
+                    mtm.setEndTime(DateChange.getDate() + 86400000L * (mCycle.getNumber() - 1));
                     mtmList.add(mtm);
                 }
             }

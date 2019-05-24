@@ -38,6 +38,7 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
     private Date curDate; // 当前日历显示的月
     private Calendar calendar;
     private MenstruationModel mtmBass;//预测大姨妈的基础数据
+    private MenstruationModel mtmBass2;//预测大姨妈的基础数据
     private long nowTime = 0;//点击的日期
     private DateCardModel dcm;//点击的月份
     private List<MenstruationModel> list;
@@ -286,34 +287,13 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
         List<MenstruationModel> mtmList = mtDao.getMTModelList(nowDate, nextDate);
         //获取全部数据
         list = mtDao.getMTModelList(0, 0);
-        //当数据库中没有本月记录时，根据上一次的记录预测本月记录
-        for (int i = 0; i < mtmList.size(); i++) {
-            mtmList.get(i).setCon(true);
-        }
-        if (mtmList.size() == 0) {
-            MenstruationModel mtm = new MenstruationModel();
-            mtm.setDate(nowDate);
-            mtm.setBeginTime(list.get(list.size() - 1).getBeginTime() + intervalTime(list.get(list.size() - 1).getBeginTime(), nowDate));
-            mtm.setEndTime(list.get(list.size() - 1).getBeginTime() + intervalTime(list.get(list.size() - 1).getBeginTime(), nowDate) + 86400000L * (mCycle.getNumber() - 1));
-            mtm.setCon(false);
-            //如果当月没有记录，就根据之前的数据来预测现在的来月经时间，如果根据之前预测的时间小于当天时间就从现在开始记录
-            if (mtm.getBeginTime() > DateChange.getDate()) {
-                mtmList.add(mtm);
-            } else {
-                mtm.setBeginTime(DateChange.getDate());
-                mtm.setEndTime(DateChange.getDate() + 86400000L * 4);
-                mtmList.add(mtm);
-            }
-            //记录预测的基准
-            mtmBass = mtm;
-        } else {
-            //记录预测的基准
-            mtmBass = mtmList.get(mtmList.size() - 1);
-        }
+        mtmList.get(mtmList.size() - 1).setCon(true);
+        mtmBass = mtmList.get(mtmList.size() - 1);
+        mtmBass2 = mtmList.get(mtmList.size() - 1);
         //下一次的月经是否在当月
         MenstruationModel mtm = new MenstruationModel();
-        mtm.setBeginTime(mtmBass.getBeginTime() + 86400000L * 28);
-        mtm.setEndTime(mtmBass.getBeginTime() + 86400000L * 28 + 86400000L * (mCycle.getNumber() - 1));
+        mtm.setBeginTime(mtmBass.getBeginTime() + 86400000L * (mCycle.getCycle() - 1));
+        mtm.setEndTime(mtm.getBeginTime() + 86400000L * (mCycle.getNumber() - 1));
         mtm.setDate(nowDate);
         mtm.setCon(false);
         //判断下次时间是否大于保存下次时间
@@ -322,7 +302,7 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
                 mtmList.add(mtm);
             } else {
                 mtm.setBeginTime(DateChange.getDate());
-                mtm.setEndTime(DateChange.getDate() + 86400000L * 4);
+                mtm.setEndTime(DateChange.getDate() + 86400000L * (mCycle.getNumber() - 1));
                 mtmList.add(mtm);
             }
             mtmBass = mtm;
@@ -335,6 +315,7 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
 
     /**
      * 获取并预测大姨妈
+     *
      * @param nowDate  当月时间
      * @param nextDate 下月时间
      * @return
@@ -364,23 +345,23 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
             mtmList.add(mtm1);
             //判断下一次的大姨妈是否在本月
             MenstruationModel mtm = new MenstruationModel();
-            mtm.setBeginTime(mtmBass.getBeginTime() + intervalTime(mtmBass.getDate(), nowDate) + 86400000L * 28);
-            mtm.setEndTime(mtmBass.getBeginTime() + intervalTime(mtmBass.getDate(), nowDate) + 86400000L * 28 + 86400000L * (mCycle.getNumber() - 1));
+            mtm.setBeginTime(mtmBass.getBeginTime() + intervalTime(mtmBass.getDate(), nowDate) + 86400000L * (mCycle.getCycle() - 1));
+            mtm.setEndTime(mtm.getBeginTime() + intervalTime(mtm.getDate(), nowDate)  + 86400000L * (mCycle.getNumber() - 1));
             mtm.setCon(false);
             if (nextDate > mtm.getBeginTime()) {
                 if (mtm.getBeginTime() > DateChange.getDate()) {
                     mtmList.add(mtm);
                 } else {
                     mtm.setBeginTime(DateChange.getDate());
-                    mtm.setEndTime(DateChange.getDate() + 86400000L * 4);
+                    mtm.setEndTime(DateChange.getDate() + 86400000L * (mCycle.getNumber() - 1));
                     mtmList.add(mtm);
                 }
             }
         }
         //判断上一次的大姨妈是否有在本月
         MenstruationModel mtm1 = new MenstruationModel();
-        mtm1.setBeginTime(mtmBass.getBeginTime() + intervalTime(mtmBass.getDate(), nowDate) - 86400000L * 28);
-        mtm1.setEndTime(mtmBass.getBeginTime() + intervalTime(mtmBass.getDate(), nowDate) - 86400000L * 28 + 86400000L * (mCycle.getNumber() - 1));
+        mtm1.setBeginTime(mtmBass.getBeginTime() + intervalTime(mtmBass.getDate(), nowDate) - (mCycle.getCycle() - 1));
+        mtm1.setEndTime(mtmBass.getBeginTime() + intervalTime(mtmBass.getDate(), nowDate) + 86400000L * (mCycle.getNumber() - 1));
         mtm1.setCon(false);
         if (nowDate <= mtm1.getEndTime()) {
             mtmList.add(mtm1);
@@ -447,7 +428,7 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
                         mtmList.add(mtm);
                     } else {
                         mtm.setBeginTime(DateChange.getDate());
-                        mtm.setEndTime(DateChange.getDate() + 86400000L * 4);
+                        mtm.setEndTime(DateChange.getDate() + 86400000L * (mCycle.getNumber() - 1));
                         mtm.setCon(false);
                         mtmList.add(mtm);
                     }
@@ -463,7 +444,7 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
      * 计算间隔时间
      *
      * @param startTime 开始时间
-     * @param endTime 结束时间
+     * @param endTime   结束时间
      * @return
      */
     private long intervalTime(long startTime, long endTime) {
@@ -475,7 +456,7 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
     /**
      * 获取当天日期
      *
-     * @param format  时间格式
+     * @param format 时间格式
      * @return
      */
     public int getNowTime(String format) {
@@ -491,7 +472,7 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
             case R.id.rili_jilu:
                 boolean isJinqi = false;
                 //判断点击当前时间是否为在预测大姨妈期间
-                if (nowTime >= mtmBass.getBeginTime() && nowTime <=mtmBass.getEndTime()) {
+                if (nowTime >= mtmBass2.getBeginTime() && nowTime <= mtmBass2.getEndTime()) {
                     isJinqi = true;
                 } else {
                     isJinqi = false;
@@ -499,8 +480,8 @@ public class RiliFragment extends Fragment implements View.OnClickListener {
                 //拿到当前开始经期时间
                 SimpleDateFormat sdf = new SimpleDateFormat("MM月dd日");
                 String time = sdf.format(new Date(nowTime));
-                String time2 = sdf.format(new Date(mtmBass.getBeginTime()));
-                String time3 = sdf.format(new Date(mtmBass.getEndTime()));
+                String time2 = sdf.format(new Date(mtmBass2.getBeginTime()));
+                String time3 = sdf.format(new Date(mtmBass2.getEndTime()));
                 new JiluDialog(getActivity(), R.style.DialogTheme, isJinqi, "", new JiluDialog.OnCloseListener() {
                     @Override
                     public void onClick(Dialog dialog, boolean is, String confirm) {

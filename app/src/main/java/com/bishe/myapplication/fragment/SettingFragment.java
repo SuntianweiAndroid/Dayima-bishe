@@ -16,8 +16,10 @@ import android.widget.Toast;
 
 import com.bishe.myapplication.LogInActivity;
 import com.bishe.myapplication.R;
+import com.bishe.myapplication.dayimarili.DateChange;
 import com.bishe.myapplication.dayimarili.db.MenstruationCycle;
 import com.bishe.myapplication.dayimarili.db.MenstruationDao;
+import com.bishe.myapplication.dayimarili.db.MenstruationModel;
 import com.bishe.myapplication.utils.MyDialog;
 import com.bishe.myapplication.utils.SettingJingqiDialog;
 import com.bishe.myapplication.utils.MySharedPreferences;
@@ -112,6 +114,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                             mc.setNumber(MySharedPreferences.getJingqiTime());
                             mc.setCycle(MySharedPreferences.getZhouqiTime());
                             new MenstruationDao(getActivity()).upMTCycle(mc);
+                            saveDb();
                         }
                     }
                 }, "jingqi").setTitle("设置经期").show();
@@ -128,6 +131,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                             mc.setNumber(MySharedPreferences.getJingqiTime());
                             mc.setCycle(MySharedPreferences.getZhouqiTime());
                             new MenstruationDao(getActivity()).upMTCycle(mc);
+                            saveDb();
                         }
                     }
                 }, "zhouqi").setTitle("设置周期").show();
@@ -164,4 +168,14 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    private void saveDb() {
+        MenstruationModel mtm = new MenstruationModel();
+        mtm.setBeginTime(DateChange.dateTimeStamp(MySharedPreferences.getRiqiTime2(), "yyyy-MM-dd"));
+        mtm.setEndTime(DateChange.dateTimeStamp(MySharedPreferences.getRiqiTime2(), "yyyy-MM-dd") + 86400000L * (MySharedPreferences.getJingqiTime() - 1));
+        mtm.setCycle(MySharedPreferences.getZhouqiTime());
+        mtm.setDurationDay(MySharedPreferences.getJingqiTime());
+        mtm.setDate(DateChange.dateTimeStamp(MySharedPreferences.getRiqiTime2(), "yyyy-MM-dd"));
+        new MenstruationDao(getActivity()).setMTModel(mtm);
+
+    }
 }
